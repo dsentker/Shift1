@@ -1,0 +1,25 @@
+log/errorhandling
+
+exception handler: debug::excHandler()
+error handler    : debug::errHandler()
+
+$debug->logException(...)
+$debug->log(
+
+
+link builder:
+
+::make('auth::login/lang:de/foo:bar');
+::make('::login', array('id' => $id));
+
+Views:
+(in view)
+$this->embedInto('path/to/view', 'content');
+
+(class)
+extends ArrayObject..
+
+if($strict) {
+   E_USER_NOTICE, see @https://github.com/zendframework/zf2/blob/master/library/Zend/View/Variables.php
+
+}

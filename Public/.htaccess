@@ -1,0 +1,22 @@
+#AddDefaultCharset utf-8
+#php_flag magic_quotes_gpc Off
+
+SetEnv APP_ENVIRONMENT development
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteBase /shift1/public/
+
+    RewriteCond %{SCRIPT_FILENAME} !-f
+    RewriteCond %{SCRIPT_FILENAME} !-d
+
+    #RewriteRule /*\.(css|js|php|php|gif|png|jpe?g)$ - [NC,L]
+    RewriteRule "^(.*)$"    "index.php" [QSA,L]
+
+</IfModule>
+
+<files *.ini>
+order deny,allow
+deny from all
+</files>

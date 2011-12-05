@@ -1,0 +1,11 @@
+----------------------------------------
+SHIFT1 Framework
+Copyright (C) 2010 - 2011 Daniel Sentker
+http://www.shiftedwork.de
+----------------------------------------
+
+You may use and modify these framework without any
+restrictions for both commercial and non-commercial
+work
+
+Attribution is appreciated but not required.

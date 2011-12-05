@@ -1,0 +1,19 @@
+testroute:
+  scheme: testroute/@_controller/@_action
+  bindings:
+    _controller:
+      default: Testroutecontroller
+
+    _action:
+      default: indexvontestroute
+
+default:
+  scheme: @_controller/@_action
+  bindings:
+    _controller:
+      default: Welcome
+
+    _action:
+      default: index,
+      match: .*
+    
