@@ -17,5 +17,4 @@ class ParentController extends Controller {
 
 }
 
-
 ?>

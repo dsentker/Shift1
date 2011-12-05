@@ -35,9 +35,6 @@ abstract class AbstractConfigFile implements iConfigFile {
         return new \ArrayObject($arrObjContents, \ArrayObject::ARRAY_AS_PROPS);
     }
 
-
-
 }
-
 
 ?>
