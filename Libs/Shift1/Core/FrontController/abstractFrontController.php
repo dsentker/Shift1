@@ -26,11 +26,38 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         $controller = $controllerData['controllerClass'];
         $actionName = $controllerData['actionMethod'];
         $params = $controllerData['params'];
-        
-        $controllerObject = new $controller($params);
-        $controllerObject->setParams($params); // overload params again if the Controller is overridden
+        $actionParams = array();
+        $requestedParams = array();
+        $reflectionMethod = new \ReflectionMethod($controller, $actionName);
 
-        $response = \call_user_func_array(array($controllerObject, $actionName), $params);
+        foreach($reflectionMethod->getParameters() as $param) {
+            /** @var \ReflectionParameter $param */
+            $requestedParams[$param->getPosition()] = $param;
+        }
+
+        foreach($requestedParams as $position => $reflectionParameter) {
+            /** @var \ReflectionParameter $reflectionParameter; */
+            if(isset($params[$reflectionParameter->getName()])) {
+                $actionParams[$position] = $params[$reflectionParameter->getName()];
+            } else {
+                if($reflectionParameter->isDefaultValueAvailable()) {
+                    /*
+                     * Note that there is a strict behaviour in php's \ReflectionParameter->getDefaultValue().
+                     * If the current default-value-parameter preprends an parameter without a default value,
+                     * getDefaultValue() will return always FALSE.
+                     * @see http://de3.php.net/manual/en/reflectionparameter.isdefaultvalueavailable.php#105207
+                     */
+                    $actionParams[$position] = $reflectionParameter->getDefaultValue();
+                } else {
+                    $actionParams[$position] = null;
+                }
+            }
+        }
+
+        $controllerObject = new $controller($params);
+        $controllerObject->setParams($params); // overload params again if Controller's contructor was overridden
+
+        $response = \call_user_func_array(array($controllerObject, $actionName), $actionParams);
 
         if(!($response instanceof iResponse)) {
             $requestedControllerString = $controller . '::' . $actionName . ' ( ' . \implode(', ', $params) . ' )';
@@ -38,6 +65,16 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         }
 
         $response->sendToClient();
+    }
+
+    protected function getRequestedActionParams($className, $methodName) {
+        $requestedParams = array();
+        $reflectionMethod = new \ReflectionMethod($className, $methodName);
+        foreach($reflectionMethod->getParameters() as $param) {
+            /** @var \ReflectionParameter $param */
+            $requestedParams[$param->getPosition()] = $param->getName();
+        }
+        return $requestedParams;
     }
 
 }

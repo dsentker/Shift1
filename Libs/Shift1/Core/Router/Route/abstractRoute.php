@@ -22,6 +22,7 @@ class AbstractRoute extends Shift1Object implements iRoute {
      */
     public function __construct($routeScheme, array $routeBindings) {
         $this->scheme = $routeScheme;
+        $routeBindings = $routeBindings + array('_controller' => array(), '_action' => array());
         $this->bindings = $routeBindings;
     }
 

@@ -6,7 +6,7 @@ SetEnv APP_ENVIRONMENT development
 <IfModule mod_rewrite.c>
 
     RewriteEngine On
-    RewriteBase /shift1/public/
+    RewriteBase /shift1/Public/
 
     RewriteCond %{SCRIPT_FILENAME} !-f
     RewriteCond %{SCRIPT_FILENAME} !-d

@@ -7,6 +7,14 @@ testroute:
     _action:
       default: indexvontestroute
 
+test:
+  scheme: @_controller/@_action/@notused/@foo
+  bindings:
+    notused:
+      default: 'gehtsnoch?'
+    foo:
+      default: 'bar'
+
 default:
   scheme: @_controller/@_action
   bindings:
@@ -16,4 +24,4 @@ default:
     _action:
       default: index,
       match: .*
-    
+

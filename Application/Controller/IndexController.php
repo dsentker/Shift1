@@ -22,9 +22,10 @@ class IndexController extends ParentController {
         return $response;
     }
 
-    public function testAction($foo, $foo2) {
+    public function testAction($baz = 'Fo', $foo = null) {
+        
     
-        return new Response('Hiho!');
+        return new Response('Hiho! ' . $baz);
     }
 
     
