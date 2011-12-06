@@ -35,10 +35,10 @@ class Bootstrapper  {
         $frontController = new FrontController($dispatcher);
         
         $app = App::getInstance();
-        $app->setConfig($configManager);
-        $app->setServiceContainer(new ServiceContainer()); 
         $app->setFrontController($frontController);
-        $app->setRequest($request);
+        $app->setConfig($configManager);
+        $app->setServiceContainer(new ServiceContainer());
+        #$app->setRequest($request);
         $app->execute();
 
 

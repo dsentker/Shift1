@@ -3,6 +3,7 @@ namespace Shift1\Core\View;
 
 use Shift1\Core\Shift1Object;
 use Shift1\Core\Exceptions\ViewException;
+use Shift1\Core\InternalFilePath;
 
 class abstractView extends Shift1Object implements iView {
 
@@ -14,10 +15,19 @@ class abstractView extends Shift1Object implements iView {
 
     protected $viewPath;
 
-    public function __construct($viewFile = null, $viewPath = null) {
+    protected $strict;
+
+    public function __construct($viewFile = null, $viewPath = null, $strict = null) {
+        $config = $this->getApp()->getConfig();
         $this->setViewFile($viewFile);
-        if(empty($viewPath)) $viewPath = $this->getApp()->getConfig()->filesystem->defaultViewFilePath;
+
+        if(null === $viewPath)
+            $viewPath = $config->filesystem->defaultViewFilePath;
         $this->setViewPath($viewPath);
+
+        if(null === $strict)
+            $strict = $config->view->strict;
+        $this->setStrict($strict);
 	}
 
     public function setViewFile($viewFile) {
@@ -64,8 +74,16 @@ class abstractView extends Shift1Object implements iView {
 	}
 
 
-	public function get($varKey, $defaultReturn = null) {
-        return isset($this->viewVars[$varKey]) ? $this->viewVars[$varKey] : $defaultReturn;
+	public function get($varKey) {
+        if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
+            return $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
+        } else {
+            if($this->isStrict()) {
+                \trigger_error(sprintf('View variable "%s" does not exist', $varKey), E_USER_NOTICE);
+            }
+            return null;
+        }
+        
 	}
 
     public function getViewVars() {
@@ -112,6 +130,21 @@ class abstractView extends Shift1Object implements iView {
 
         return $c;
 	}
+
+    /**
+     * @param bool $flag
+     * @return void
+     */
+    public function setStrict($flag = true) {
+        $this->strict = $flag;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStrict() {
+        return $this->strict;
+    }
 
 	/**
 	 * Calls ::getContent and returns the content

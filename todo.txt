@@ -8,9 +8,11 @@ $debug->log(
 
 
 link builder:
-
 ::make('auth::login/lang:de/foo:bar');
 ::make('::login', array('id' => $id));
+
+in templates:
+::render(
 
 Views:
 (in view)

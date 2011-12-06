@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Shift1\Core\Response\Response;
+use Shift1\Core\View\View;
 
 class IndexController extends ParentController {
 
@@ -24,8 +25,9 @@ class IndexController extends ParentController {
 
     public function testAction($baz = 'Fo', $foo = null) {
         
-    
-        return new Response('Hiho! ' . $baz);
+        $view = new View('index');
+        $view->content = new View('test');
+        return new Response($view->render());
     }
 
     

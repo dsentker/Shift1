@@ -1,11 +1,5 @@
 <?php
-/**
- * View Class
- * 
- * @package Shift1 PHP Framework
- */
-
-namespace Shift1;
+namespace Shift1\Core\View;
  
 use Shift1\InternalFilePath;
 

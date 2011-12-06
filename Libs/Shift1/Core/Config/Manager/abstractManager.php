@@ -19,6 +19,14 @@ abstract class AbstractManager implements iConfigManager {
         return $this->get($key);
     }
 
+    public function set($key, $value) {
+        $this->configData[$key] = $value;
+    }
+
+    public function __set($key, $value) {
+        return $this->set($key, $value);
+    }
+
     public function getFromString($strKey) {
         /*
          * $arrKey = \explode('.', $strKey);
@@ -39,6 +47,10 @@ abstract class AbstractManager implements iConfigManager {
 
     public function getConfigData() {
         return $this->configData;
+    }
+
+    public function dump() {
+        return \var_export($this->configData);
     }
 
 
