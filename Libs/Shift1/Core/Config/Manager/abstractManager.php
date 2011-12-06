@@ -53,6 +53,4 @@ abstract class AbstractManager implements iConfigManager {
         return \var_export($this->configData);
     }
 
-
 }
-?>

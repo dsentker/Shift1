@@ -25,9 +25,7 @@ class IndexController extends ParentController {
 
     public function testAction($baz = 'Fo', $foo = null) {
         
-        $view = new View('index');
-        $view->content = new View('test');
-        return new Response($view->render());
+        return new Response($this->view->render());
     }
 
     

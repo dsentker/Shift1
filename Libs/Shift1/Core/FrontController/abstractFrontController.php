@@ -55,7 +55,6 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         }
 
         $controllerObject = new $controller($params);
-        $controllerObject->setParams($params); // overload params again if Controller's contructor was overridden
 
         $response = \call_user_func_array(array($controllerObject, $actionName), $actionParams);
 

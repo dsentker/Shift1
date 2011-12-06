@@ -17,6 +17,26 @@ class abstractView extends Shift1Object implements iView {
 
     protected $strict;
 
+    /**
+     * @var null|View
+     */
+    protected $wrapperView = null;
+
+    /**
+     * @var null|string
+     */
+    protected $wrapperSlot = null;
+
+    /**
+     * @var array
+     */
+    protected $wrapperParams = array();
+
+    /**
+     * @param null|string $viewFile
+     * @param null|string $viewPath
+     * @param null|bool $strict
+     */
     public function __construct($viewFile = null, $viewPath = null, $strict = null) {
         $config = $this->getApp()->getConfig();
         $this->setViewFile($viewFile);
@@ -153,8 +173,29 @@ class abstractView extends Shift1Object implements iView {
 	 * @return string
 	 */
 	public function render() {
-        return $this->getContent();
+
+        $content = $this->getContent();
+
+        if($this->wrapperExists()) {
+            $wrapper = new self($this->wrapperView);
+            $wrapper->assignArray($this->wrapperParams);
+            $wrapper->assign($this->wrapperSlot, $content);
+            $content = $wrapper->render();
+        }
+
+        return $content;
+
 	}
+
+    public function wrappedBy($viewFile, array $params = array(), $slotName = 'content') {
+        $this->wrapperView = $viewFile;
+        $this->wrapperSlot = $slotName;
+        $this->wrapperParams = $params;
+    }
+
+    protected function wrapperExists() {
+        return ($this->wrapperView !== null) && ($this->wrapperSlot !== null);
+    }
 
 }
 ?>

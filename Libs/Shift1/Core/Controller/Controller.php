@@ -1,36 +1,29 @@
 <?php
 namespace Shift1\Core\Controller;
 
-use Shift1\Core\Shift1Object;
-use Shift1\Core\Exceptions\ControllerException;
+use Shift1\Core\View\View;
 
-abstract class Controller extends Shift1Object implements iController  {
+class Controller extends AbstractController {
 
-    static $actionDefault = 'index';
-    static $actionNotFound = 'notFound';
+    /**
+     * @var \Shift1\Core\View\View
+     */
+    protected $view;
 
-    protected $params = array();
+    /**
+     * @param array $params
+     */
+    public function __construct(array $params  = array()) {
+        parent::__construct($params);
 
-    public function __construct(array $params) {
-        $this->params = $params;
+        $this->view = new View($params['_controller'] . '/' . $params['_action']);
     }
 
-    public function setParams(array $params) {
-        $this->params = $params;
-    }
-
-    public function getParams() {
-        return $this->params;
-    }
-
-    protected function getParam($paramIdentifier, $defaultReturn = null) {
-        return ($this->hasParam($paramIdentifier)) ? $this->params[$paramIdentifier] : $defaultReturn;
-    }
-
-    protected function hasParam($paramIdentifier) {
-        return isset($this->params[$paramIdentifier]);
+    /**
+     * @return \Shift1\Core\View\View
+     */
+    public function getView() {
+        return $this->view;
     }
 
 }
-
-?>

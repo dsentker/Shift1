@@ -8,6 +8,8 @@
 
 <p>Hello, World...</p>
 
+<?php echo $this->foobaa; ?>
+
 <?php echo $this->content; ?>
 
 </body>
