@@ -28,10 +28,6 @@ class Bootstrapper  {
 
         $configManager = new ConfigManager($configFile, 'development');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a1f9667b5d83042497c12de63ce1a889224cd51
         $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
         $router = Router\Router::fromConfig($routes);
         $request = new HttpRequest($router);

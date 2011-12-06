@@ -9,8 +9,4 @@ abstract class Shift1Object {
     }
 
 }
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> 5a1f9667b5d83042497c12de63ce1a889224cd51

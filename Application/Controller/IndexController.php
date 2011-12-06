@@ -23,7 +23,7 @@ class IndexController extends ParentController {
     }
 
     public function testAction($foo, $foo2) {
-
+    
         return new Response('Hiho!');
     }
 

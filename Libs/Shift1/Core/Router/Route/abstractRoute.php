@@ -88,9 +88,4 @@ class AbstractRoute extends Shift1Object implements iRoute {
         return \strpos($routeSegment, self::KEYBINDING_CHAR) !== false;
     }
 
-<<<<<<< HEAD
 }
-?>
-=======
-}
->>>>>>> 5a1f9667b5d83042497c12de63ce1a889224cd51
