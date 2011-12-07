@@ -19,9 +19,9 @@ default:
   scheme: @_controller/@_action
   bindings:
     _controller:
-      default: Welcome
+      default: Index
 
     _action:
-      default: index,
+      default: index
       match: .*
 

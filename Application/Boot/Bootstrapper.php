@@ -18,7 +18,7 @@ class Bootstrapper  {
 
         \error_reporting(-1);
 
-        require \realpath('../Libs/Shift1/Core/Autoloader/Autoloader.php');
+        require \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
 
         $shift1Loader = new Autoloader();
         $shift1Loader->register();

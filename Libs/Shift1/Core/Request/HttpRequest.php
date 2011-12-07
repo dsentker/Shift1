@@ -27,7 +27,8 @@ class HttpRequest extends AbstractRequest {
     }
 
     public function assembleController() {
-        return $this->controller = $this->getRouter()->resolveUri($this->getProjectUri());
+        $this->controller = $this->getRouter()->resolveUri($this->getProjectUri());
+        return $this->controller;
     }
 
     public function getRouter() {
