@@ -1,9 +1,7 @@
 <?php
 namespace Shift1\Log;
 
-interface iLog {
-
-    
+interface iLogger {
 
     public function addWriter(Writer\iLogWriter $writer);
 

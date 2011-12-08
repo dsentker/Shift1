@@ -13,10 +13,10 @@ class Controller extends AbstractController {
     /**
      * @param array $params
      */
-    public function __construct(array $params  = array()) {
+    final public function __construct(array $params  = array()) {
         parent::__construct($params);
-
         $this->view = new View($params['_controller'] . '/' . $params['_action']);
+        $this->init();
     }
 
     /**

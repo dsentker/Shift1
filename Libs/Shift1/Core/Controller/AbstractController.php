@@ -31,4 +31,8 @@ abstract class AbstractController extends Shift1Object implements iController  {
         return isset($this->params[$paramIdentifier]);
     }
 
+    public function init() {
+        
+    }
+
 }

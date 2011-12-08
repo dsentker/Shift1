@@ -6,6 +6,12 @@ use Shift1\Core\View\View;
 
 class IndexController extends ParentController {
 
+    public function init() {
+        /** @var \Shift1\Log\Logger $logger */
+        $logger = $this->getApp()->getServiceContainer()->get('Log');
+        $logger->log('IndexController initiated', 'debug');
+    }
+
     public function indexAction() {
 
         $yaml = new \Shift1\Core\InternalFilePath('Application/Config/routes.yml');
@@ -28,7 +34,7 @@ class IndexController extends ParentController {
         /** @var \Shift1\Log\Logger $logger */
         $logger = $this->getApp()->getServiceContainer()->get('Log');
         #$logger->log('TEST');
-        $logger->log('Foo bar ist guuut', 'crit');
+        $logger->log('Foo bar ist guuut');
 
 
         #var_dump(4 < 1024); exit();

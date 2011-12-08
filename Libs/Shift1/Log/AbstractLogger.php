@@ -3,7 +3,7 @@ namespace Shift1\Log;
 
 use Shift1\Core\Exceptions\LoggerException;
  
-abstract class AbstractLog implements iLog {
+abstract class AbstractLogger implements iLogger {
 
     protected $levels = array(
         'debug'  => 90,
@@ -14,7 +14,6 @@ abstract class AbstractLog implements iLog {
         'crit'   => 40,
         'alert'  => 30,
         'emerg'  => 20,
-
     );
 
     /**
@@ -39,27 +38,12 @@ abstract class AbstractLog implements iLog {
         return $this->levels;
     }
 
-    public function getLevelName($levelId, $findClosest = true) {
+    public function getLevelName($levelId) {
         $flipped = \array_flip($this->getLevels());
         if(!isset($flipped[$levelId])) {
-            if(false === $findClosest) {
-                throw new LoggerException('Log level not defined: ' . $levelId);
-            }
-
+            throw new LoggerException('Log level not defined: ' . $levelId);
         }
         return $flipped[$levelId];
-    }
-
-    protected function findClosestLevel($levelId) {
-        $levels = \ksort(\array_flip(($this->getLevels())), SORT_NUMERIC);
-        foreach($levels as $level => $name) {
-            if($levelId > $level) {
-                /**
-                 * @TODO: This is not working properly. Take your time and think about it!
-                 */
-                return $level;
-            }
-        }
     }
 
     public function getLevel($levelName) {

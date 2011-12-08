@@ -12,6 +12,8 @@ abstract class AbstractService extends Shift1Object implements iService {
     protected $path;
     
     protected $constructorArgs = array();
+
+    static public $isSingleton = false;
     
     public function setClassNamespace($ns, $path = null) {
         $this->namespace = $ns;

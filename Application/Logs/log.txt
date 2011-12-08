@@ -1,5 +1,8 @@
-2011-12-08 17:23:17  debug(90): TEST
-2011-12-08 17:23:18  debug(90): TEST
-2011-12-08 17:23:19  debug(90): TEST
-2011-12-08 17:26:05  crit(40): Foo bar ist guuut
-2011-12-08 17:26:06  crit(40): Foo bar ist guuut
+2011-12-09 00:10:23 debug (90): IndexController initiated
+
+2011-12-09 00:10:23 debug (90): Foo bar ist guuut
+
+2011-12-09 00:10:40 debug (90): IndexController initiated
+
+2011-12-09 00:10:40 debug (90): Foo bar ist guuut
+

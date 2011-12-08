@@ -9,6 +9,8 @@ interface iController {
 
     public function getParams();
 
+    public function init();
+
 }
 
 ?>

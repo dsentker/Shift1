@@ -13,8 +13,16 @@ final class App {
     static private $instance = null;
 
     protected $configManager;
+
+    /**
+     * @var null|\Shift1\Core\Service\ServiceContainer
+     */
     protected $serviceContainer;
+
+
     protected $frontController;
+
+
     protected $request;
 
     static public function getInstance() {
