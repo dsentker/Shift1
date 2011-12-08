@@ -2,7 +2,7 @@
 namespace Shift1\Core\Service;
 
 use Shift1\Core\InternalFilePath;
-use Shift1\Core\Exceptions\FileNotFoundException;
+use Shift1\Core\Exceptions as Exception;
 use Shift1\Core\Shift1Object;
 
 abstract class AbstractService extends Shift1Object implements iService {
@@ -20,7 +20,6 @@ abstract class AbstractService extends Shift1Object implements iService {
     
     public function getClassNamespace() {
         return $this->namespace;
-        
     }
     
     public function getPath() {
@@ -28,12 +27,16 @@ abstract class AbstractService extends Shift1Object implements iService {
     }
     
     public function getRessource() {
-        
-        $ressourcePath = new InternalFilePath('Shift1/' . $this->getPath());
+
+        if(empty($this->path)) {
+            throw new Exception\ClassNotFoundException($this->namespace);
+        }
+
+        $ressourcePath = new InternalFilePath('Application/' . $this->getPath());
         if(\file_exists($ressourcePath)) {
             require_once $ressourcePath;
         } else {
-            throw new FileNotFoundException($ressourcePath);
+            throw new Exception\FileNotFoundException($ressourcePath);
         }
         
     }
@@ -54,6 +57,10 @@ abstract class AbstractService extends Shift1Object implements iService {
         
         $serviceClassName = $this->getClassNamespace();
         $constructorArgs  = $this->getConstructorArgs();
+
+        if(empty($this->namespace)) {
+            throw new Exception\ServiceException('No namespace target defined for ' . \get_class(($this)));
+        }
         
         if(!\class_exists($serviceClassName)) {
             $this->getRessource();

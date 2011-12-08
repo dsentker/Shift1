@@ -24,6 +24,10 @@ class IndexController extends ParentController {
     }
 
     public function testAction($baz = 'Fo', $foo = null) {
+
+        $logger = $this->getApp()->getServiceContainer()->get('Log');
+        $logger->log('TEST');
+
         #var_dump(4 < 1024); exit();
         return new Response($this->view->render());
     }

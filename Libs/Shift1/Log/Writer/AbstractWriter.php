@@ -8,21 +8,21 @@ abstract class AbstractWriter implements iLogWriter {
     /**
      * @var int
      */
-    protected $priority = iLog::ALL;
+    protected $level = 'status';
 
     /**
      * @param int $priority
      * @return void
      */
-    public function setPriority($priority) {
-        $this->priority = (int) $priority;
+    public function setLevel($priority) {
+        $this->level = (int) $priority;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getPriority() {
-        return $this->priority;
+    public function getLevel() {
+        return $this->level;
     }
 
 
