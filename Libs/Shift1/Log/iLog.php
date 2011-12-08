@@ -11,10 +11,10 @@ interface iLog {
     const WARNING = 32;
     const ERROR = 4;
 
-    public function addLogger();
+    public function addWriter(Writer\iLogWriter $writer);
 
-    public function getLogger();
+    public function getWriter();
 
-    public function write($msg, $errLevel);
-
+    public function log($msg, $errLevel);
+  
 }
