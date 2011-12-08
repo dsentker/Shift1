@@ -10,6 +10,8 @@
 
 <?php echo $this->foobaa; ?>
 
+<p>P...</p>
+
 <?php echo $this->content; ?>
 
 </body>

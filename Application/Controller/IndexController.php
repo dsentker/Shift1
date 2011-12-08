@@ -24,7 +24,7 @@ class IndexController extends ParentController {
     }
 
     public function testAction($baz = 'Fo', $foo = null) {
-        var_dump(4 < 1024); exit();
+        #var_dump(4 < 1024); exit();
         return new Response($this->view->render());
     }
 

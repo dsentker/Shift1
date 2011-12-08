@@ -22,15 +22,15 @@ class abstractView extends Shift1Object implements iView {
      */
     protected $wrapperView = null;
 
-    /**
-     * @var null|string
-     */
-    protected $wrapperSlot = null;
 
     /**
-     * @var array
+     * @static
+     * @param string $viewFile
+     * @return abstractView
      */
-    protected $wrapperParams = array();
+    public static function instance($viewFile) {
+        return new self($viewFile);
+    }
 
     /**
      * @param null|string $viewFile
@@ -99,7 +99,7 @@ class abstractView extends Shift1Object implements iView {
             return $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
         } else {
             if($this->isStrict()) {
-                \trigger_error(sprintf('View variable "%s" does not exist', $varKey), E_USER_NOTICE);
+                \trigger_error(sprintf('View variable "%s" does not exist for ' . $this->getViewFile(), $varKey), E_USER_NOTICE);
             }
             return null;
         }
@@ -177,24 +177,20 @@ class abstractView extends Shift1Object implements iView {
         $content = $this->getContent();
 
         if($this->wrapperExists()) {
-            $wrapper = new self($this->wrapperView);
-            $wrapper->assignArray($this->wrapperParams);
-            $wrapper->assign($this->wrapperSlot, $content);
-            $content = $wrapper->render();
+            $content = $this->wrapperView->render();
         }
 
         return $content;
 
 	}
 
-    public function wrappedBy($viewFile, array $params = array(), $slotName = 'content') {
-        $this->wrapperView = $viewFile;
-        $this->wrapperSlot = $slotName;
-        $this->wrapperParams = $params;
+    public function wrappedBy(self $view, $slotName = 'content') {
+        $view->assign($slotName, &$this);
+        $this->wrapperView = $view;
     }
 
     protected function wrapperExists() {
-        return ($this->wrapperView !== null) && ($this->wrapperSlot !== null);
+        return $this->wrapperView !== null;
     }
 
 }
