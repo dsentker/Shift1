@@ -41,7 +41,7 @@ class Logger extends AbstractLog {
      * @param int|string $level
      * @return void
      */
-    public function log($msg, $level = 'status') {
+    public function log($msg, $level = 'debug') {
 
         if(\is_int($level)) {
             $errLevel = $level;
@@ -63,10 +63,8 @@ class Logger extends AbstractLog {
 
         foreach($this->getWriter() as $writer) {
 
-            $writerLevel = $this->getLevel($writer->getLevel());
-
             /** @var Writer\iLogWriter $writer */
-            if((int) $errLevel <= $writerLevel) {
+            if((int) $errLevel <= $writer->getLevel()) {
                 $writer->write($message);
             }
 

@@ -14,7 +14,9 @@ class LogService extends AbstractService {
 
     public function prepare(&$logger) {
         /** @var \Shift1\Log\Logger $logger */
-        $logger->addWriter(new Writer\FileWriter(new InternalFilePath('Application\Logs\log.txt')));
+        $fileWriter = new Writer\FileWriter(new InternalFilePath('Application\Logs\log.txt'));
+        $fileWriter->setLevel('emerg');
+        $logger->addWriter($fileWriter);
     }
     
 }

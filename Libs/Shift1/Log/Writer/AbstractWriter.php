@@ -8,7 +8,7 @@ abstract class AbstractWriter implements iLogWriter {
     /**
      * @var int
      */
-    protected $level = 'status';
+    protected $level = 'debug';
 
     /**
      * @param int $priority
