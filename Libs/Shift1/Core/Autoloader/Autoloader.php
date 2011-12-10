@@ -12,7 +12,7 @@ class Autoloader extends ClassLoader\UniversalClassLoader {
         $this->registerNamespace('Shift1', BASEPATH . '/Libs/');
         $this->registerNamespace('Application', BASEPATH . '/');
         $this->registerNamespace('Symfony', BASEPATH . '/Libs/');
-
+        
     }
     
 }

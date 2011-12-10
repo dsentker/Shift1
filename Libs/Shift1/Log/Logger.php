@@ -21,7 +21,7 @@ class Logger extends AbstractLogger {
     protected $timestampFormat = 'Y-m-d H:i:s';
 
     public function __construct() {
-        
+        \register_shutdown_function(array($this, 'executeShutdown'));
     }
 
     public function setFormat($format) {
@@ -100,10 +100,14 @@ class Logger extends AbstractLogger {
         return $event;
     }
 
-    public function __destruct() {
+    /**
+     * Is called via register_shutdown_function()
+     * @see \register_shutdown_function
+     * @return void
+     */
+    public function executeShutdown() {
         foreach($this->getWriter() as $writer) {
             /** @var Writer\AbstractWriter $writer */
-
             $writer->write();
         }
     }

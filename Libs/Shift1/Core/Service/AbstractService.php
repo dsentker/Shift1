@@ -76,7 +76,6 @@ abstract class AbstractService extends Shift1Object implements iService {
         }
         
         $this->prepare($instance);
-        
         return $instance;
     }
 

@@ -38,8 +38,8 @@ class FileWriter extends AbstractWriter {
             );
             $lines[] = \strtr($this->getFormat(), $translate);
         }
-        
-        \file_put_contents($this->file, \implode($lines) . \PHP_EOL . \PHP_EOL, FILE_APPEND);
+
+        \file_put_contents($this->file, \implode(\PHP_EOL, $lines) . \PHP_EOL . \PHP_EOL, FILE_APPEND);
     }
 
 }

@@ -24,12 +24,13 @@ class ServiceContainer implements iServiceContainer {
         }
 
         if($serviceWrapperNS::$isSingleton && $this->serviceIsRunning($serviceName)) {
-            return $this->getRunningService($serviceName)->getInstance();
+            return $this->getRunningService($serviceName);
         }
 
         $serviceWrapper = new $serviceWrapperNS;
-        $this->activeServices[$serviceName] = $serviceWrapper;
-        return $serviceWrapper->getInstance();
+        $instance = $serviceWrapper->getInstance();
+        $this->activeServices[$serviceName] = $instance;
+        return $instance;
     }
 
     /**
