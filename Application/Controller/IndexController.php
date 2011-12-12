@@ -34,7 +34,7 @@ class IndexController extends ParentController {
         /** @var \Shift1\Log\Logger $logger */
         $logger = $this->getApp()->getServiceContainer()->get('Log');
         #$logger->log('TEST');
-        $logger->log('Foo bar ist guuut');
+        $logger->log('Something went wrong with ::testAction', 'emerg');
 
         return new Response($this->view->render());
     }
@@ -42,7 +42,8 @@ class IndexController extends ParentController {
     public function logAction() {
         $fb = $this->getApp()->getServiceContainer()->get('FirePHP');
         #print_r($fb);
-        $fb->error(array(1,2,3));
+        #$fb->error(array(1,2, 'FOO'));
+        $fb->fb(array(1,2,'foo'), 'MyLabel0riz0r', \FirePHP::WARN);
     }
 
     

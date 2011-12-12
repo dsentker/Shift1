@@ -20,11 +20,16 @@ class LogService extends AbstractService {
         $fileWriter = new Writer\FileWriter(new InternalFilePath('Application\Logs\log.txt'));
         $fileWriter->setLevel('debug');
 
+        $firePHPWriter = new Writer\FirePHPWriter();
+        
+
         $screenWriter = new Writer\ScreenWriter();
         #$screenWriter->setLevel('notice');
 
         $logger->addWriter($fileWriter);
         $logger->addWriter($screenWriter);
+        $logger->addWriter($firePHPWriter);
+        $logger->addWriter(new Writer\NullWriter());
 
     }
     

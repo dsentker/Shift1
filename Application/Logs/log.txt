@@ -78,3 +78,103 @@
 
 2011-12-12 12:05:46 debug (90): IndexController initiated
 
+2011-12-12 19:57:23 debug (90): IndexController initiated
+
+2011-12-12 19:57:32 debug (90): IndexController initiated
+
+2011-12-12 19:57:33 debug (90): IndexController initiated
+
+2011-12-12 19:57:42 debug (90): IndexController initiated
+
+2011-12-12 19:57:50 debug (90): IndexController initiated
+
+2011-12-12 19:57:55 debug (90): IndexController initiated
+
+2011-12-12 19:58:04 debug (90): IndexController initiated
+
+2011-12-12 19:58:11 debug (90): IndexController initiated
+
+2011-12-12 20:17:10 debug (90): IndexController initiated
+
+2011-12-12 20:17:13 debug (90): IndexController initiated
+
+2011-12-12 20:19:12 debug (90): IndexController initiated
+
+2011-12-12 20:19:22 debug (90): IndexController initiated
+2011-12-12 20:19:22 debug (90): Foo bar ist guuut
+
+2011-12-12 20:19:24 debug (90): IndexController initiated
+2011-12-12 20:19:24 debug (90): Foo bar ist guuut
+
+2011-12-12 20:20:19 debug (90): IndexController initiated
+2011-12-12 20:20:19 debug (90): Foo bar ist guuut
+
+2011-12-12 20:20:45 debug (90): IndexController initiated
+
+2011-12-12 20:27:44 debug (90): IndexController initiated
+2011-12-12 20:27:44 debug (90): Foo bar ist guuut
+
+2011-12-12 20:28:20 debug (90): IndexController initiated
+
+2011-12-12 20:28:29 debug (90): IndexController initiated
+2011-12-12 20:28:29 err (50): Something went wrong with ::testAction
+
+2011-12-12 20:29:02 debug (90): IndexController initiated
+2011-12-12 20:29:02 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:29:23 debug (90): IndexController initiated
+2011-12-12 20:29:23 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:29:28 debug (90): IndexController initiated
+2011-12-12 20:29:28 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:29:32 debug (90): IndexController initiated
+2011-12-12 20:29:32 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:30:17 debug (90): IndexController initiated
+2011-12-12 20:30:17 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:30:52 debug (90): IndexController initiated
+2011-12-12 20:30:52 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:30:52 debug (90): IndexController initiated
+2011-12-12 20:30:52 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:31:11 debug (90): IndexController initiated
+
+2011-12-12 20:31:14 debug (90): IndexController initiated
+2011-12-12 20:31:14 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:35:38 debug (90): IndexController initiated
+2011-12-12 20:35:38 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:39:40 debug (90): IndexController initiated
+2011-12-12 20:39:40 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:39:46 debug (90): IndexController initiated
+2011-12-12 20:39:46 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:40:48 debug (90): IndexController initiated
+2011-12-12 20:40:48 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:41:06 debug (90): IndexController initiated
+2011-12-12 20:41:06 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:41:16 debug (90): IndexController initiated
+2011-12-12 20:41:16 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:41:41 debug (90): IndexController initiated
+2011-12-12 20:41:41 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:44:58 debug (90): IndexController initiated
+2011-12-12 20:44:58 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:45:23 debug (90): IndexController initiated
+2011-12-12 20:45:23 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:46:34 debug (90): IndexController initiated
+2011-12-12 20:46:34 emerg (20): Something went wrong with ::testAction
+
+2011-12-12 20:46:35 debug (90): IndexController initiated
+2011-12-12 20:46:35 emerg (20): Something went wrong with ::testAction
+
