@@ -34,7 +34,7 @@ abstract class AbstractService extends Shift1Object implements iService {
             throw new Exception\ClassNotFoundException($this->namespace);
         }
 
-        $ressourcePath = new InternalFilePath('Application/' . $this->getPath());
+        $ressourcePath = new InternalFilePath($this->getPath());
         if(\file_exists($ressourcePath)) {
             require_once $ressourcePath;
         } else {

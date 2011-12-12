@@ -36,9 +36,13 @@ class IndexController extends ParentController {
         #$logger->log('TEST');
         $logger->log('Foo bar ist guuut');
 
-
-        #var_dump(4 < 1024); exit();
         return new Response($this->view->render());
+    }
+
+    public function logAction() {
+        $fb = $this->getApp()->getServiceContainer()->get('FirePHP');
+        #print_r($fb);
+        $fb->error(array(1,2,3));
     }
 
     

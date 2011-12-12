@@ -6,3 +6,75 @@
 
 2011-12-09 00:10:40 debug (90): Foo bar ist guuut
 
+2011-12-09 15:50:01 debug (90): IndexController initiated
+
+2011-12-09 15:50:01 debug (90): Foo bar ist guuut
+
+2011-12-12 11:33:10 debug (90): IndexController initiated
+
+2011-12-12 11:33:12 debug (90): IndexController initiated
+
+2011-12-12 11:33:17 debug (90): IndexController initiated
+2011-12-12 11:33:17 debug (90): Foo bar ist guuut
+
+2011-12-12 11:33:18 debug (90): IndexController initiated
+2011-12-12 11:33:18 debug (90): Foo bar ist guuut
+
+2011-12-12 11:33:19 debug (90): IndexController initiated
+2011-12-12 11:33:19 debug (90): Foo bar ist guuut
+
+2011-12-12 11:33:20 debug (90): IndexController initiated
+2011-12-12 11:33:20 debug (90): Foo bar ist guuut
+
+2011-12-12 11:40:17 debug (90): IndexController initiated
+
+2011-12-12 11:41:14 debug (90): IndexController initiated
+
+2011-12-12 11:43:36 debug (90): IndexController initiated
+
+2011-12-12 11:51:25 debug (90): IndexController initiated
+
+2011-12-12 11:51:57 debug (90): IndexController initiated
+
+2011-12-12 11:52:18 debug (90): IndexController initiated
+
+2011-12-12 11:56:50 debug (90): IndexController initiated
+
+2011-12-12 11:56:51 debug (90): IndexController initiated
+
+2011-12-12 12:01:33 debug (90): IndexController initiated
+
+2011-12-12 12:01:40 debug (90): IndexController initiated
+
+2011-12-12 12:02:34 debug (90): IndexController initiated
+
+2011-12-12 12:03:16 debug (90): IndexController initiated
+
+2011-12-12 12:03:17 debug (90): IndexController initiated
+
+2011-12-12 12:03:30 debug (90): IndexController initiated
+
+2011-12-12 12:03:49 debug (90): IndexController initiated
+
+2011-12-12 12:03:50 debug (90): IndexController initiated
+
+2011-12-12 12:04:02 debug (90): IndexController initiated
+
+2011-12-12 12:04:04 debug (90): IndexController initiated
+
+2011-12-12 12:04:10 debug (90): IndexController initiated
+
+2011-12-12 12:04:43 debug (90): IndexController initiated
+
+2011-12-12 12:04:44 debug (90): IndexController initiated
+
+2011-12-12 12:04:54 debug (90): IndexController initiated
+
+2011-12-12 12:05:39 debug (90): IndexController initiated
+
+2011-12-12 12:05:40 debug (90): IndexController initiated
+
+2011-12-12 12:05:43 debug (90): IndexController initiated
+
+2011-12-12 12:05:46 debug (90): IndexController initiated
+
