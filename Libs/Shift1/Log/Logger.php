@@ -137,7 +137,10 @@ class Logger extends AbstractLogger {
         }
     }
 
-
+    /**
+     * @param bool $stopChain
+     * @return void
+     */
     public function registerErrorHandler($stopChain = true) {
 
        \set_error_handler(array($this, 'errorHandler'));
@@ -161,18 +164,23 @@ class Logger extends AbstractLogger {
 
     }
 
+    /**
+     * @param $errno
+     * @param $errstr
+     * @param $errfile
+     * @param $errline
+     * @param $errcontext
+     * @return bool
+     * @see \set_error_handler()
+     */
     public function errorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
 
         if (\error_reporting() && $errno) {
-            if (isset($this->errorHandlerMapping[$errno])) {
-                $priority = $this->errorHandlerMapping[$errno];
-            } else {
-                $priority = 'notice';
-            }
+            $priority = (isset($this->errorHandlerMapping[$errno])) ? $this->errorHandlerMapping[$errno] : 'notice';
             $this->log($errstr, $priority);
         }
 
-        // continue w/ native error handler
+        // continue w/ native error handler?
         return $this->errorHandlerStopChain;
     }
 }
