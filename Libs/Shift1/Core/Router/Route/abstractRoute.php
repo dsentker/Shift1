@@ -17,7 +17,7 @@ class AbstractRoute extends Shift1Object implements iRoute {
     protected $bindings = array();
 
     /**
-     * @param $routeScheme
+     * @param string $routeScheme
      * @param array $routeBindings
      */
     public function __construct($routeScheme, array $routeBindings) {
@@ -35,7 +35,7 @@ class AbstractRoute extends Shift1Object implements iRoute {
 
     /**
      * @throws \Shift1\Core\Exceptions\RouteException
-     * @param $bind
+     * @param string $bind
      * @return array
      */
     public function getBinding($bind) {
@@ -82,7 +82,7 @@ class AbstractRoute extends Shift1Object implements iRoute {
     }
 
     /**
-     * @param $routeSegment
+     * @param string $routeSegment
      * @return bool
      */
     public function isBindedSegment($routeSegment) {

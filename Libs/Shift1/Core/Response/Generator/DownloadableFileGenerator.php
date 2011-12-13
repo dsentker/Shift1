@@ -10,29 +10,52 @@ class DownloadableFileGenerator extends AbstractResponseGenerator {
 
     const DEFAULT_FILE_CONTENTTYPE = 'application/force-download';
 
+    /**
+     * @var string
+     */
     protected $filePath;
+
+    /**
+     * @var string
+     */
     protected $fileName; // Alias to see in download dialog
 
+    /**
+     * @param $filePath
+     * @return self
+     */
     public function setFile($filePath) {
         $this->filePath = $filePath;
-
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getFile() {
         return $this->filePath;
     }
 
+    /**
+     * @param $name
+     * @return self
+     */
     public function setFileName($name) {
         $this->fileName = $name;
-
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getFileName() {
         return (!empty($this->fileName)) ? $this->fileName : \basename($this->getFile());
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\ResponseException
+     * @return \Shift1\Core\Response\Response
+     */
     public function getResponse() {
 
         $fullPath = $this->getFile();

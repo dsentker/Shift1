@@ -9,12 +9,24 @@ class abstractView extends Shift1Object implements iView {
 
     const VAR_KEY_PREFIX = '__';
 
+    /**
+     * @var array
+     */
     protected $viewVars = array();
 
+    /**
+     * @var string
+     */
     protected $viewFile;
 
+    /**
+     * @var string
+     */
     protected $viewPath;
 
+    /**
+     * @var bool
+     */
     protected $strict;
 
     /**
@@ -50,6 +62,10 @@ class abstractView extends Shift1Object implements iView {
         $this->setStrict($strict);
 	}
 
+    /**
+     * @param string $viewFile
+     * @return abstractView
+     */
     public function setViewFile($viewFile) {
 
         if(\strpos($viewFile, '.') === false) {
@@ -60,23 +76,38 @@ class abstractView extends Shift1Object implements iView {
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getViewFile() {
         return $this->viewFile;
     }
 
+    /**
+     * @param string $path
+     * @return void
+     */
     public function setViewPath($path) {
 
         if(!($path instanceof InternalFilePath)) {
             $path = new InternalFilePath($path);
         }
-
         $this->viewPath = $path . \DIRECTORY_SEPARATOR;
 	}
 
+    /**
+     * @return string
+     */
     public function getViewPath() {
         return $this->viewPath;
     }
 
+    /**
+     * @param string $varKey
+     * @param mixed $varValue
+     * @param bool $overwrite
+     * @return self
+     */
 	public function assign($varKey, $varValue, $overwrite = true) {
         if(!($this->varKeyExists($varKey) && $overwrite === false)) {
             $this->viewVars[self::VAR_KEY_PREFIX . $varKey] = $varValue;
@@ -84,16 +115,22 @@ class abstractView extends Shift1Object implements iView {
         return $this;
 	}
 
+    /**
+     * @param array $vars
+     * @param bool $overwrite
+     * @return self
+     */
 	public function assignArray(array $vars, $overwrite = false) {
-
         foreach($vars as $key => $var) {
             $this->assign($key, $var, $overwrite);
         }
-
         return $this;
 	}
 
-
+    /**
+     * @param $varKey
+     * @return mixed|null
+     */
 	public function get($varKey) {
         if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
             return $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
@@ -103,33 +140,59 @@ class abstractView extends Shift1Object implements iView {
             }
             return null;
         }
-        
 	}
 
+    /**
+     * @return array
+     */
     public function getViewVars() {
         return $this->viewVars;
     }
 
+    /**
+     * @param string $key
+     * @return bool
+     */
     public function varKeyExists($key) {
         return isset($this->viewVars[self::VAR_KEY_PREFIX . $key]);
     }
 
+    /**
+     * @return void
+     */
     public function clearVars() {
         $this->viewVars = array();
     }
 
+    /**
+     * @param string $key
+     * @param mixed $val
+     * @return void
+     */
 	public function __set($key, $val) {
         $this->assign($key, $val);
 	}
 
+    /**
+     * @param string $var
+     * @return mixed|null
+     */
 	public function __get($var) {
         return $this->get($var);
 	}
 
+    /**
+     * @return string
+     */
 	public function __toString() {
         return $this->getContent(false);
 	}
 
+    /**
+     * @throws \Shift1\Core\Exceptions\ViewException
+     * @param bool $throw
+     * @return string
+     */
 	protected function getContent($throw = true) {
 
         $viewFile = $this->getViewFile();
@@ -184,14 +247,21 @@ class abstractView extends Shift1Object implements iView {
 
 	}
 
+    /**
+     * @param self $view
+     * @param string $slotName
+     * @return void
+     */
     public function wrappedBy(self $view, $slotName = 'content') {
         $view->assign($slotName, &$this);
         $this->wrapperView = $view;
     }
 
+    /**
+     * @return bool
+     */
     protected function wrapperExists() {
         return $this->wrapperView !== null;
     }
 
 }
-?>

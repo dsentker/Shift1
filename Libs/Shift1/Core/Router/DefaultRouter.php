@@ -6,6 +6,9 @@ use Shift1\Core\Router\Route\Route;
 
 class DefaultRouter extends AbstractRouter {
 
+    /**
+     * 
+     */
     public function __construct() {
 
         parent::__construct();
@@ -19,7 +22,7 @@ class DefaultRouter extends AbstractRouter {
             ),
 
             /*
-             * Not used yet
+             * Not used now
              * 
 
             'lang' => array(
@@ -34,4 +37,3 @@ class DefaultRouter extends AbstractRouter {
     }
 
 }
-?>

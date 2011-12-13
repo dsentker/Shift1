@@ -11,10 +11,12 @@ use Shift1\Core\Dispatcher\Dispatcher;
 
 class FrontController extends AbstractFrontController {
 
+    /**
+     * @param \Shift1\Core\Dispatcher\Dispatcher $dispatcher
+     */
     public function __construct(Dispatcher $dispatcher) {
         $this->setDispatcher($dispatcher);
     }
    
 
 }
-?>

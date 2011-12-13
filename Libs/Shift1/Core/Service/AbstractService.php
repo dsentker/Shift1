@@ -6,28 +6,55 @@ use Shift1\Core\Exceptions as Exception;
 use Shift1\Core\Shift1Object;
 
 abstract class AbstractService extends Shift1Object implements iService {
-    
+
+    /**
+     * @var string
+     */
     protected $namespace;
-    
+
+    /**
+     * @var string
+     */
     protected $path;
-    
+
+    /**
+     * @var array
+     */
     protected $constructorArgs = array();
 
+    /**
+     * @var bool
+     */
     static public $isSingleton = false;
-    
+
+    /**
+     * @param string $ns
+     * @param null|string $path
+     * @return void
+     */
     public function setClassNamespace($ns, $path = null) {
         $this->namespace = $ns;
         $this->path = $path;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getClassNamespace() {
         return $this->namespace;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getPath() {
         return $this->path;
     }
-    
+
+    /**
+     * @throws \Shift1\Core\Exceptions\ClassNotFoundException|\Shift1\Core\Exceptions\FileNotFoundException
+     * @return mixed
+     */
     public function getRessource() {
 
         if(empty($this->path)) {
@@ -42,19 +69,34 @@ abstract class AbstractService extends Shift1Object implements iService {
         }
         
     }
-    
+
+    /**
+     * @param object $serviceInstance
+     * @return void
+     */
     public function prepare(&$serviceInstance) {
         
     }
-    
+
+    /**
+     * @param array $args
+     * @return void
+     */
     public function setConstructorArgs(array $args) {
         $this->constructorArgs = $args;
     }
-    
+
+    /**
+     * @return array
+     */
     public function getConstructorArgs() {
         return $this->constructorArgs;
     }
-    
+
+    /**
+     * @throws \Shift1\Core\Exceptions\ServiceException
+     * @return object
+     */
     public function getInstance() {
         
         $serviceClassName = $this->getClassNamespace();
@@ -80,4 +122,3 @@ abstract class AbstractService extends Shift1Object implements iService {
     }
 
 }
-?>

@@ -1,20 +1,24 @@
 <?php
-
 namespace Shift1\Core\Dispatcher;
 
 use Shift1\Core\Exceptions\DispatcherException;
 use Shift1\Core\Router\iRouter;
 
-
 class Dispatcher extends AbstractDispatcher {
 
     const CONTROLLER_SUFFIX = 'Controller';
+
     const ACTION_SUFFIX = 'Action';
 
-    protected $routeResult;
-
+    /**
+     * @var array
+     */
     protected $uriParts = array();
 
+    /**
+     * @param mixed $result
+     * @return bool
+     */
     protected function validateRequestResult($result) {
         if($result === false) {
             return false;
@@ -22,6 +26,10 @@ class Dispatcher extends AbstractDispatcher {
         return true;
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\DispatcherException
+     * @return array
+     */
     public function dispatch() {
 
         $data = $this->getRequest()->assembleController();
@@ -53,7 +61,7 @@ class Dispatcher extends AbstractDispatcher {
             $controllerClass = $controllerNamespace . $controllerClassName;
             $actionMethodName = $controllerClass::$actionDefault . self::ACTION_SUFFIX;
         } else {
-            // Requested Controller exists!
+            // Requested Controller exists
             if(empty($actionMethodName)) {
                 $actionMethodName = $controllerClass::$actionDefault . self::ACTION_SUFFIX;
             } elseif(!$this->actionExists($controllerClass, $actionMethodName)) {
@@ -69,10 +77,19 @@ class Dispatcher extends AbstractDispatcher {
 
     }
 
+    /**
+     * @param string $controller
+     * @param string $action
+     * @return bool
+     */
     protected function actionExists($controller, $action) {
         return \is_callable(array($controller, $action));
     }
 
+    /**
+     * @param string $controllerClass
+     * @return bool
+     */
     protected function controllerExists($controllerClass) {
         return \class_exists($controllerClass);
     }

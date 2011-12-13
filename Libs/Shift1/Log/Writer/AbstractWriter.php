@@ -46,6 +46,4 @@ abstract class AbstractWriter extends Shift1Object implements iLogWriter {
     public function getLevel() {
         return $this->level;
     }
-
-
 }

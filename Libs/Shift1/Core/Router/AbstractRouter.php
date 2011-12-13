@@ -12,6 +12,9 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
      */
     protected $routes = array();
 
+    /**
+     * 
+     */
     public function __construct() {
 
     }
@@ -19,7 +22,7 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
     /**
      * @param string $requestUri
      * @param string $routeName
-     * @return array|bool
+     * @return array
      */
     protected function fetchParams($requestUri, $routeName) {
 
@@ -63,6 +66,11 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
 
     }
 
+    /**
+     * @param string $param
+     * @return bool
+     * @TODO swap out this functionality
+     */
     protected function transformParamValue($param) {
         if($param === '1' || $param == 'true') {
             $value = true;
@@ -99,7 +107,6 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
     public function resolveUri($requestUri) {
 
         $routeName = $this->getMatchingRoute($requestUri);
-
         return $this->fetchParams($requestUri, $routeName);
 
     }
@@ -168,4 +175,3 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
         throw new RouteException("Unabble to find a matching route for {$compareWithUri}");
     }
 }
-?>

@@ -20,22 +20,39 @@ class Logger extends AbstractLogger {
      */
     protected $timestampFormat = 'Y-m-d H:i:s';
 
+    /**
+     * 
+     */
     public function __construct() {
         \register_shutdown_function(array($this, 'executeShutdown'));
     }
 
+    /**
+     * @param string $format
+     * @return void
+     */
     public function setFormat($format) {
         $this->format = $format;
     }
 
+    /**
+     * @return string
+     */
     public function getFormat() {
         return $this->format;
     }
 
+    /**
+     * @param string $format
+     * @return void
+     */
     public function setTimestampFormat($format) {
         $this->timestampFormat = $format;
     }
 
+    /**
+     * @return string
+     */
     public function getTimestampFormat() {
         return $this->timestampFormat;
     }
@@ -76,13 +93,11 @@ class Logger extends AbstractLogger {
 
         foreach($this->getWriter() as $writer) {
             /** @var Writer\AbstractWriter $writer */
-
             if((int) $errLevel <= $this->getLevel($writer->getLevel())) {
                 $writer->addEvent($event);
             }
 
         }
-
     }
 
     /**

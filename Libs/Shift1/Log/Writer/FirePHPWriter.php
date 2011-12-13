@@ -53,6 +53,9 @@ final class FirePHPWriter extends AbstractWriter {
         }
     }
 
+    /**
+     * @return void
+     */
     public function write() {
         /*
          * Nothing to do here, the

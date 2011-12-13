@@ -8,7 +8,7 @@ namespace Shift1\Core\Parser;
  * @see http://codeaid.net/php/parse-ini-File-into-a-multi-dimensional-array
  *
  * Slightly modified.
- * Original class comments are below.
+ * Original class comments below.
  */
 
 /**

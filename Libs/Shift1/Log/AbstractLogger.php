@@ -5,6 +5,9 @@ use Shift1\Core\Exceptions\LoggerException;
  
 abstract class AbstractLogger implements iLogger {
 
+    /**
+     * @var array
+     */
     protected $levels = array(
         'debug'  => 90,
         'info'   => 80,
@@ -38,6 +41,11 @@ abstract class AbstractLogger implements iLogger {
         return $this->levels;
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\LoggerException
+     * @param string $levelId
+     * @return string
+     */
     public function getLevelName($levelId) {
         $flipped = \array_flip($this->getLevels());
         if(!isset($flipped[$levelId])) {
@@ -46,12 +54,16 @@ abstract class AbstractLogger implements iLogger {
         return $flipped[$levelId];
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\LoggerException
+     * @param string $levelName
+     * @return string
+     */
     public function getLevel($levelName) {
         if(!isset($this->levels[$levelName])) {
             throw new LoggerException('Log level name not defined: ' . $levelName);
         }
         return $this->levels[$levelName];
     }
-
 
 }

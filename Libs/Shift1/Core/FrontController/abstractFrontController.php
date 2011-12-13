@@ -8,18 +8,30 @@ use Shift1\Core\Shift1Object;
 
 abstract class AbstractFrontController extends Shift1Object implements iFrontController {
 
-    protected $router;
-
+    /**
+     * @var \Shift1\Core\Dispatcher\Dispatcher
+     */
     protected $dispatcher;
 
+    /**
+     * @return \Shift1\Core\Dispatcher\Dispatcher
+     */
     public function getDispatcher() {
         return $this->dispatcher;
     }
 
+    /**
+     * @param \Shift1\Core\Dispatcher\Dispatcher $dispatcher
+     * @return void
+     */
     public function setDispatcher(Dispatcher $dispatcher) {
         $this->dispatcher = $dispatcher;
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\FrontControllerException
+     * @return void
+     */
     public function run() {
 
         $controllerData = $this->getDispatcher()->dispatch();
@@ -77,4 +89,3 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
     }
 
 }
-?>

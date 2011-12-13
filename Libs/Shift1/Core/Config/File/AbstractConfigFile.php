@@ -5,24 +5,43 @@ use Shift1\Core\Exceptions\FileNotFoundException;
 
 abstract class AbstractConfigFile implements iConfigFile {
 
+    /**
+     * @var string
+     */
     protected $configFile;
 
+
+    /**
+     * @param string $configFile
+     */
     public function __construct($configFile) {
-        if(!\file_exists($configFile)) {
-            throw new FileNotFoundException($configFile);
-        }
         $this->setConfigFile($configFile);
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\FileNotFoundException
+     * @param string $configFile
+     * @return void
+     */
     public function setConfigFile($configFile) {
+        if(!\file_exists($configFile)) {
+            throw new FileNotFoundException($configFile);
+        }
         $this->configFile = $configFile;
     }
 
+    /**
+     * @return string
+     */
     public function getConfigFile() {
         return $this->configFile;
     }
 
-    public function toArrayObject($arrItems = null) {
+    /**
+     * @param array|null $arrItems
+     * @return \ArrayObject
+     */
+    public function toArrayObject(array $arrItems = null) {
 
         $arrObjContents = array();
 
@@ -34,7 +53,4 @@ abstract class AbstractConfigFile implements iConfigFile {
 
         return new \ArrayObject($arrObjContents, \ArrayObject::ARRAY_AS_PROPS);
     }
-
 }
-
-?>

@@ -33,6 +33,10 @@ class ServiceContainer implements iServiceContainer {
         return $instance;
     }
 
+    /**
+     * @param string $serviceName
+     * @return bool
+     */
     public function has($serviceName) {
         $serviceWrapperNS = '\\Application\\Services\\' . \ucfirst($serviceName) . 'Service';
         return \class_exists($serviceWrapperNS);

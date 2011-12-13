@@ -22,4 +22,3 @@ return array(
   'mov'  => 'video/quicktime',
   'avi'  => 'video/x-msvideo',
 );
-?>

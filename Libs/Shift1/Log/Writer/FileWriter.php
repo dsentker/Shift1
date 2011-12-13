@@ -1,29 +1,50 @@
 <?php
 namespace Shift1\Log\Writer;
 
-
 class FileWriter extends AbstractWriter {
 
+    /**
+     * @var string
+     */
     protected $file;
 
+    /**
+     * @var string
+     */
     protected $format = '%timestamp% %levelName% (%level%): %message%';
 
+    /**
+     * @param string $file
+     */
     public function __construct($file) {
         $this->file = $file;
     }
 
+    /**
+     * @return string
+     */
     public function getFile() {
         return $this->file;
     }
 
+    /**
+     * @param string $format
+     * @return void
+     */
     public function setFormat($format) {
         $this->format = $format;
     }
 
+    /**
+     * @return string
+     */
     public function getFormat() {
         return $this->format;
     }
 
+    /**
+     * @return void
+     */
     public function write() {
 
         $lines = array();
