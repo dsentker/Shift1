@@ -11,5 +11,3 @@ class ArrayFile extends AbstractConfigFile {
     }
 
 }
-
-?>

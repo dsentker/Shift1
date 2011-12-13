@@ -129,5 +129,3 @@ final class App {
         $this->getFrontController()->run();
     }
 }
-
-?>

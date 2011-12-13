@@ -15,4 +15,3 @@ class Manager extends AbstractManager {
     }
 
 }
-?>

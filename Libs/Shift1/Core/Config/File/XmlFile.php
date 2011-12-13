@@ -21,5 +21,3 @@ class configFileXml extends AbstractConfigFile {
     }
 
 }
-
-?>

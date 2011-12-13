@@ -8,4 +8,3 @@ class ClassNotFoundException extends \Exception {
     }
     
 }
-?>

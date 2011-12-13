@@ -94,7 +94,4 @@ class Dispatcher extends AbstractDispatcher {
         return \class_exists($controllerClass);
     }
     
-
 }
-
-?>

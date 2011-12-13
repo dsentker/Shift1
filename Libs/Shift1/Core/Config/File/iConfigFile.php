@@ -16,5 +16,3 @@ interface iConfigFile {
     public function toArrayObject();
 
 }
-
-?>

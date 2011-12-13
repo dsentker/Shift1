@@ -238,4 +238,3 @@ class iniParser implements iParser {
     }
 
 }
-?>
