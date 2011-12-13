@@ -63,7 +63,6 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
         $fetched['_routeScheme'] = $route->getScheme();
         $fetched['_routeName'] = $routeName;
         return $fetched;
-
     }
 
     /**

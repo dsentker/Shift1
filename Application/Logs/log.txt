@@ -178,3 +178,66 @@
 2011-12-12 20:46:35 debug (90): IndexController initiated
 2011-12-12 20:46:35 emerg (20): Something went wrong with ::testAction
 
+2011-12-13 12:38:07 notice (70): Undefined index: _action
+2011-12-13 12:38:07 debug (90): IndexController initiated
+
+2011-12-13 12:38:11 notice (70): Undefined index: _action
+2011-12-13 12:38:11 debug (90): IndexController initiated
+
+2011-12-13 12:39:42 notice (70): Undefined index: _action
+2011-12-13 12:39:42 debug (90): IndexController initiated
+
+
+
+
+
+2011-12-13 12:40:48 debug (90): IndexController initiated
+
+2011-12-13 12:40:55 debug (90): IndexController initiated
+2011-12-13 12:40:55 emerg (20): Something went wrong with ::testAction
+
+2011-12-13 12:41:26 debug (90): IndexController initiated
+2011-12-13 12:41:26 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:41:26 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:41:54 debug (90): IndexController initiated
+2011-12-13 12:41:54 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:41:54 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:43:10 debug (90): IndexController initiated
+2011-12-13 12:43:10 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:43:10 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:43:22 debug (90): IndexController initiated
+2011-12-13 12:43:22 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:43:22 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:43:25 debug (90): IndexController initiated
+2011-12-13 12:43:25 emerg (20): Something went wrong with ::testAction
+
+2011-12-13 12:43:26 debug (90): IndexController initiated
+2011-12-13 12:43:26 emerg (20): Something went wrong with ::testAction
+
+2011-12-13 12:43:30 debug (90): IndexController initiated
+2011-12-13 12:43:30 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:43:30 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:46:17 debug (90): IndexController initiated
+2011-12-13 12:46:17 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:46:17 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:46:43 debug (90): IndexController initiated
+2011-12-13 12:46:43 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:46:43 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:46:46 debug (90): IndexController initiated
+2011-12-13 12:46:46 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:46:46 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 12:46:49 debug (90): IndexController initiated
+2011-12-13 12:46:49 emerg (20): Something went wrong with ::testAction
+
+2011-12-13 12:46:54 debug (90): IndexController initiated
+2011-12-13 12:46:54 emerg (20): Something went wrong with ::testAction
+2011-12-13 12:46:54 notice (70): View variable "doesNotExist" does not exist for subpage.php
+

@@ -13,7 +13,6 @@ class LogService extends AbstractService {
         $this->setClassNamespace('\Shift1\Log\Logger');
     }
 
-
     public function prepare(&$logger) {
         /** @var \Shift1\Log\Logger $logger */
 
@@ -21,7 +20,6 @@ class LogService extends AbstractService {
         $fileWriter->setLevel('debug');
 
         $firePHPWriter = new Writer\FirePHPWriter();
-        
 
         $screenWriter = new Writer\ScreenWriter();
         #$screenWriter->setLevel('notice');

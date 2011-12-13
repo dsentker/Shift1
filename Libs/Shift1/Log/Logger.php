@@ -21,6 +21,16 @@ class Logger extends AbstractLogger {
     protected $timestampFormat = 'Y-m-d H:i:s';
 
     /**
+     * @var array
+     */
+    protected $errorHandlerMapping = array();
+
+    /**
+     * @var bool
+     */
+    protected $errorHandlerStopChain;
+
+    /**
      * 
      */
     public function __construct() {
@@ -125,5 +135,44 @@ class Logger extends AbstractLogger {
             /** @var Writer\AbstractWriter $writer */
             $writer->write();
         }
+    }
+
+
+    public function registerErrorHandler($stopChain = true) {
+
+       \set_error_handler(array($this, 'errorHandler'));
+
+        // Contruct a default map of phpErrors to Zend_Log priorities.
+        // Some of the errors are uncatchable, but are included for completeness
+        $this->errorHandlerMapping = array(
+            E_NOTICE => 'notice',
+            E_USER_NOTICE => 'notice',
+            E_WARNING => 'warn',
+            E_CORE_WARNING => 'warn',
+            E_USER_WARNING => 'warn',
+            E_ERROR => 'err',
+            E_USER_ERROR => 'err',
+            E_CORE_ERROR => 'err',
+            E_RECOVERABLE_ERROR => 'err',
+            E_STRICT => 'debug',
+        );
+
+        $this->errorHandlerStopChain = (bool) $stopChain;
+
+    }
+
+    public function errorHandler($errno, $errstr, $errfile, $errline, $errcontext) {
+
+        if (\error_reporting() && $errno) {
+            if (isset($this->errorHandlerMapping[$errno])) {
+                $priority = $this->errorHandlerMapping[$errno];
+            } else {
+                $priority = 'notice';
+            }
+            $this->log($errstr, $priority);
+        }
+
+        // continue w/ native error handler
+        return $this->errorHandlerStopChain;
     }
 }

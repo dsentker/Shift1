@@ -16,8 +16,6 @@ class Bootstrapper  {
 
     public static function init() {
 
-        \error_reporting(-1);
-
         require \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
 
         $shift1Loader = new Autoloader();
@@ -33,17 +31,26 @@ class Bootstrapper  {
         $request = new HttpRequest($router);
         $dispatcher = new Dispatcher($request);
         $frontController = new FrontController($dispatcher);
-        
+        $serviceContainer = new ServiceContainer();
+
+        /** @var \Shift1\Core\App $app */
         $app = App::getInstance();
         $app->setFrontController($frontController);
         $app->setConfig($configManager);
-        $app->setServiceContainer(new ServiceContainer());
-        #$app->setRequest($request);
-        $app->execute();
+        $app->setServiceContainer($serviceContainer);
 
+        self::beforeExecute($app);
+        self::runApp($app);
 
     }
 
-}
+    public static function beforeExecute(App $app) {
+        \error_reporting(-1);
+        $app->getServiceContainer()->get('Log')->registerErrorHandler(0);
+    }
 
-?>
+
+    protected static function runApp(App $app) {
+        $app->execute();
+    }
+}

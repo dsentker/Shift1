@@ -27,4 +27,3 @@ class PdoService extends AbstractService {
     }
     
 }
-?>

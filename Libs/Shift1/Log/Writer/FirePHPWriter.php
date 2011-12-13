@@ -16,7 +16,7 @@ final class FirePHPWriter extends AbstractWriter {
         if(!$serviceContainer->has('FirePHP')) {
             throw new LoggerException('Can\'t use FirePHPWriter: Service "FirePHP" not found!');
         }
-        $this->fbInstance = $this->getApp()->getServiceContainer()->get('FirePHP');
+        $this->fbInstance = $serviceContainer->get('FirePHP');
     }
 
     /**

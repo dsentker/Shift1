@@ -7,7 +7,7 @@ abstract class AbstractResponseGenerator extends Shift1Object implements iRespon
 
     /**
      * @static
-     * @return AbstractResponseGenerator
+     * @return self
      */
     public static function factory() {
         return new static();

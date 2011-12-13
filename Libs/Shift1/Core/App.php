@@ -81,9 +81,13 @@ final class App {
     }
 
     /**
-     * @return null|Service\iServiceContainer
+     * @throws \RuntimeException
+     * @return Service\iServiceContainer
      */
     public function getServiceContainer() {
+        if(!($this->serviceContainer instanceof Service\iServiceContainer)) {
+            throw new \RuntimeException('No service container defined');
+        }
         return $this->serviceContainer;
     }
 
