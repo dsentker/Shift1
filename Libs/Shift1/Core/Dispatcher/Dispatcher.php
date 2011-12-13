@@ -48,8 +48,7 @@ class Dispatcher extends AbstractDispatcher {
 
         $controllerNamespace = $config->controller->namespace;
         $controllerClass = $controllerNamespace . $controllerClassName;
-        $named_params['_controllerNamespace'] = $controllerNamespace;
-        
+
         if(empty($controllerClassName)) {
             // No Controller name was given
             $controllerClassName = $config->controller->defaultController . self::CONTROLLER_SUFFIX;

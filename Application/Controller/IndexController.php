@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Shift1\Core\Response\Response;
+use Shift1\Core\Exceptions\ApplicationException;
 use Shift1\Core\View\View;
 
 class IndexController extends ParentController {
@@ -46,10 +47,10 @@ class IndexController extends ParentController {
         $fb->fb(array(1,2,'foo'), 'MyLabel0riz0r', \FirePHP::WARN);
     }
 
-    
+    public function eAction() {
+        $foo = 123;
+        throw new \Exception('OMG here is an exception!');
+        $bar= 345;
+    }
 
-    
 }
-
-
-?>

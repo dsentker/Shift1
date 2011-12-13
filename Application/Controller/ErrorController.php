@@ -2,14 +2,13 @@
 namespace Application\Controller;
 
 use Shift1\Core\Response\Response;
+use Shift1\Core\View\View;
+use Shift1\Core\Response\Header\Header;
 
 class ErrorController extends ParentController {
 
     public function indexAction() {
-        $params = $this->getParams();
-        return new Response("Controller '{$params['_controller']}::{$params['_action']}' not found.<br /><pre>" . \var_export($params, 1));
+        return new Response($this->view, new Header(404));
     }
 
 }
-
-?>

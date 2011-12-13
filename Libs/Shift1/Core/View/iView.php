@@ -8,4 +8,11 @@ interface iView {
      * @return string
      */
     public function render();
+
+    /**
+     * @abstract
+     * @param bool $throw
+     * @return string
+     */
+    public function getContent($throw = true);
 }

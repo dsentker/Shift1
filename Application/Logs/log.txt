@@ -241,3 +241,266 @@
 2011-12-13 12:46:54 emerg (20): Something went wrong with ::testAction
 2011-12-13 12:46:54 notice (70): View variable "doesNotExist" does not exist for subpage.php
 
+
+
+
+
+2011-12-13 13:27:11 debug (90): IndexController initiated
+2011-12-13 13:27:11 emerg (20): Something went wrong with ::testAction
+2011-12-13 13:27:11 notice (70): View variable "doesNotExist" does not exist for subpage.php
+
+2011-12-13 13:28:06 debug (90): IndexController initiated
+2011-12-13 13:28:06 notice (70): Undefined variable: e
+2011-12-13 13:28:06 notice (70): Undefined variable: e
+
+2011-12-13 13:29:31 debug (90): IndexController initiated
+2011-12-13 13:29:31 notice (70): Undefined variable: e
+2011-12-13 13:29:31 notice (70): Undefined variable: e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2011-12-13 13:46:45 notice (70): Undefined variable: content
+
+2011-12-13 13:48:08 notice (70): Undefined variable: content
+
+2011-12-13 13:48:14 notice (70): Undefined variable: content
+
+2011-12-13 13:48:31 notice (70): Undefined variable: content
+
+2011-12-13 13:48:34 notice (70): Undefined variable: content
+
+2011-12-13 13:48:43 notice (70): Undefined variable: content
+
+2011-12-13 13:49:35 notice (70): Undefined variable: content
+
+2011-12-13 13:49:36 notice (70): Undefined variable: content
+
+2011-12-13 13:49:45 notice (70): Undefined variable: content
+
+2011-12-13 13:49:51 notice (70): Undefined variable: content
+
+2011-12-13 13:49:55 notice (70): Undefined variable: content
+
+2011-12-13 13:50:03 notice (70): Undefined variable: content
+
+2011-12-13 13:50:07 notice (70): Undefined variable: content
+
+2011-12-13 13:50:13 notice (70): Undefined variable: content
+
+2011-12-13 13:50:19 notice (70): Undefined variable: content
+
+2011-12-13 13:50:20 notice (70): Undefined variable: content
+
+2011-12-13 13:50:27 notice (70): Undefined variable: content
+
+2011-12-13 13:50:57 notice (70): Undefined variable: content
+
+2011-12-13 13:51:03 notice (70): Undefined variable: content
+
+2011-12-13 13:51:51 notice (70): Undefined variable: content
+
+2011-12-13 13:52:44 notice (70): Undefined variable: content
+
+2011-12-13 13:52:46 notice (70): Undefined variable: content
+
+2011-12-13 13:52:48 notice (70): Undefined variable: content
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2011-12-13 15:15:43 notice (70): Undefined variable: content
+
+2011-12-13 15:16:59 notice (70): Undefined variable: content
+
+2011-12-13 15:17:07 notice (70): Undefined variable: content
+
+
+
+2011-12-13 15:22:19 notice (70): Undefined variable: content
+
+2011-12-13 15:22:32 notice (70): Undefined variable: content
+
+2011-12-13 15:23:26 notice (70): Undefined variable: content
+
+
+
+
+
+
+
+
+
+
+
+2011-12-13 15:24:50 notice (70): Undefined variable: e
+
+
+
+
+
+
+
+
+
+
+
+
+
+2011-12-13 15:28:43 debug (90): IndexController initiated
+
+2011-12-13 15:30:45 debug (90): IndexController initiated
+
+2011-12-13 15:32:09 debug (90): IndexController initiated
+
+2011-12-13 15:32:43 debug (90): IndexController initiated
+
+2011-12-13 15:34:18 debug (90): IndexController initiated
+
+2011-12-13 15:34:33 debug (90): IndexController initiated
+
+2011-12-13 15:35:27 debug (90): IndexController initiated
+
+2011-12-13 15:35:42 debug (90): IndexController initiated
+
+2011-12-13 15:37:31 debug (90): IndexController initiated
+
+2011-12-13 15:40:59 debug (90): IndexController initiated
+
+2011-12-13 15:41:47 debug (90): IndexController initiated
+
+2011-12-13 15:41:48 debug (90): IndexController initiated
+
+2011-12-13 15:43:43 debug (90): IndexController initiated
+
+2011-12-13 15:43:43 debug (90): IndexController initiated
+
+2011-12-13 15:44:35 debug (90): IndexController initiated
+
+2011-12-13 15:44:36 debug (90): IndexController initiated
+
+2011-12-13 15:48:09 debug (90): IndexController initiated
+2011-12-13 15:48:09 err (50): Argument 1 passed to Shift1\Core\Debug\HTMLResponseExceptionHandler::handle() must be an instance of Exception, string given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\FrontController\AbstractFrontController.php on line 77 and defined
+
+2011-12-13 15:48:35 debug (90): IndexController initiated
+
+2011-12-13 15:49:36 debug (90): IndexController initiated
+
+2011-12-13 15:49:57 debug (90): IndexController initiated
+
+2011-12-13 15:50:52 debug (90): IndexController initiated
+
+2011-12-13 15:51:40 debug (90): IndexController initiated
+
+2011-12-13 15:52:22 debug (90): IndexController initiated
+
+2011-12-13 15:53:06 debug (90): IndexController initiated
+
+2011-12-13 15:53:45 debug (90): IndexController initiated
+
+2011-12-13 15:53:45 debug (90): IndexController initiated
+
+
+
+2011-12-13 15:57:13 debug (90): IndexController initiated
+
+2011-12-13 15:57:50 debug (90): IndexController initiated
+
+2011-12-13 15:58:45 debug (90): IndexController initiated
+
+2011-12-13 15:59:08 debug (90): IndexController initiated
+
+2011-12-13 15:59:13 debug (90): IndexController initiated
+
+2011-12-13 15:59:28 debug (90): IndexController initiated
+
+2011-12-13 16:00:17 debug (90): IndexController initiated
+
+2011-12-13 16:01:07 debug (90): IndexController initiated
+
+2011-12-13 16:01:18 debug (90): IndexController initiated
+2011-12-13 16:01:18 notice (70): Undefined variable: codeRows
+2011-12-13 16:01:18 warn (60): Invalid argument supplied for foreach()
+
+2011-12-13 16:01:29 debug (90): IndexController initiated
+2011-12-13 16:01:29 notice (70): Undefined variable: code
+2011-12-13 16:01:29 warn (60): Invalid argument supplied for foreach()
+
+2011-12-13 16:01:42 debug (90): IndexController initiated
+

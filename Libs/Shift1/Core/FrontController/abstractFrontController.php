@@ -4,6 +4,8 @@ namespace Shift1\Core\FrontController;
 use Shift1\Core\Dispatcher\Dispatcher;
 use Shift1\Core\Response\iResponse;
 use Shift1\Core\Exceptions\FrontControllerException;
+use Shift1\Core\Exceptions\ApplicationException;
+use Shift1\Core\Debug\HTMLResponseExceptionHandler;
 use Shift1\Core\Shift1Object;
 
 abstract class AbstractFrontController extends Shift1Object implements iFrontController {
@@ -68,7 +70,15 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
 
         $controllerObject = new $controller($params);
 
-        $response = \call_user_func_array(array($controllerObject, $actionName), $actionParams);
+        try {
+            $response = \call_user_func_array(array($controllerObject, $actionName), $actionParams);
+        } catch(ApplicationException $e) {
+            $handler = new HTMLResponseExceptionHandler;
+            $handler->handle($e);
+            exit(0);
+        }
+
+        
 
         if(!($response instanceof iResponse)) {
             $requestedControllerString = $controller . '::' . $actionName . ' ( ' . \implode(', ', $params) . ' )';

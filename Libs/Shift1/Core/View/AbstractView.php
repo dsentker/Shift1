@@ -2,10 +2,9 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Shift1Object;
-use Shift1\Core\Exceptions\ViewException;
 use Shift1\Core\InternalFilePath;
 
-class abstractView extends Shift1Object implements iView {
+abstract class abstractView extends Shift1Object implements iView {
 
     const VAR_KEY_PREFIX = '__';
 
@@ -30,15 +29,20 @@ class abstractView extends Shift1Object implements iView {
     protected $strict;
 
     /**
-     * @var null|View
+     * @var null|self
      */
     protected $wrapperView = null;
+
+    /**
+     * @var null|string
+     */
+    protected $wrapperSlot = null;
 
 
     /**
      * @static
      * @param string $viewFile
-     * @return abstractView
+     * @return self
      */
     public static function instance($viewFile) {
         return new self($viewFile);
@@ -64,7 +68,7 @@ class abstractView extends Shift1Object implements iView {
 
     /**
      * @param string $viewFile
-     * @return abstractView
+     * @return self
      */
     public function setViewFile($viewFile) {
 
@@ -85,11 +89,12 @@ class abstractView extends Shift1Object implements iView {
 
     /**
      * @param string $path
+     * @param bool $adjustPath
      * @return void
      */
-    public function setViewPath($path) {
+    public function setViewPath($path, $adjustPath = true) {
 
-        if(!($path instanceof InternalFilePath)) {
+        if(!($path instanceof InternalFilePath) && $adjustPath) {
             $path = new InternalFilePath($path);
         }
         $this->viewPath = $path . \DIRECTORY_SEPARATOR;
@@ -189,32 +194,6 @@ class abstractView extends Shift1Object implements iView {
 	}
 
     /**
-     * @throws \Shift1\Core\Exceptions\ViewException
-     * @param bool $throw
-     * @return string
-     */
-	protected function getContent($throw = true) {
-
-        $viewFile = $this->getViewFile();
-
-        if(empty($viewFile) && $throw) {
-            throw new ViewException('No View File given!');
-        }
-
-        $path = $this->getViewPath() . $viewFile;
-
-        if(!\file_exists($path) && $throw)
-            throw new ViewException("View File {$viewFile} not found in {$this->getViewPath()}");
-
-        \ob_start();
-            require $path;
-            $c = \ob_get_contents();
-        \ob_get_clean();
-
-        return $c;
-	}
-
-    /**
      * @param bool $flag
      * @return void
      */
@@ -229,8 +208,8 @@ class abstractView extends Shift1Object implements iView {
         return $this->strict;
     }
 
-	/**
-	 * Calls ::getContent and returns the content
+    /**
+	 * Calls ::getContent() and returns the content
 	 *
 	 * @access Public
 	 * @return string
@@ -240,6 +219,7 @@ class abstractView extends Shift1Object implements iView {
         $content = $this->getContent();
 
         if($this->wrapperExists()) {
+            $this->wrapperView->assign($this->wrapperSlot, $content);
             $content = $this->wrapperView->render();
         }
 
@@ -253,15 +233,14 @@ class abstractView extends Shift1Object implements iView {
      * @return void
      */
     public function wrappedBy(self $view, $slotName = 'content') {
-        $view->assign($slotName, &$this);
         $this->wrapperView = $view;
+        $this->wrapperSlot = $slotName;
     }
 
     /**
      * @return bool
      */
     protected function wrapperExists() {
-        return $this->wrapperView !== null;
+        return $this->wrapperView instanceof iView;
     }
-
 }
