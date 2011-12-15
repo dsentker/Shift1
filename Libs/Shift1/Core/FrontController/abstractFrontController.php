@@ -31,54 +31,61 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\FrontControllerException
-     * @return void
+     * @param $uriParams
+     * @param \ReflectionMethod $action
+     * @return array
      */
-    public function run() {
-
-        $controllerData = $this->getDispatcher()->dispatch();
-        $controller = $controllerData['controllerClass'];
-        $actionName = $controllerData['actionMethod'];
-        $params = $controllerData['params'];
+    protected function mapToActionParams($uriParams, \ReflectionMethod $action) {
         $actionParams = array();
-        $requestedParams = array();
-        $reflectionMethod = new \ReflectionMethod($controller, $actionName);
 
-        foreach($reflectionMethod->getParameters() as $param) {
+        foreach($action->getParameters() as $param) {
             /** @var \ReflectionParameter $param */
-            $requestedParams[$param->getPosition()] = $param;
-        }
 
-        foreach($requestedParams as $position => $reflectionParameter) {
-            /** @var \ReflectionParameter $reflectionParameter; */
-            if(isset($params[$reflectionParameter->getName()])) {
-                $actionParams[$position] = $params[$reflectionParameter->getName()];
+            $paramPosition = $param->getPosition();
+
+            if(isset($uriParams[$param->getName()])) {
+                $actionParams[$paramPosition] = $uriParams[$param->getName()];
             } else {
-                if($reflectionParameter->isDefaultValueAvailable()) {
+                if($param->isDefaultValueAvailable()) {
                     /*
                      * Note that there is a strict behaviour in php's \ReflectionParameter->getDefaultValue().
                      * If the current default-value-parameter preprends an parameter without a default value,
                      * getDefaultValue() will return always FALSE.
                      * @see http://de3.php.net/manual/en/reflectionparameter.isdefaultvalueavailable.php#105207
                      */
-                    $actionParams[$position] = $reflectionParameter->getDefaultValue();
+                    $actionParams[$paramPosition] = $param->getDefaultValue();
                 } else {
-                    $actionParams[$position] = null;
+                    $actionParams[$paramPosition] = null;
                 }
             }
         }
 
-        $controllerObject = new $controller($params);
+        return $actionParams;
+    }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\FrontControllerException
+     * @return void
+     */
+    public function run() {
+
+        /**
+         * @var array $controllerData
+         * @var \Shift1\Core\Response\iResponse $response
+         */
+        $controllerData = $this->getDispatcher()->dispatch();
+        $controller = $controllerData['controllerClass'];
+        $actionName = $controllerData['actionMethod'];
+        $params = $controllerData['params'];
+        $actionparams = $this->mapToActionParams($params,  new \ReflectionMethod($controller, $actionName));
+        
         try {
-            $response = \call_user_func_array(array($controllerObject, $actionName), $actionParams);
+            $response = \call_user_func_array(array(new $controller($params), $actionName), $actionparams);
         } catch(ApplicationException $e) {
             $handler = new HTMLResponseExceptionHandler;
             $handler->handle($e);
             exit(0);
         }
-
-        
 
         if(!($response instanceof iResponse)) {
             $requestedControllerString = $controller . '::' . $actionName . ' ( ' . \implode(', ', $params) . ' )';
@@ -86,16 +93,6 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         }
 
         $response->sendToClient();
-    }
-
-    protected function getRequestedActionParams($className, $methodName) {
-        $requestedParams = array();
-        $reflectionMethod = new \ReflectionMethod($className, $methodName);
-        foreach($reflectionMethod->getParameters() as $param) {
-            /** @var \ReflectionParameter $param */
-            $requestedParams[$param->getPosition()] = $param->getName();
-        }
-        return $requestedParams;
     }
 
 }
