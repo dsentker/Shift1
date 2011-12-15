@@ -31,12 +31,7 @@ class IndexController extends ParentController {
     }
 
     public function testAction($baz = 'Fo', $foo = null) {
-
-        /** @var \Shift1\Log\Logger $logger */
-        $logger = $this->getApp()->getServiceContainer()->get('Log');
-        #$logger->log('TEST');
-        $logger->log('Something went wrong with ::testAction', 'emerg');
-
+        
         return new Response($this->view->render());
     }
 

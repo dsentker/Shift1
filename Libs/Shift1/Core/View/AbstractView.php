@@ -29,17 +29,6 @@ abstract class abstractView extends Shift1Object implements iView {
     protected $strict;
 
     /**
-     * @var null|self
-     */
-    protected $wrapperView = null;
-
-    /**
-     * @var null|string
-     */
-    protected $wrapperSlot = null;
-
-
-    /**
      * @static
      * @param string $viewFile
      * @return self
@@ -163,6 +152,15 @@ abstract class abstractView extends Shift1Object implements iView {
     }
 
     /**
+     * Just an alias to varKeyExists()
+     * @param string $key
+     * @return bool
+     */
+    public function has($key) {
+        return $this->varKeyExists($key);
+    }
+
+    /**
      * @return void
      */
     public function clearVars() {
@@ -208,39 +206,4 @@ abstract class abstractView extends Shift1Object implements iView {
         return $this->strict;
     }
 
-    /**
-	 * Calls ::getContent() and returns the content
-	 *
-	 * @access Public
-	 * @return string
-	 */
-	public function render() {
-
-        $content = $this->getContent();
-
-        if($this->wrapperExists()) {
-            $this->wrapperView->assign($this->wrapperSlot, $content);
-            $content = $this->wrapperView->render();
-        }
-
-        return $content;
-
-	}
-
-    /**
-     * @param self $view
-     * @param string $slotName
-     * @return void
-     */
-    public function wrappedBy(self $view, $slotName = 'content') {
-        $this->wrapperView = $view;
-        $this->wrapperSlot = $slotName;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function wrapperExists() {
-        return $this->wrapperView instanceof iView;
-    }
 }

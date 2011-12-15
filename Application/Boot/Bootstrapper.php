@@ -22,8 +22,8 @@ class Bootstrapper  {
         $shift1Loader = new Autoloader();
         $shift1Loader->register();
 
-        #Debug\HTMLResponseExceptionHandler::register();
-        Debug\SilentExceptionHandler::register();
+        Debug\HTMLResponseExceptionHandler::register();
+        #Debug\SilentExceptionHandler::register();
 
         /** @var \Shift1\Core\App $app */
         $app = App::getInstance();
@@ -43,7 +43,7 @@ class Bootstrapper  {
         $app->setFrontController($frontController);
 
         self::beforeExecute($app);
-        self::runApp($app);
+        self::executeApp($app);
 
     }
 
@@ -53,7 +53,7 @@ class Bootstrapper  {
     }
 
 
-    protected static function runApp(App $app) {
+    protected static function executeApp(App $app) {
         $app->execute();
     }
 }
