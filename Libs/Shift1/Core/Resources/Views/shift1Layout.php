@@ -12,38 +12,39 @@
         }
 
         .wrapper {
-            width: 960px;
-            padding: 10px 20px;
+            width: 90%;
+            min-width: 960px;
+            max-width: 1400px;
+            padding: 20px;
             border: 1px solid #ccc;
             background: #fff;
             margin: 20px auto;
             box-shadow: 0 0 2px rgba(128,110,146, .125);
-            border-radius: 8px;
+            border-radius: 3px;
         }
 
         p {
             line-height: 155%;
         }
 
-        b, strong {
+        b,
+        strong {
             font-weight: bold;
             color: #0099cc;
         }
 
-        pre, code {
-            font-size: 14px;
-        }
-
-        code {
+        pre,
+        code,
+        .fixed-width {
             display: block;
             font-family: Consolas, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Monaco, Courier New, Courier;
+            font-size: 12px;
         }
 
         code span.row {
             padding: 2px 0;
             display: block;
             white-space: pre-wrap;
-            font-size: 11px;
             overflow: hidden;
         }
 
@@ -64,8 +65,22 @@
             width: 900px;
         }
 
-        code span.row:nth-child(odd) {
+        span.row:nth-child(odd) {
             background-color: #f3f3f3;
+        }
+
+        .fixed-width span.row {
+            display: block;
+            line-height: 20px;
+        }
+
+        .hidden-mouseover {
+            visibility: hidden;
+            color: #0099cc;
+        }
+        
+        span:hover .hidden-mouseover {
+            visibility: visible;
         }
 
         .highlight {
@@ -91,6 +106,12 @@
             margin: 16px 0;
             font-style: italic;
 
+        }
+
+        h5 {
+            font-weight: bold;
+            font-size: 15px;
+            margin: 16px 0 4px 0;
         }
         
     </style>

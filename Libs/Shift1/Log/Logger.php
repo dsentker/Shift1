@@ -31,6 +31,11 @@ class Logger extends AbstractLogger {
     protected $errorHandlerStopChain;
 
     /**
+     * @var int
+     */
+    protected $logCount = 0;
+
+    /**
      * 
      */
     public function __construct() {
@@ -50,6 +55,20 @@ class Logger extends AbstractLogger {
      */
     public function getFormat() {
         return $this->format;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLogCount() {
+        return $this->logCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function increaseLogCount() {
+        return ++$this->logCount;
     }
 
     /**
@@ -85,7 +104,7 @@ class Logger extends AbstractLogger {
     /**
      * @param string $msg
      * @param int|string $level
-     * @return void
+     * @return int
      */
     public function log($msg, $level = 'debug') {
 
@@ -108,6 +127,8 @@ class Logger extends AbstractLogger {
             }
 
         }
+
+        return $this->increaseLogCount();
     }
 
     /**

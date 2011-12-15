@@ -83,4 +83,13 @@ abstract class AbstractController extends Shift1Object implements iController  {
         return self::$actionNotFound;
     }
 
+    /**
+     * @return string
+     */
+    public function getControllerName() {
+        $fqClassname = \get_class($this);
+        $parts = \explode('\\', $fqClassname);
+        return \array_pop($parts);
+    }
+
 }

@@ -14,38 +14,32 @@ class IndexController extends ParentController {
     }
 
     public function indexAction() {
-
-        $yaml = new \Shift1\Core\InternalFilePath('Application/Config/routes.yml');
-
-        $parsed = \Symfony\Component\Yaml\Yaml::parse($yaml);
-
-        die(print_r($parsed));
-
-        return new Response('Hallo Welt');
+        return new Response('<pre>' . print_r($this->getParams(), 1));
     }
 
-    public function downloadSomethingAction() {
+    public function getLogoAction() {
         $file = new \Shift1\Core\InternalFilePath('Shift1/logo.jpg');
         $response = \Shift1\Core\Response\Generator\DownloadableFileGenerator::factory()->setFile($file)->setFileName('Name der Datei.jpg')->getResponse();
         return $response;
     }
 
-    public function testAction($baz = 'Fo', $foo = null) {
+    public function viewAction() {
         $this->getView()->wrappedBy(new View('subpage'));
         return new Response($this->getView()->render());
     }
 
-    public function logAction() {
-        $fb = $this->getApp()->getServiceContainer()->get('FirePHP');
-        #print_r($fb);
-        #$fb->error(array(1,2, 'FOO'));
-        $fb->fb(array(1,2,'foo'), 'MyLabel0riz0r', \FirePHP::WARN);
+    public function logTestAction() {
+        /** @var \Shift1\Log\Logger $logger */
+        $logger = $this->getApp()->getServiceContainer()->get('Log');
+        $logger->log('This is an debug information');
+        $logger->log('This is a warning log entry', 'warn');
+
+        return new Response($logger->getLogCount() . 'entries added.');
     }
 
-    public function eAction() {
-        $foo = 123;
-        throw new \Exception('OMG here is an exception!');
-        $bar= 345;
+    public function execptionAction() {
+        throw new ApplicationException('This is an exception!');
+        
     }
 
 }
