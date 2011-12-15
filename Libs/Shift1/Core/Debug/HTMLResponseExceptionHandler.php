@@ -11,7 +11,6 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
     const FETCH_LINES_AFTER = 3;
 
     public function handle(\Exception $e) {
-
         $codeLine = $e->getLine();
         $codeFile = \file($e->getFile());
         $codeRows = array();

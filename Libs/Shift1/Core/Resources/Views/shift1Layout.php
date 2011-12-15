@@ -3,6 +3,7 @@
 <head>
     <title><?php echo (isset($pageTitle)) ? $pageTitle : 'Message' ?> &lt; Shift1 PHP Framework</title>
     <meta name="robots" content="noindex, nofollow" />
+    <meta charset="utf-8" />
     <style>
         body {
             background: #f4f0f8;
@@ -42,16 +43,25 @@
             padding: 2px 0;
             display: block;
             white-space: pre-wrap;
-            color: #000;
-            font-size: 12px;
+            font-size: 11px;
+            overflow: hidden;
+        }
+
+        code span.row span {
+            display: inline-block;
+            float: left;
         }
 
         code span.line {
             width: 40px;
             padding-right: 20px;
             text-align: right;
-            display: inline-block;
             color: #888;
+        }
+
+        code span.lineText {
+            color: #000;
+            width: 900px;
         }
 
         code span.row:nth-child(odd) {

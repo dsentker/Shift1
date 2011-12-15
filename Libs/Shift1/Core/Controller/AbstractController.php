@@ -67,4 +67,20 @@ abstract class AbstractController extends Shift1Object implements iController  {
         
     }
 
+    /**
+     * @static
+     * @return string
+     */
+    public static function getDefaultActionName() {
+        return self::$actionDefault;
+    }
+
+    /**
+     * @static
+     * @return string
+     */
+    public static function getNotFoundActionName() {
+        return self::$actionNotFound;
+    }
+
 }

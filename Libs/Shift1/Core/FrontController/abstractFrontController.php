@@ -77,7 +77,14 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         $controller = $controllerData['controllerClass'];
         $actionName = $controllerData['actionMethod'];
         $params = $controllerData['params'];
-        $actionparams = $this->mapToActionParams($params,  new \ReflectionMethod($controller, $actionName));
+
+        try {
+            $reflectionAction = new \ReflectionMethod($controller, $actionName);
+        } catch(\ReflectionException $e) {
+            throw new FrontControllerException('Reflection failed: Controller `' . $controller . '::' . $actionName .'´ does not exist!');
+        }
+
+        $actionparams = $this->mapToActionParams($params, $reflectionAction );
         
         try {
             $response = \call_user_func_array(array(new $controller($params), $actionName), $actionparams);
