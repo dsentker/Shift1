@@ -31,8 +31,8 @@ class IndexController extends ParentController {
     }
 
     public function testAction($baz = 'Fo', $foo = null) {
-        
-        return new Response($this->view->render());
+        $this->getView()->wrappedBy(new View('subpage'));
+        return new Response($this->getView()->render());
     }
 
     public function logAction() {

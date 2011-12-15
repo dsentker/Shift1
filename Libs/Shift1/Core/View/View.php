@@ -3,11 +3,6 @@ namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
 
-function testr($buffer) {
-    $buffer = null;
-    return $buffer;
-}
-
 class View extends AbstractView {
 
     /**
@@ -39,8 +34,7 @@ class View extends AbstractView {
             throw new ViewException("View File {$viewFile} not found in {$this->getViewPath()}");
         }
 
-
-        \ob_start('\Shift1\Core\View\testr');
+        \ob_start(null);
         require $templatePath;
         return \ob_get_clean();
 
@@ -54,7 +48,7 @@ class View extends AbstractView {
      * @param null|string $viewFile
      * @param null|string $viewPath
      * @param null|bool $strict
-     * @return abstractView
+     * @return self
      */
     public function newSelf($viewFile = null, $viewPath = null, $strict = null) {
 
@@ -66,6 +60,13 @@ class View extends AbstractView {
         $newSelf = new self($viewFile, null, $strict);
         $newSelf->setViewPath($viewPath, false);
         return $newSelf;
+    }
+
+    /**
+     * @return self
+     */
+    public function __clone() {
+        return $this->newSelf();
     }
 
     /**

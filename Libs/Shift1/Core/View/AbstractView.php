@@ -144,6 +144,20 @@ abstract class abstractView extends Shift1Object implements iView {
     }
 
     /**
+     * @return array
+     */
+    public function getViewKeys() {
+        return \array_keys($this->getViewVars());
+    }
+
+    /**
+     * @return array
+     */
+    public function getViewValues() {
+        return \array_values($this->getViewVars());
+    }
+
+    /**
      * @param string $key
      * @return bool
      */
@@ -158,6 +172,35 @@ abstract class abstractView extends Shift1Object implements iView {
      */
     public function has($key) {
         return $this->varKeyExists($key);
+    }
+
+    /**
+     * Just an alias to varKeyExists()
+     * @param string $key
+     * @return bool
+     */
+    public function __isset($key) {
+        return $this->varKeyExists($key);
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function removeVar($key) {
+        if($this->has($key)) {
+            unset($this->viewVars[$key]);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function __unset($key) {
+        return $this->remove($key);
     }
 
     /**

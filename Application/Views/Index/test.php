@@ -6,3 +6,4 @@ $this->wrappedBy(self::instance('index')->assignArray(array('right' => 'lol pani
 
 <h3>This is a sub-heading</h3>
     <p>And another paragraph....</p>
+    <?php if($this->has('sub')) echo $this->sub; ?>
