@@ -45,7 +45,7 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return self
      */
     public static function instance($viewFile) {
-        return new self($viewFile);
+        return new static($viewFile);
     }
 
     /**
