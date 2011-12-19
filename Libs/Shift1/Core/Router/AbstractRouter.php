@@ -13,13 +13,6 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
     protected $routes = array();
 
     /**
-     * 
-     */
-    public function __construct() {
-
-    }
-
-    /**
      * @param string $requestUri
      * @param string $routeName
      * @return array
@@ -60,8 +53,11 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
             }
         }
 
-        $fetched['_routeScheme'] = $route->getScheme();
-        $fetched['_routeName'] = $routeName;
+        $fetched['_route'] = array(
+          'scheme' =>  $route->getScheme(),
+          'name'   => $routeName,
+        );
+        
         return $fetched;
     }
 
@@ -83,20 +79,21 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
 
     /**
      * Returns the key and value from given segment.
-     * Returns FALSE if this segment is not an parameter binding.
+     * Returns FALSE if this segment is not a binded parameter.
      * @param string $segment
      * @return array|bool
      */
     protected function getParamFromSegment($segment) {
-        if(\strpos($segment, iRoute::URI_PARAM_KEY_SEPARATOR) !== false ) {
-            $parts = \explode(iRoute::URI_PARAM_KEY_SEPARATOR, $segment);
-            return array(
-              'key' => \array_shift($parts),
-              'value' => \implode(iRoute::URI_PARAM_KEY_SEPARATOR, $parts),
-            );
-        } else {
+        if(!\strpos($segment, iRoute::URI_PARAM_KEY_SEPARATOR) !== false ) {
             return false;
         }
+
+        $parts = \explode(iRoute::URI_PARAM_KEY_SEPARATOR, $segment);
+
+        return array(
+          'key' => \array_shift($parts),
+          'value' => \implode(iRoute::URI_PARAM_KEY_SEPARATOR, $parts),
+        );
     }
 
     /**

@@ -8,7 +8,7 @@ class ControllerFactory extends AbstractControllerFactory {
      * @param string $controllerName
      * @param null|string $actionName
      * @param array $params
-     * @return \Shift1\Core\Controller\AbstractController
+     * @return \Shift1\Core\Response\iResponse
      */
     public static function createController($controllerName, $actionName = null, array $params = array()) {
         $factory = new self;

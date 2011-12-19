@@ -4,7 +4,6 @@ namespace Application\Boot;
 use Shift1\Core\Config\Manager\Manager as ConfigManager;
 use Shift1\Core\FrontController\FrontController;
 use Shift1\Core\Router;
-use Shift1\Core\Dispatcher\Dispatcher;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Autoloader\Autoloader;
 use Shift1\Core\Config\File;
@@ -38,8 +37,7 @@ class Bootstrapper  {
         $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
         $router = Router\Router::fromConfig($routes);
         $request = new HttpRequest($router);
-        $dispatcher = new Dispatcher($request);
-        $frontController = new FrontController($dispatcher);
+        $frontController = new FrontController($request);
         $app->setFrontController($frontController);
 
         self::beforeExecute($app);

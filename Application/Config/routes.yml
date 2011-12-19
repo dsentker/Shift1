@@ -8,7 +8,7 @@ testroute:
       default: indexvontestroute
 
 default:
-  scheme: @_controller/@_action
+  scheme: @_controller/@_action/
   bindings:
     _controller:
       default: Index
@@ -16,4 +16,3 @@ default:
     _action:
       default: index
       match: .*
-

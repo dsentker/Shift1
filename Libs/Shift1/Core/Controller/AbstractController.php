@@ -24,7 +24,7 @@ abstract class AbstractController extends Shift1Object implements iController  {
     /**
      * @param array $params
      */
-    final public function __construct(array $params = array()) {
+    public function __construct(array $params = array()) {
         $this->params = $params;
     }
 

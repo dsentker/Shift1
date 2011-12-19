@@ -80,6 +80,7 @@ class HttpRequest extends AbstractRequest {
      */
     public function isAjaxRequest() {
         /**
+         * @TODO
          * return x_requested_with || $_POST[is_ajax] ....
          */
     }

@@ -2,6 +2,7 @@
 namespace Shift1\Core\Controller\Factory;
 
 use Shift1\Core\Shift1Object;
+use Shift1\Core\Response\iResponse;
 
 class AbstractControllerFactory extends Shift1Object implements iControllerFactory {
 
@@ -29,24 +30,27 @@ class AbstractControllerFactory extends Shift1Object implements iControllerFacto
         $this->config = $this->getApp()->getConfig();
     }
 
+    /**
+     * @return \Shift1\Core\Response\iResponse
+     */
     public function getController() {
 
         $controllerNamespace = $this->config->controller->namespace;
         $controllerName = \ucfirst($this->getControllerName());
-        $controllerFqNs = $controllerNamespace . $controllerName;
+        $controllerFqNs = $controllerNamespace . $controllerName . self::CONTROLLER_PREFIX;
         
         if(empty($controllerName)) {
             $controllerName = $this->config->controller->defaultController;
 
             /** @var $controllerFqNs \Shift1\Core\Controller\AbstractController */
-            $controllerFqNs = $controllerNamespace . $controllerName;
+            $controllerFqNs = $controllerNamespace . $controllerName . self::CONTROLLER_PREFIX;
 
             return $this->getControllerInstance($controllerFqNs, $controllerFqNs::getDefaultActionName());
         }
 
         if(!\class_exists($controllerFqNs)) {
             $controllerName = $this->config->controller->errorController;
-            $controllerFqNs = $controllerNamespace . $controllerName;
+            $controllerFqNs = $controllerNamespace . $controllerName . self::CONTROLLER_PREFIX;
             return $this->getControllerInstance($controllerFqNs, $controllerFqNs::getDefaultActionName());
         }
 
@@ -58,17 +62,19 @@ class AbstractControllerFactory extends Shift1Object implements iControllerFacto
      * @param string $controllerFqNs
      * @param string $actionName
      * @param array $params
-     * @return \Shift1\Core\Controller\AbstractController
+     * @return mixed
      */
     protected function getControllerInstance($controllerFqNs, $actionName, array $params = array()) {
 
-        $rfController = new \ReflectionClass($controllerFqNs . self::CONTROLLER_PREFIX);
+        $actionName = $actionName . self::ACTION_PREFIX;
+
+        $rfController = new \ReflectionClass($controllerFqNs);
 
         /** @var $controller \Shift1\Core\Controller\AbstractController */
-        $controller = $rfController->newInstanceArgs($params);
+        $controller = $rfController->newInstanceArgs(array($params));
 
-        if(\method_exists($controller, $actionName)) {
-            $actionName = $controller::getNotFoundActionName();
+        if(! \method_exists($controller, $actionName)) {
+            $actionName = $controller::getNotFoundActionName() . self::ACTION_PREFIX;
         }
 
         $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionName));

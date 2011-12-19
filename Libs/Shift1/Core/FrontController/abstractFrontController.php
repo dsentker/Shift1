@@ -1,73 +1,57 @@
 <?php
 namespace Shift1\Core\FrontController;
 
-use Shift1\Core\Dispatcher\Dispatcher;
-use Shift1\Core\Response\iResponse;
-use Shift1\Core\Exceptions\FrontControllerException;
-use Shift1\Core\Exceptions\ApplicationException;
-use Shift1\Core\Debug\HTMLResponseExceptionHandler;
 use Shift1\Core\Shift1Object;
+use Shift1\Core\Request\iRequest;
+use Shift1\Core\Exceptions\FrontControllerException;
+use Shift1\Core\Controller\Factory\ControllerFactory;
 
 abstract class AbstractFrontController extends Shift1Object implements iFrontController {
 
     /**
-     * @var \Shift1\Core\Dispatcher\Dispatcher
+     * @var \Shift1\Core\Request\iRequest
      */
-    protected $dispatcher;
+    protected $request;
 
-    /**
-     * @return \Shift1\Core\Dispatcher\Dispatcher
-     */
-    public function getDispatcher() {
-        return $this->dispatcher;
+    public function __construct(iRequest $request) {
+        $this->request = $request;
     }
 
     /**
-     * @param \Shift1\Core\Dispatcher\Dispatcher $dispatcher
-     * @return void
+     * @return \Shift1\Core\Request\iRequest
      */
-    public function setDispatcher(Dispatcher $dispatcher) {
-        $this->dispatcher = $dispatcher;
+    protected function getRequest() {
+        return $this->request;
     }
 
-    
+    /**
+     * @param array $data
+     * @return bool
+     */
+    protected function validateRequestResult(array $data) {
+        return (
+          isset($data['_controller'])
+          && isset($data['_action'])
+          // && isset($data['_params'])
+        );
+    }
+
     /**
      * @throws \Shift1\Core\Exceptions\FrontControllerException
-     * @return void
+     * @return string
      */
     public function run() {
 
-        /**
-         * @var array $controllerData
-         * @var \Shift1\Core\Response\iResponse $response
-         */
-        $controllerData = $this->getDispatcher()->dispatch();
-        $controller = $controllerData['controllerClass'];
-        $actionName = $controllerData['actionMethod'];
-        $params = $controllerData['params'];
+        $request = $this->getRequest();
+        $data = $request->assembleController();
 
-        try {
-            $reflectionAction = new \ReflectionMethod($controller, $actionName);
-        } catch(\ReflectionException $e) {
-            throw new FrontControllerException('Reflection failed: Controller `' . $controller . '::' . $actionName .'´ does not exist!');
+        if($this->validateRequestResult($data) === false) {
+            throw new FrontControllerException('No valid Request result given: ' . \PHP_EOL . \var_export($data, 1));
         }
 
-        $actionparams = $this->mapToActionParams($params, $reflectionAction );
-        
-        try {
-            $response = \call_user_func_array(array(new $controller($params), $actionName), $actionparams);
-        } catch(ApplicationException $e) {
-            $handler = new HTMLResponseExceptionHandler;
-            $handler->handle($e);
-            exit(0);
-        }
+        $response = ControllerFactory::createController($data['_controller'], $data['_action'], $data);
 
-        if(!($response instanceof iResponse)) {
-            $requestedControllerString = $controller . '::' . $actionName . ' ( ' . \implode(', ', $params) . ' )';
-            throw new FrontControllerException('No valid Response given from Controller ' . $requestedControllerString);
-        }
-
-        $response->sendToClient();
+        return $response->sendToClient();
     }
 
 }
