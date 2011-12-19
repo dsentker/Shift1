@@ -5,6 +5,8 @@ use Shift1\Core\Exceptions\DispatcherException;
 use Shift1\Core\Controller\AbstractController;
 use Shift1\Core\Router\iRouter;
 
+use Shift1\Core\Controller\Factory\ControllerFactory;
+
 class Dispatcher extends AbstractDispatcher {
 
     const CONTROLLER_SUFFIX = 'Controller';
@@ -29,7 +31,7 @@ class Dispatcher extends AbstractDispatcher {
 
     /**
      * @throws \Shift1\Core\Exceptions\DispatcherException
-     * @return array
+     * @return \Shift1\Core\Controller\AbstractController
      */
     public function dispatch() {
 
@@ -40,41 +42,8 @@ class Dispatcher extends AbstractDispatcher {
             throw new DispatcherException('No valid Request result given: ' . \var_export($data, 1));
         }
 
-        $controllerClassName =  (!empty($data['_controller']))
-                ? $data['_controller'] . self::CONTROLLER_SUFFIX
-                : null;
+        return ControllerFactory::createController($data['_controller'], $data['_action'], $data['_params']);
 
-        $actionMethodName = $data['_action'] . self::ACTION_SUFFIX;
-
-        $controllerNamespace = $config->controller->namespace;
-        $controllerClass = $controllerNamespace . \ucfirst($controllerClassName);
-
-        /** @var \Shift1\Core\Controller\AbstractController $controllerClass */
-
-        if(empty($controllerClassName)) {
-            // No Controller name was given
-            $controllerClassName = $config->controller->defaultController . self::CONTROLLER_SUFFIX;
-            $controllerClass = $controllerNamespace . $controllerClassName;
-            $actionMethodName = $controllerClass::getNotFoundActionName() . self::ACTION_SUFFIX;
-        } elseif(!$this->controllerExists($controllerClass)) {
-            // Controller was defined, but does not exist
-            $controllerClassName = $config->controller->errorController . self::CONTROLLER_SUFFIX;
-            $controllerClass = $controllerNamespace . $controllerClassName;
-            $actionMethodName = $controllerClass::getDefaultActionName() . self::ACTION_SUFFIX;
-        } else {
-            // Requested Controller exists
-            if(empty($actionMethodName)) {
-                $actionMethodName = $controllerClass::getDefaultActionName() . self::ACTION_SUFFIX;
-            } elseif(!$this->actionExists($controllerClass, $actionMethodName)) {
-                $actionMethodName = $controllerClass::getNotFoundActionName() . self::ACTION_SUFFIX;
-            }
-        }
-
-        return array(
-            'controllerClass' => $controllerClass,
-            'actionMethod'    => $actionMethodName,
-            'params'          => $data,
-        );
 
     }
 

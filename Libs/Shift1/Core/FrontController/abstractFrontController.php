@@ -30,39 +30,7 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @param $uriParams
-     * @param \ReflectionMethod $action
-     * @return array
-     */
-    protected function mapToActionParams($uriParams, \ReflectionMethod $action) {
-        $actionParams = array();
-
-        foreach($action->getParameters() as $param) {
-            /** @var \ReflectionParameter $param */
-
-            $paramPosition = $param->getPosition();
-
-            if(isset($uriParams[$param->getName()])) {
-                $actionParams[$paramPosition] = $uriParams[$param->getName()];
-            } else {
-                if($param->isDefaultValueAvailable()) {
-                    /*
-                     * Note that there is a strict behaviour in php's \ReflectionParameter->getDefaultValue().
-                     * If the current default-value-parameter preprends an parameter without a default value,
-                     * getDefaultValue() will return always FALSE.
-                     * @see http://de3.php.net/manual/en/reflectionparameter.isdefaultvalueavailable.php#105207
-                     */
-                    $actionParams[$paramPosition] = $param->getDefaultValue();
-                } else {
-                    $actionParams[$paramPosition] = null;
-                }
-            }
-        }
-
-        return $actionParams;
-    }
-
+    
     /**
      * @throws \Shift1\Core\Exceptions\FrontControllerException
      * @return void
