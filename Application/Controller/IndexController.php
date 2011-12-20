@@ -43,7 +43,7 @@ class IndexController extends ParentController {
         return new Response($logger->getLogCount() . 'entries added.');
     }
 
-    public function execptionAction() {
+    public function exceptionAction() {
         throw new E\ApplicationException('This is an exception!');
         
     }
