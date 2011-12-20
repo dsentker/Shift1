@@ -19,15 +19,23 @@ $this->wrappedBy($this->newSelf('shift1Layout'), 'content');
             $args = array();
             foreach($trace['args'] as $arg) {
                 if(\is_array($arg)) {
-                    $args[] = 'array()';
+                    $args[] = 'array('.\count($arg).' keys)';
                 } elseif (\is_object($arg)) {
                     $args[] = \get_class($arg);
                 } else {
                     $args[] = '\'' . (string) $arg . '\'';
                 }
             }
-            echo '<span class="row"><strong>#' . $ct . '</strong> ' . $trace['class'] . $trace['type'] . $trace['function'] . '(' . \implode(', ', $args) . ')
-                        <span class="hidden-mouseover">' . \str_replace(BASEPATH, '', $trace['file']) .' (' . $trace['line'] . ')</span>
+
+
+            $class =    (empty($trace['class']))    ? ''            : '\\' . $trace['class'];
+            $type  =    (empty($trace['type']))     ? ''            : $trace['type'];
+            $file =     (empty($trace['file']))     ? '(unknown)'   : $trace['file'];
+            $line =     (empty($trace['line']))     ? ''            : '(' . $trace['line'] .')';
+            $function = (empty($trace['function'])) ? ''            : $trace['function'];
+
+            echo '<span class="row"><strong>#' . $ct . '</strong> ' . $class . $type . $function . '(' . \implode(', ', $args) . ')
+                        <span class="hidden-mouseover">' . \str_replace(BASEPATH, '', $file) .' ' . $line . '</span>
                   </span>';
         endforeach; ?>
         </div>

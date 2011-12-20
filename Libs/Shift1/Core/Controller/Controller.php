@@ -16,7 +16,7 @@ class Controller extends AbstractController {
     final public function __construct(array $params = array()) {
         parent::__construct($params);
 
-        $this->view = new View($this->getControllerName() . '/' . $params['_action']);
+        $this->view = new View($params['_controller'] . '/' . $params['_action']);
         $this->init();
     }
 
