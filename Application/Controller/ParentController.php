@@ -10,11 +10,13 @@ class ParentController extends Controller {
         return 'indx';
     }
 
+    public function init() {
+        parent::init();
+    }
+
     public function notFoundAction() {
         $params = $this->getParams();
         return new Response("Action '{$params['_action']}' not found in {$params['_controller']}");
     }
 
 }
-
-?>

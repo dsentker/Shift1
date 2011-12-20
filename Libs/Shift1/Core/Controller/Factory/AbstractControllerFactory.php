@@ -41,10 +41,7 @@ class AbstractControllerFactory extends Shift1Object implements iControllerFacto
         
         if(empty($controllerName)) {
             $controllerName = $this->config->controller->defaultController;
-
-            /** @var $controllerFqNs \Shift1\Core\Controller\AbstractController */
             $controllerSuffixed = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
-
             return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
         }
 
@@ -54,7 +51,7 @@ class AbstractControllerFactory extends Shift1Object implements iControllerFacto
             return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
         }
 
-        return $this->getControllerInstance($controllerFqNs, $this->getActionName(), $this->getParams());
+        return $this->getControllerInstance($controllerNamespace . $controllerName, $this->getActionName(), $this->getParams());
 
     }
 

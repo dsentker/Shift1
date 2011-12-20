@@ -8,6 +8,7 @@ use Shift1\Core\View\View;
 class IndexController extends ParentController {
 
     public function init() {
+        parent::init();
         /** @var \Shift1\Log\Logger $logger */
         $logger = $this->getApp()->getServiceContainer()->get('Log');
         $logger->log('IndexController initiated', 'debug');
@@ -29,7 +30,7 @@ class IndexController extends ParentController {
     }
 
     public function viewAction() {
-        $this->getView()->wrappedBy(new View('subpage'));
+        #$this->getView()->wrappedBy(new View('subpage'));
         return new Response($this->getView()->render());
     }
 

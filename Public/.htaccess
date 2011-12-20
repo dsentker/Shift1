@@ -14,8 +14,8 @@ SetEnv APP_ENVIRONMENT development
     RewriteBase /shift1/public/
 
     # force 301 to a single domain if not requested
-    RewriteCond %{HTTP_HOST} !^www.example.com$ [NC]
-    RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
+    #RewriteCond %{HTTP_HOST} !^www.example.com$ [NC]
+    #RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
 
     RewriteCond %{SCRIPT_FILENAME} !-f
     RewriteCond %{SCRIPT_FILENAME} !-d
