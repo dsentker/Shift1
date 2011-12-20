@@ -2,6 +2,7 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
+use Shift1\Core\InternalFilePath;
 
 class View extends AbstractView {
 
@@ -16,50 +17,76 @@ class View extends AbstractView {
     protected $wrapperSlot = null;
 
     /**
-     * @throws \Shift1\Core\Exceptions\ViewException
-     * @param bool $throw
+     * @throws \Shift1\Core\Exceptions\ViewException if ::throw is TRUE
      * @return string
      */
-    public function getContent($throw = true) {
+    public function getContent() {
 
         $viewFile = $this->getViewFile();
 
-        if(empty($viewFile) && $throw) {
-            throw new ViewException('No View File given!');
+        if(empty($viewFile)) {
+            if($this->isThrowingExceptions()) {
+                throw new ViewException('No View file given!');
+            } else {
+                die('No View file given!');
+            }
+
         }
 
-        $templatePath = $this->getViewPath() . $viewFile;
+        $viewFile = new InternalFilePath($viewFile);
 
-        if(!\file_exists($templatePath) && $throw) {
-            throw new ViewException("View File {$viewFile} not found in {$this->getViewPath()}");
+        #echo "Trying to load " . $viewFile->getAbsolutePath() . ' (Result: ' . var_export($viewFile->exists(), 1) . ')<br><br>';
+
+        if(!$viewFile->exists()) {
+            if($this->isThrowingExceptions()) {
+                throw new ViewException("View File {$viewFile} not found!");
+            } else {
+                die("Exit: View File {$viewFile} not found");
+            }
         }
 
         \ob_start(null);
-        require $templatePath;
+        require $viewFile->getAbsolutePath();
         return \ob_get_clean();
 
+    }
+
+    /**
+     * @param string|Shift1\Core\InternalFilePath $file
+     * @return bool
+     */
+    public function fileExists($file) {
+        if(!($file instanceof InternalFilePath)) {
+            $file = $this->completeViewFilename($file);
+            $file = new InternalFilePath($file);
+        }
+        return $file->exists();
     }
 
     /**
      * Creates a new view file. This method is callable
      * from the view file and is useful when a parent
      * wrapper is defined.
-     *
+
      * @param null|string $viewFile
-     * @param null|string $viewPath
-     * @param null|bool $strict
-     * @return self
+     * @param bool $useDefaultViewFilePath
+     * @return View
      */
-    public function newSelf($viewFile = null, $viewPath = null, $strict = null) {
+    public function newSelf($viewFile = null, $useDefaultViewFilePath = true) {
 
         // Copy file, path and isStrict, if not defined
         $viewFile = (null === $viewFile) ? $this->getViewFile() : $viewFile;
-        $viewPath = (null === $viewPath) ? $this->getViewPath() : $viewPath;
-        $strict   = (null === $strict)   ? $this->isStrict()    : $strict;
 
-        $newSelf = new self($viewFile, null, $strict);
-        $newSelf->setViewPath($viewPath, false);
+        $newSelf = new self($viewFile, $this->isStrict(), $useDefaultViewFilePath);
+
+        if($this->isThrowingExceptions()) {
+            $newSelf->enableExceptions();
+        } else {
+            $newSelf->disableExceptions();
+        }
+
         return $newSelf;
+
     }
 
     /**

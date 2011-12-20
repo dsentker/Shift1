@@ -8,7 +8,7 @@ use Shift1\Core\Response\Header\Header;
 class ErrorController extends ParentController {
 
     public function indexAction() {
-        return new Response($this->view, new Header(404));
+        return new Response($this->getView()->render(), new Header(404));
     }
 
 }

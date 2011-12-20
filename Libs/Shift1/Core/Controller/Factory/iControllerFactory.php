@@ -3,8 +3,8 @@ namespace Shift1\Core\Controller\Factory;
  
 interface iControllerFactory {
 
-    const CONTROLLER_PREFIX = 'Controller';
+    const CONTROLLER_SUFFIX = 'Controller';
 
-    const ACTION_PREFIX     = 'Action';
+    const ACTION_SUFFIX     = 'Action';
 
 }

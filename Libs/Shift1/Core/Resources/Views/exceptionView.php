@@ -1,6 +1,6 @@
 <?php
 /** @var \Shift1\Core\View\View $this */
-$this->wrappedBy($this->newSelf('shift1Layout'), 'content');
+$this->wrappedBy($this->newSelf('Libs/Shift1/Core/Resources/Views/shift1Layout', false), 'content');
 
 ?>
 <h3>Uncaught Exception</h3>

@@ -15,9 +15,25 @@ class Controller extends AbstractController {
      */
     final public function __construct(array $params = array()) {
         parent::__construct($params);
+    }
 
-        $this->view = new View($params['_controller'] . '/' . $params['_action']);
-        $this->init();
+    public function init() {
+        $this->view = new View();
+
+        $dispatched = $this->getParam('_dispatched');
+
+        $viewDir = $this->getApp()->getConfig()->filesystem->defaultViewFolder;
+        $suggestedViewFile = $dispatched['class'] . '/' . $dispatched['action'];
+
+        if($this->getView()->fileExists($viewDir . '/' . $suggestedViewFile)) {
+            $this->getView()->setViewFile($suggestedViewFile);
+        } elseif($this->getView()->fileExists($viewDir . '/index')) {
+            $this->getView()->setViewFile('index');
+        } else {
+            // No view file detected
+            $this->getView()->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', true);
+        }
+
     }
 
     /**

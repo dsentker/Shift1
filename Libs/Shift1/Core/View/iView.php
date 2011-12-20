@@ -11,8 +11,7 @@ interface iView {
 
     /**
      * @abstract
-     * @param bool $throw
      * @return string
      */
-    public function getContent($throw = true);
+    public function getContent();
 }

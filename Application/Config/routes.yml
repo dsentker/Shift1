@@ -7,6 +7,15 @@ testroute:
     _action:
       default: indexvontestroute
 
+nocontroller:
+  scheme: foo/@_action/
+  bindings:
+    _controller:
+      default: Index
+    _action:
+      default: index
+      match: s
+
 default:
   scheme: @_controller/@_action/
   bindings:
@@ -16,3 +25,11 @@ default:
     _action:
       default: index
       match: .*
+
+fallback:
+  scheme:
+  bindings:
+    _controller:
+      default: Error
+    _action:
+      default: index

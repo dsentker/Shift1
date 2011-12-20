@@ -2,7 +2,7 @@
 namespace Application\Controller;
 
 use Shift1\Core\Response\Response;
-use Shift1\Core\Exceptions\ApplicationException;
+use Shift1\Core\Exceptions as E;
 use Shift1\Core\View\View;
 
 class IndexController extends ParentController {
@@ -18,8 +18,13 @@ class IndexController extends ParentController {
     }
 
     public function getLogoAction() {
-        $file = new \Shift1\Core\InternalFilePath('Shift1/logo.jpg');
-        $response = \Shift1\Core\Response\Generator\DownloadableFileGenerator::factory()->setFile($file)->setFileName('Name der Datei.jpg')->getResponse();
+        try {
+            $file = new \Shift1\Core\InternalFilePath('/logo.jpg');
+            $response = \Shift1\Core\Response\Generator\DownloadableFileGenerator::factory()->setFile($file)->setFileName('Name der Datei.jpg')->getResponse();
+        } catch(E\FileNotFoundException $e) {
+            exit('Download not available. ' . $e->getMessage());
+        }
+
         return $response;
     }
 
@@ -38,7 +43,7 @@ class IndexController extends ParentController {
     }
 
     public function execptionAction() {
-        throw new ApplicationException('This is an exception!');
+        throw new E\ApplicationException('This is an exception!');
         
     }
 

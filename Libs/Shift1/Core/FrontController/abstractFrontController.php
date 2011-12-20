@@ -32,7 +32,6 @@ abstract class AbstractFrontController extends Shift1Object implements iFrontCon
         return (
           isset($data['_controller'])
           && isset($data['_action'])
-          // && isset($data['_params'])
         );
     }
 

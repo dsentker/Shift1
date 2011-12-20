@@ -29,6 +29,12 @@ abstract class abstractView extends Shift1Object implements iView {
     protected $strict;
 
     /**
+     * Wheter to throw an exception or not
+     * @var bool
+     */
+    protected $throw = true;
+
+    /**
      * @static
      * @param string $viewFile
      * @return self
@@ -37,35 +43,70 @@ abstract class abstractView extends Shift1Object implements iView {
         return new static($viewFile);
     }
 
+
     /**
      * @param null|string $viewFile
-     * @param null|string $viewPath
      * @param null|bool $strict
+     * @param bool $useDefaultViewFilePath
      */
-    public function __construct($viewFile = null, $viewPath = null, $strict = null) {
-        $config = $this->getApp()->getConfig();
-        $this->setViewFile($viewFile);
+    public function __construct($viewFile = null, $strict = null, $useDefaultViewFilePath = true) {
 
-        if(null === $viewPath)
-            $viewPath = $config->filesystem->defaultViewFilePath;
-        $this->setViewPath($viewPath);
+        if(!empty($viewFile)) {
+            $this->setViewFile($viewFile, $useDefaultViewFilePath);
+        }
 
-        if(null === $strict)
+        if(null === $strict) {
+            $config = $this->getApp()->getConfig();
             $strict = $config->view->strict;
+        }
         $this->setStrict($strict);
 	}
 
     /**
+     * @return void
+     */
+    public function disableExceptions() {
+        $this->throw = false;
+    }
+
+    /**
+     * @return void
+     */
+    public function enableExceptions() {
+        $this->throw = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isThrowingExceptions() {
+        return $this->throw;
+    }
+
+    /**
+     * @param string $file
+     * @return string
+     */
+    protected function completeViewFilename($file) {
+        if(\strpos($file, '.') === false) {
+            $file .= '.' . $this->getApp()->getConfig()->filesystem->defaultViewFileExtension;
+        }
+        return $file;
+    }
+
+    /**
      * @param string $viewFile
+     * @param bool $useDefaultViewFilePath
      * @return self
      */
-    public function setViewFile($viewFile) {
-
-        if(\strpos($viewFile, '.') === false) {
-            $viewFile .= '.' . $this->getApp()->getConfig()->filesystem->defaultViewFileExtension;
+    public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
+        if($useDefaultViewFilePath === true) {
+            $config = $this->getApp()->getConfig();
+            $viewFile = $config->filesystem->defaultViewFolder . '/' . $viewFile;
         }
 
-        $this->viewFile = $viewFile;
+        $this->viewFile = $this->completeViewFilename($viewFile);
+
         return $this;
     }
 
@@ -74,26 +115,6 @@ abstract class abstractView extends Shift1Object implements iView {
      */
     public function getViewFile() {
         return $this->viewFile;
-    }
-
-    /**
-     * @param string $path
-     * @param bool $adjustPath
-     * @return void
-     */
-    public function setViewPath($path, $adjustPath = true) {
-
-        if(!($path instanceof InternalFilePath) && $adjustPath) {
-            $path = new InternalFilePath($path);
-        }
-        $this->viewPath = $path . \DIRECTORY_SEPARATOR;
-	}
-
-    /**
-     * @return string
-     */
-    public function getViewPath() {
-        return $this->viewPath;
     }
 
     /**
@@ -231,7 +252,16 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return string
      */
 	public function __toString() {
-        return $this->getContent(false);
+
+        $wasThrowing = $this->isThrowingExceptions();
+
+        // __toString always excepts a string, not an exception.
+        $this->disableExceptions();
+
+        $content = $this->getContent();
+        if($wasThrowing) $this->enableExceptions();
+
+        return $content;
 	}
 
     /**

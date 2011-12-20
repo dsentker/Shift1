@@ -61,6 +61,15 @@ abstract class AbstractController extends Shift1Object implements iController  {
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
+    public function addParam($key, $value) {
+        $this->params[$key] = $value;
+    }
+
+    /**
      * @return void
      */
     public function init() {

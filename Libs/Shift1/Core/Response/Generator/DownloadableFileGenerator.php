@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response\Generator;
 
-use Shift1\Core\Exceptions\ResponseException;
+use Shift1\Core\Exceptions\FileNotFoundException;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Response;
@@ -61,14 +61,14 @@ class DownloadableFileGenerator extends AbstractResponseGenerator {
         $fullPath = $this->getFile();
 
         if(!\file_exists($fullPath)) {
-            throw new ResponseException('Downloadable File path does not exist: ' . $fullPath);
+            throw new FileNotFoundException($fullPath);
         }
 
         $fileSize = \filesize($fullPath);
         $pathParts = \pathinfo($fullPath);
         $ext = \strtolower($pathParts["extension"]);
 
-        $contentTypesRes = new InternalFilePath('Shift1/Core/Resources/FileContentTypes.php');
+        $contentTypesRes = new InternalFilePath('Libs/Shift1/Core/Resources/FileContentTypes.php');
         $contentTypes = require_once $contentTypesRes->getAbsolutePath();
         $contentType = (\array_key_exists($ext, $contentTypes)) ? $contentTypes[$ext] : self::DEFAULT_FILE_CONTENTTYPE;
 

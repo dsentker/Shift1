@@ -20,18 +20,22 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
                 $codeRows[$line+1] = $row;
             }
         }
+        $view = new View('Libs/Shift1/Core/Resources/Views/exceptionView', true, false);
+        $view->disableExceptions();
 
-        $view = new View('exceptionView');
-        $view->setViewPath('Libs/Shift1/Core/Resources/Views/');
         $view->assignArray(array(
                 'e' => $e,
                 'code' => $codeRows,
         ));
 
+        if(\headers_sent()) {
+            exit($view->render());
+        }
+
         $header = new Response\Header\Header(500);
         $response = new Response\Response($view->render(), $header);
         $response->sendToClient();
 
-        return false;
+        exit();
     }
 }

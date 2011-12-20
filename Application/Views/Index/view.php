@@ -1,7 +1,7 @@
 <?php
 /** @var \Shift1\Core\View\View $this  */
 
-$this->wrappedBy(self::instance('index')->assign('foo', 'This is the text for the "foo" placeholder'));
+#$this->wrappedBy(self::instance('index')->assign('foo', 'This is the text for the "foo" placeholder'));
 ?>
 
 <div style="border: 1px solid #dc143c; padding-left: 10px; background-color: #dcdcdc; ">

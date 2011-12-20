@@ -1,7 +1,6 @@
 <?php
 namespace Shift1\Core\Response;
 
-use Shift1\Core\Exceptions\ResponseException;
 use Shift1\Core\Response\Header\iHeader;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Generator\RedirectGenerator;
