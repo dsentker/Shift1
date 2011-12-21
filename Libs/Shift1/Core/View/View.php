@@ -51,9 +51,16 @@ class View extends AbstractView {
 
     /**
      * @param string|Shift1\Core\InternalFilePath $file
+     * @param bool $useDefaultViewFilePath
      * @return bool
      */
-    public function fileExists($file) {
+    public function fileExists($file, $useDefaultViewFilePath = true) {
+
+        if(true === $useDefaultViewFilePath) {
+            $config = $this->getApp()->getConfig();
+            $file = $config->filesystem->defaultViewFolder . '/' . $file;
+        }
+
         if(!($file instanceof InternalFilePath)) {
             $file = $this->completeViewFilename($file);
             $file = new InternalFilePath($file);

@@ -101,7 +101,7 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return self
      */
     public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
-        if($useDefaultViewFilePath === true) {
+        if(true === $useDefaultViewFilePath) {
             $config = $this->getApp()->getConfig();
             $viewFile = $config->filesystem->defaultViewFolder . '/' . $viewFile;
         }
@@ -125,6 +125,8 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return self
      */
 	public function assign($varKey, $varValue, $overwrite = true) {
+
+        $varKey = \trim($varKey);
 
         if(empty($varKey)) {
             throw new ViewException('Assignment failed: Empty keys are not allowed!');

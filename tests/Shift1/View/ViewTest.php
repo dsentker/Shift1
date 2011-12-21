@@ -13,6 +13,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     protected $view;
 
     public function setUp() {
+        App::getInstance()->getConfig()->filesystem->defaultViewFolder = 'Shift1/View/ViewFiles';
         $this->view = new View();
     }
 
@@ -25,49 +26,46 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testFileExistString() {
-        $this->assertTrue($this->view->fileExists('Shift1/View/ViewFiles/index'));
-        $this->assertTrue($this->view->fileExists('Shift1/View/ViewFiles/index.php'));
-        $this->assertFalse($this->view->fileExists('Shift1/View/ViewFiles/'));
+
+        $this->assertTrue($this->view->fileExists('Index'));
+        $this->assertTrue($this->view->fileExists('Index.php'));
+
+        $this->assertFalse($this->view->fileExists('iDoNotExist.php'));
+        $this->assertFalse($this->view->fileExists('/'));
+        $this->assertFalse($this->view->fileExists('../'));
         $this->assertFalse($this->view->fileExists(''));
         $this->assertFalse($this->view->fileExists('.php'));
     }
 
 
     public function testStaticNewInstance() {
-        $view = View::instance('Shift1/View/ViewFiles/index');
+        $view = View::instance('index');
         $this->assertInstanceOf('\Shift1\Core\View\View', $view);
         $this->assertNotSame($view, $this->view);
     }
 
-    public function testConstructorStrictParam() {
+    /**
+     * @dataProvider constructorStrictParamProvider
+     */
+    public function testConstructorStrictParam($strict, $setConfigStrict = null) {
 
-        $view = new View(null, true, null);
-        $this->assertTrue($view->isStrict());
+
+        if(null !== $setConfigStrict) {
+            App::getInstance()->getConfig()->view->strict = $setConfigStrict;
+            $exceptedIsStrict = $setConfigStrict;
+        } else {
+            $exceptedIsStrict = $strict;
+        }
+
+        $view = new View(null, $strict, null);
+        $this->assertEquals($view->isStrict(), $exceptedIsStrict);
+
         unset($view);
-
-        $view = new View(null, false, null);
-        $this->assertFalse($view->isStrict());
-        unset($view);
-
-        App::getInstance()->getConfig()->view->strict = false;
-        $view = new View(null, null, null);
-        $this->assertFalse($view->isStrict());
-        unset($view);
-
-        App::getInstance()->getConfig()->view->strict = true;
-        $view = new View(null, null, null);
-        $this->assertTrue($view->isStrict());
-        unset($view);
-
     }
 
     public function testAssignmentsString() {
 
         $this->view->setStrict(false);
-        $this->assertNull($this->view->get('iDoNotExist'));
-
-        $this->view->setStrict(true);
-        $this->setExpectedException('\PHPUnit_Framework_Error_Notice');
         $this->assertNull($this->view->get('iDoNotExist'));
 
         $this->view->assign('foo', 'bar');
@@ -79,10 +77,25 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         $this->view->assign('foo', 'newFoo', false);
         $this->assertNotEquals('newFoo', $this->view->get('foo'));
         $this->assertEquals('baz', $this->view->get('foo'));
+    }
 
-        $this->setExpectedException('\Shift1\Core\Exceptions\ViewException');
-        $this->view->assign('', 'value');
+    public function testEmptyAssignment() {
+        try {
+            $this->view->assign(' ', 'value');
+        } catch(\Shift1\Core\Exceptions\ViewException $e) {
+            return;
+        }
+        $this->fail('Expected ViewException was not thrown');
+    }
 
+    public function testGetValueStrict() {
+        $this->view->setStrict(true);
+        try {
+            $this->view->get('iDoNotExist');
+        } catch(\PHPUnit_Framework_Error_Notice $e) {
+            return;
+        }
+        $this->fail('Expected Notice was not returned');
     }
 
     public function testAssignmentsMixed() {
@@ -122,7 +135,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testRenderingSimple() {
-        $this->view->setViewFile('Shift1/View/ViewFiles/TinyView', false);
+        $this->view->setViewFile('TinyView');
         $this->assertEquals('This is a  test!', $this->view->render());
 
         $this->view->key = 'nice';
@@ -140,7 +153,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         $this->view->key = array(1,2,3);
         $this->assertEquals('This is a Array test!', $this->view->render());
 
-        $this->view->setViewFile('Shift1/View/ViewFiles/EchoVar', false);
+        $this->view->setViewFile('EchoVar');
         $this->view->assign('key', 'value');
         $this->assertEquals('value', $this->view->render());
 
@@ -162,6 +175,43 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         unset($viewVars);
 
 
+    }
+
+    public function testRenderingExtended() {
+
+        $this->view->setViewFile('TinyViewWrapped');
+        $this->assertEquals('This is a  test!', $this->view->render());
+
+        $this->view->setViewFile('EmptyFile');
+        $this->view->foo = 'bar';
+        $this->assertEmpty($this->view->render());
+
+        $this->view->wrappedBy($this->view->newSelf('TinyView'));
+        $this->assertEquals('This is a  test!', $this->view->render());
+    }
+
+    public function testCommon() {
+        $this->view->foo = 'bar';
+        $this->assertTrue($this->view->has('foo'));
+        $this->assertFalse($this->view->has('bar'));
+    }
+
+    public function testGetContent() {
+        $this->view->setViewFile('');
+
+        $this->setExpectedException('\Shift1\Core\Exceptions\ViewException');
+        $this->view->getContent();
+    }
+
+
+    public function constructorStrictParamProvider() {
+        return array(
+            array(true,  null),
+            array(false, null),
+            array(null,  true),
+            array(null,  false),
+            array(null,  null),
+        );
     }
 
 

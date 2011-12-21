@@ -1,3 +1,6 @@
+<?php
+/** @var  $this \Shift1\Core\View\View */
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +9,7 @@
   </head>
 
   <body>
+    <?php if($this->has('content')) echo $this->content; ?>
   
   </body>
-
 </html>

@@ -28,7 +28,7 @@ class InternalFilePath {
      * @return bool
      */
     public function exists() {
-        return (\file_exists($this->getAbsolutePath()));
+        return (\file_exists($this->getAbsolutePath()) && \is_file($this->getAbsolutePath()));
     }
 
     /**
