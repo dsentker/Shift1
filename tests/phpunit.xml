@@ -1,6 +1,6 @@
-<phpunit bootstrap="./bootstrap.php" colors="true">
+<phpunit bootstrap="bootstrap.php" colors="false">
     <testsuites>
-        <testsuite name="Shift1 Test Suite">
+        <testsuite name="Shift1_Test_Suite">
             <directory>./</directory>
         </testsuite>
     </testsuites>
