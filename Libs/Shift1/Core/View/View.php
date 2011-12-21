@@ -111,9 +111,9 @@ class View extends AbstractView {
 
         $content = $this->getContent();
 
-        if($this->wrapperExists()) {
-            $this->wrapperView->assign($this->wrapperSlot, $content);
-            $content = $this->wrapperView->render();
+        if($this->hasWrapper()) {
+            $this->getWrapper()->assign($this->wrapperSlot, $content);
+            $content = $this->getWrapper()->render();
         }
 
         return $content;
@@ -133,8 +133,15 @@ class View extends AbstractView {
     /**
      * @return bool
      */
-    protected function wrapperExists() {
+    public function hasWrapper() {
         return $this->wrapperView instanceof iView;
+    }
+
+    /**
+     * @return null|self
+     */
+    public function getWrapper() {
+        return $this->wrapperView;
     }
 
 

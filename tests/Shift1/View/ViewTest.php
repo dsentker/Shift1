@@ -4,6 +4,7 @@ namespace Shift1Test\View;
 use Shift1\Core\View\View;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\App;
+use Shift1\Core\Exceptions\ViewException;
 
 class ViewTest extends \PHPUnit_Framework_TestCase {
 
@@ -98,6 +99,23 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         $this->fail('Expected Notice was not returned');
     }
 
+    public function testCloning() {
+
+        $this->view->assign('foo', 'bar');
+        $this->view->setViewFile('index');
+
+        $viewClone = clone $this->view;
+
+        $this->assertNotSame($viewClone, $this->view);
+        $this->assertEquals($viewClone->foo, 'bar');
+        $this->assertEquals($viewClone->foo, $this->view->foo);
+
+        $this->assertEquals($viewClone->getViewFile(), $this->view->getViewFile());
+
+        $viewClone2 = $viewClone->newSelf('EmptyFile');
+        $this->assertNotEquals($viewClone->getViewFile(), $viewClone2->getViewFile());
+    }
+
     public function testAssignmentsMixed() {
         $anArray = array('foo', 'bar', 'baz');
         $this->view->anArray = $anArray;
@@ -187,20 +205,35 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         $this->assertEmpty($this->view->render());
 
         $this->view->wrappedBy($this->view->newSelf('TinyView'));
+        $this->assertTrue($this->view->hasWrapper());
         $this->assertEquals('This is a  test!', $this->view->render());
+        $this->assertInstanceOf('\Shift1\Core\View\iView', $this->view->getWrapper());
     }
 
     public function testCommon() {
         $this->view->foo = 'bar';
         $this->assertTrue($this->view->has('foo'));
         $this->assertFalse($this->view->has('bar'));
+        $this->assertFalse($this->view->has(''));
+        $this->assertFalse($this->view->has(null));
     }
 
     public function testGetContent() {
-        $this->view->setViewFile('');
 
-        $this->setExpectedException('\Shift1\Core\Exceptions\ViewException');
-        $this->view->getContent();
+        try {
+            $this->view->setViewFile('');
+            $this->view->getContent();
+        } catch(ViewException $e) {
+            return;
+        }
+
+        $this->fail('Expected ViewException while given an empty view file');
+
+    }
+
+    public function testEmptyFile() {
+        $this->view->setViewFile('EmptyFile');
+        $this->assertEmpty($this->view->render());
     }
 
 
@@ -213,6 +246,5 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
             array(null,  null),
         );
     }
-
 
 }
