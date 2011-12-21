@@ -3,6 +3,7 @@ namespace Shift1\Core\View;
 
 use Shift1\Core\Shift1Object;
 use Shift1\Core\InternalFilePath;
+use Shift1\Core\Exceptions\ViewException;
 
 abstract class abstractView extends Shift1Object implements iView {
 
@@ -124,6 +125,11 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return self
      */
 	public function assign($varKey, $varValue, $overwrite = true) {
+
+        if(empty($varKey)) {
+            throw new ViewException('Assignment failed: Empty keys are not allowed!');
+        }
+
         if(!($this->varKeyExists($varKey) && $overwrite === false)) {
             $this->viewVars[self::VAR_KEY_PREFIX . $varKey] = $varValue;
         }
@@ -158,10 +164,22 @@ abstract class abstractView extends Shift1Object implements iView {
 	}
 
     /**
+     * @param bool $prefixed Wether the keys get with internal prefix or not
      * @return array
      */
-    public function getViewVars() {
-        return $this->viewVars;
+    public function getViewVars($prefixed = false) {
+
+        if($prefixed) {
+            return $this->viewVars;
+        }
+
+        $returnArray = array();
+        foreach($this->viewVars as $key => $value) {
+            $cleanKey = \str_replace(self::VAR_KEY_PREFIX, '', $key);
+            $returnArray[$cleanKey] = $value;
+        }
+        return $returnArray;
+
     }
 
     /**
@@ -205,12 +223,14 @@ abstract class abstractView extends Shift1Object implements iView {
     }
 
     /**
-     * @param string $key
+     * Remove a VarKey. Returns true is the
+     * deletion was successfull.
+     * @param $key
      * @return bool
      */
     public function removeVar($key) {
-        if($this->has($key)) {
-            unset($this->viewVars[$key]);
+        if(isset($this->viewVars[self::VAR_KEY_PREFIX . $key])) {
+            unset($this->viewVars[self::VAR_KEY_PREFIX . $key]);
             return true;
         }
         return false;
@@ -221,7 +241,7 @@ abstract class abstractView extends Shift1Object implements iView {
      * @return bool
      */
     public function __unset($key) {
-        return $this->remove($key);
+        return $this->removeVar($key);
     }
 
     /**

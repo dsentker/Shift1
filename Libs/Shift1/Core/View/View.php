@@ -35,8 +35,6 @@ class View extends AbstractView {
 
         $viewFile = new InternalFilePath($viewFile);
 
-        #echo "Trying to load " . $viewFile->getAbsolutePath() . ' (Result: ' . var_export($viewFile->exists(), 1) . ')<br><br>';
-
         if(!$viewFile->exists()) {
             if($this->isThrowingExceptions()) {
                 throw new ViewException("View File {$viewFile} not found!");
