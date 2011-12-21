@@ -17,7 +17,8 @@ class InternalFilePath {
         if($adjustSeparator) {
             $path = \strtr($path, array(
                 '/' => \DIRECTORY_SEPARATOR,
-                '\\' => \DIRECTORY_SEPARATOR));
+                '\\' => \DIRECTORY_SEPARATOR
+            ));
         }
 
         $this->path = $path;

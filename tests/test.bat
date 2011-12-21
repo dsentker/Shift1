@@ -1,0 +1,1 @@
+phpunit --bootstrap c:\xampp\htdocs\shift1\tests\bootstrap.php  c:\xampp\htdocs\shift1\tests\Shift1\View\ViewTest.php
