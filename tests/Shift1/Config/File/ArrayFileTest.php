@@ -20,7 +20,7 @@ class ArrayFileTest extends \PHPUnit_Framework_TestCase {
 
     public function testAsArray() {
         $asArray = $this->arrayFile->toArray();
-        $this->assertTrue(\is_array($asArray));
+        $this->assertInternalType('array', $asArray);
         $this->assertArrayHasKey('cars', $asArray);
         $this->assertArrayHasKey('stuff', $asArray);
     }
