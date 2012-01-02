@@ -4,13 +4,14 @@ namespace Application\Controller;
 use Shift1\Core\Response\Response;
 use Shift1\Core\Exceptions as E;
 use Shift1\Core\View\View;
+use Shift1\Core\FrontController;
 
 class IndexController extends ParentController {
 
     public function init() {
         parent::init();
         /** @var \Shift1\Log\Logger $logger */
-        $logger = $this->getApp()->getServiceContainer()->get('Log');
+        $logger = FrontController::getInstance()->getServiceContainer()->get('Log');
         $logger->log('IndexController initiated', 'debug');
     }
 
@@ -30,13 +31,13 @@ class IndexController extends ParentController {
     }
 
     public function viewAction() {
-        #$this->getView()->wrappedBy(new View('subpage'));
+        # $this->view->sub = 'A text for placeholder "sub"';
         return new Response($this->getView()->render());
     }
 
     public function logTestAction() {
         /** @var \Shift1\Log\Logger $logger */
-        $logger = $this->getApp()->getServiceContainer()->get('Log');
+        $logger = FrontController::getInstance()->getServiceContainer()->get('Log');
         $logger->log('This is an debug information');
         $logger->log('This is a warning log entry', 'warn');
 
@@ -45,7 +46,10 @@ class IndexController extends ParentController {
 
     public function exceptionAction() {
         throw new E\ApplicationException('This is an exception!');
-        
+    }
+
+    public function errorAction() {
+        \trigger_error('Foo != Bar!');
     }
 
 }

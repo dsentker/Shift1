@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Config\File;
 
-interface iConfigFile {
+interface ConfigFileInterface {
 
     /**
      * @abstract

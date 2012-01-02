@@ -4,9 +4,8 @@ namespace Shift1\Core\Response;
 use Shift1\Core\Response\Header\iHeader;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Generator\RedirectGenerator;
-use Shift1\Core\Shift1Object;
 
-abstract class AbstractResponse extends Shift1Object implements iResponse {
+abstract class AbstractResponse implements ResponseInterface {
 
     /**
      * @var null|Header\iHeader

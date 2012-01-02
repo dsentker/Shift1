@@ -1,11 +1,10 @@
 <?php
 namespace Shift1\Core\Router;
 
-use Shift1\Core\Shift1Object;
-use Shift1\Core\Router\Route\iRoute;
+use Shift1\Core\Router\Route\RouteInterface;
 use Shift1\Core\Exceptions\RouteException;
 
-abstract class AbstractRouter extends Shift1Object implements iRouter {
+abstract class AbstractRouter implements RouterInterface {
 
     /**
      * @var array
@@ -32,14 +31,14 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
 
         if(!empty($requestUri)) {
 
-            $requestUriParts = \explode(iRoute::URI_SEGMENT_SEPARATOR, \trim($requestUri,'/'));
-            $routeParts =      \explode(iRoute::URI_SEGMENT_SEPARATOR, \trim($route->getScheme(), iRoute::URI_SEGMENT_SEPARATOR));
+            $requestUriParts = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($requestUri,'/'));
+            $routeParts =      \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($route->getScheme(), RouteInterface::URI_SEGMENT_SEPARATOR));
 
             foreach($requestUriParts as $position => $segment) {
 
                 if(isset($routeParts[$position])) {
                     if($route->isBindedSegment($routeParts[$position])) {
-                        $routeKey = \str_replace(iRoute::KEYBINDING_CHAR, '', $routeParts[$position]);
+                        $routeKey = \str_replace(RouteInterface::KEYBINDING_CHAR, '', $routeParts[$position]);
                         $fetched[$routeKey] = $this->transformParamValue($segment);
                     } else {
                         // This segment is just a text value without special purpose. ignore.
@@ -85,15 +84,15 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
      * @return array|bool
      */
     protected function getParamFromSegment($segment) {
-        if(!\strpos($segment, iRoute::URI_PARAM_KEY_SEPARATOR) !== false ) {
+        if(!\strpos($segment, RouteInterface::URI_PARAM_KEY_SEPARATOR) !== false ) {
             return false;
         }
 
-        $parts = \explode(iRoute::URI_PARAM_KEY_SEPARATOR, $segment);
+        $parts = \explode(RouteInterface::URI_PARAM_KEY_SEPARATOR, $segment);
 
         return array(
           'key' => \array_shift($parts),
-          'value' => \implode(iRoute::URI_PARAM_KEY_SEPARATOR, $parts),
+          'value' => \implode(RouteInterface::URI_PARAM_KEY_SEPARATOR, $parts),
         );
     }
 
@@ -137,10 +136,10 @@ abstract class AbstractRouter extends Shift1Object implements iRouter {
 
     /**
      * @param string $identifier
-     * @param Route\iRoute $route
+     * @param RouteInterface $route
      * @return void
      */
-    public function addRoute($identifier, Route\iRoute $route) {
+    public function addRoute($identifier, RouteInterface $route) {
         $this->routes[$identifier] = $route;
     }
 

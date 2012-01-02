@@ -2,9 +2,8 @@
 namespace Shift1\Log\Writer;
 
 use Shift1\Log\Event\Event;
-use Shift1\Core\Shift1Object;
 
-abstract class AbstractWriter extends Shift1Object implements iLogWriter {
+abstract class AbstractWriter implements LogWriterInterface {
 
     /**
      * @var string

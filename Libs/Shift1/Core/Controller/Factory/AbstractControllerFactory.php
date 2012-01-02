@@ -1,10 +1,10 @@
 <?php
 namespace Shift1\Core\Controller\Factory;
 
-use Shift1\Core\Shift1Object;
-use Shift1\Core\Response\iResponse;
+use Shift1\Core\Response\ResponseInterface;
+use Shift1\Core\FrontController;
 
-class AbstractControllerFactory extends Shift1Object implements iControllerFactory {
+class AbstractControllerFactory implements ControllerFactoryInterface {
 
     /**
      * @var \Shift1\Core\Config\Manager\iConfigManager
@@ -27,7 +27,7 @@ class AbstractControllerFactory extends Shift1Object implements iControllerFacto
     protected $controllerName;
 
     public function __construct() {
-        $this->config = $this->getApp()->getConfig();
+        $this->config = FrontController::getInstance()->getConfig();
     }
 
     /**

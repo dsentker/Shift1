@@ -2,9 +2,8 @@
 namespace Shift1\Core\Router\Route;
 
 use Shift1\Core\Exceptions\RouteException;
-use Shift1\Core\Shift1Object;
 
-class AbstractRoute extends Shift1Object implements iRoute {
+class AbstractRoute implements RouteInterface {
 
     /**
      * @var string

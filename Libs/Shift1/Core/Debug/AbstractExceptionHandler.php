@@ -1,9 +1,7 @@
 <?php
 namespace Shift1\Core\Debug;
 
-use Shift1\Core\Shift1Object;
- 
-abstract class AbstractExceptionHandler extends Shift1Object {
+abstract class AbstractExceptionHandler {
 
     final public static function register() {
         $handler = new static();

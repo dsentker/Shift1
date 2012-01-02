@@ -3,7 +3,7 @@ namespace Shift1\Core\Config\File;
 
 use Shift1\Core\Exceptions\FileNotFoundException;
 
-abstract class AbstractConfigFile implements iConfigFile {
+abstract class AbstractConfigFile implements ConfigFileInterface {
 
     /**
      * @var string

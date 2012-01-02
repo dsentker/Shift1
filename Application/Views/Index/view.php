@@ -8,6 +8,6 @@ $this->wrappedBy(self::instance('index')->assign('foo', 'This is the text for th
     <h3>This is a sub-heading from /index/view.php</h3>
     <p>Testing a paragraph...</p>
 
-    <p>Testing ::has() &raquo; <?php \var_export($this->has('sub')); ?></p>
+    <p>Testing ::has('sub') &raquo; <?php \var_export($this->has('sub')); ?></p>
     <?php if($this->has('sub')) echo $this->sub; ?>
 </div>

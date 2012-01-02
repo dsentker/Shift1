@@ -1,12 +1,12 @@
 <?php
 namespace Shift1\Core\Service;
 
-interface iService {
+interface ServiceInterface {
 
     /**
      * @abstract
      * @return object
      */
-    public function getInstance();
+    function getInstance();
     
 }

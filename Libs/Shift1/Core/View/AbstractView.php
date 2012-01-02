@@ -1,11 +1,11 @@
 <?php
 namespace Shift1\Core\View;
 
-use Shift1\Core\Shift1Object;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Exceptions\ViewException;
+use Shift1\Core\FrontController;
 
-abstract class abstractView extends Shift1Object implements iView {
+abstract class abstractView implements ViewInterface {
 
     const VAR_KEY_PREFIX = '__';
 
@@ -57,7 +57,7 @@ abstract class abstractView extends Shift1Object implements iView {
         }
 
         if(null === $strict) {
-            $config = $this->getApp()->getConfig();
+            $config = FrontController::getInstance()->getConfig();
             $strict = $config->view->strict;
         }
         $this->setStrict($strict);
@@ -90,7 +90,7 @@ abstract class abstractView extends Shift1Object implements iView {
      */
     protected function completeViewFilename($file) {
         if(\strpos($file, '.') === false) {
-            $file .= '.' . $this->getApp()->getConfig()->filesystem->defaultViewFileExtension;
+            $file .= '.' . FrontController::getInstance()->getConfig()->filesystem->defaultViewFileExtension;
         }
         return $file;
     }
@@ -102,7 +102,7 @@ abstract class abstractView extends Shift1Object implements iView {
      */
     public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
         if(true === $useDefaultViewFilePath) {
-            $config = $this->getApp()->getConfig();
+            $config = FrontController::getInstance()->getConfig();
             $viewFile = $config->filesystem->defaultViewFolder . '/' . $viewFile;
         }
 

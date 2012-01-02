@@ -4,7 +4,7 @@ namespace Shift1\Core\Service;
 use Shift1\Core\Exceptions\ClassNotFoundException;
 use Shift1\Core\Exceptions\ServiceException;
 
-class ServiceContainer implements iServiceContainer {
+class ServiceContainer implements ServiceContainerInterface {
 
     /**
      * @var array

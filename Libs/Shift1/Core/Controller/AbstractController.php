@@ -1,10 +1,9 @@
 <?php
 namespace Shift1\Core\Controller;
 
-use Shift1\Core\Shift1Object;
 use Shift1\Core\Exceptions\ControllerException;
 
-abstract class AbstractController extends Shift1Object implements iController  {
+abstract class AbstractController implements ControllerInterface  {
 
     /**
      * @var string

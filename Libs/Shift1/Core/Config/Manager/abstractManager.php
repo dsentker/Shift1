@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Config\Manager;
 
-abstract class AbstractManager implements iConfigManager {
+abstract class AbstractManager implements ConfigManagerInterface {
 
     /**
      * @var \ArrayObject

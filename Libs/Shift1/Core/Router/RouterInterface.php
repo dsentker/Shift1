@@ -2,7 +2,9 @@
 
 namespace Shift1\Core\Router;
 
-interface iRouter {
+use Shift1\Core\Router\Route\RouteInterface;
+
+interface RouterInterface {
 
     /**
      * @abstract
@@ -14,9 +16,9 @@ interface iRouter {
     /**
      * @abstract
      * @param string $identifier
-     * @param Route\iRoute $route
+     * @param RouteInterface $route
      * @return void
      */
-    public function addRoute($identifier, Route\iRoute $route);
+    function addRoute($identifier, RouteInterface $route);
 
 }

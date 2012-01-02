@@ -1,14 +1,9 @@
 <?php
 namespace Shift1\Core\Request;
 
-use Shift1\Core\Router\iRouter;
+use Shift1\Core\FrontController;
 
-class HttpRequest extends AbstractRequest {
-
-    /**
-     * @var null|\Shift1\Core\Router\iRouter
-     */
-    protected $router = null;
+class Request extends AbstractRequest {
 
     /**
      * @var array
@@ -41,39 +36,21 @@ class HttpRequest extends AbstractRequest {
     protected $env = array();
 
     /**
-     * @var array
+     * @static
+     * @return Request
      */
-    protected $controller = array();
-
-    /**
-     * @param \Shift1\Core\Router\iRouter $router
-     */
-    public function __construct(iRouter $router) {
-
-        $this->router = $router;
-        $this->setServer($_SERVER);
-        $this->setCookie($_COOKIE);
-        $this->setEnv($_ENV);
-        $this->setFiles($_FILES);
-        $this->setGet($_GET);
-        $this->setPost($_POST);
+    public static function fromGlobals() {
+        $req = new static;
+        $req->setServer($_SERVER);
+        $req->setCookie($_COOKIE);
+        $req->setEnv($_ENV);
+        $req->setFiles($_FILES);
+        $req->setGet($_GET);
+        $req->setPost($_POST);
+        return $req;
     }
 
     /**
-     * @return array
-     */
-    public function assembleController() {
-        $this->setController($this->getRouter()->resolveUri($this->getProjectUri()));
-        return $this->getController();
-    }
-
-    /**
-     * @return null|\Shift1\Core\Router\iRouter
-     */
-    public function getRouter() {
-        return $this->router;
-    }
-
     /**
      * @TODO Implement this method
      * @return void
@@ -104,23 +81,8 @@ class HttpRequest extends AbstractRequest {
     /**
      * @return string
      */
-    public function getProjectUri() {
-        return \str_replace($this->getApp()->getConfig()->route->appWebRoot, '', $this->getDomain() . $this->getRequestUri());
-    }
-
-    /**
-     * @param array $controller
-     * @return void
-     */
-    public function setController($controller) {
-        $this->controller = $controller;
-    }
-
-    /**
-     * @return array
-     */
-    public function getController() {
-        return $this->controller;
+    public function getProjectUri($appWebRoot) {
+        return \str_replace($appWebRoot, '', $this->getDomain() . $this->getRequestUri());
     }
 
     public function setCookie($cookie) {

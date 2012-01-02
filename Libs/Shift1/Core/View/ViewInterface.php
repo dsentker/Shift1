@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\View;
 
-interface iView {
+interface ViewInterface {
 
     /**
      * @abstract

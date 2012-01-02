@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Controller\Factory;
  
-interface iControllerFactory {
+interface ControllerFactoryInterface {
 
     const CONTROLLER_SUFFIX = 'Controller';
 

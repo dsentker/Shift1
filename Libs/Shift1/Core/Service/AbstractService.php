@@ -3,9 +3,8 @@ namespace Shift1\Core\Service;
 
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Exceptions as Exception;
-use Shift1\Core\Shift1Object;
 
-abstract class AbstractService extends Shift1Object implements iService {
+abstract class AbstractService implements ServiceInterface {
 
     /**
      * @var string

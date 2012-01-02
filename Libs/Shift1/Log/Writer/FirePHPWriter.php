@@ -2,6 +2,7 @@
 namespace Shift1\Log\Writer;
 
 use Shift1\Core\Exceptions\LoggerException;
+use Shift1\Core\FrontController;
 use Shift1\Log\Event\Event;
 
 final class FirePHPWriter extends AbstractWriter {
@@ -12,7 +13,7 @@ final class FirePHPWriter extends AbstractWriter {
     private $fbInstance;
 
     public function __construct() {
-        $serviceContainer = $this->getApp()->getServiceContainer();
+        $serviceContainer = FrontController::getInstance()->getServiceContainer();
         if(!$serviceContainer->has('FirePHP')) {
             throw new LoggerException('Can\'t use FirePHPWriter: Service "FirePHP" not found!');
         }

@@ -1,0 +1,26 @@
+#AddDefaultCharset utf-8
+#php_flag magic_quotes_gpc Off
+
+SetEnv APP_ENVIRONMENT development
+
+<files *.ini>
+    order deny,allow
+    deny from all
+</files>
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteBase /shift1/public/
+
+    # force 301 to a single domain if not requested
+    #RewriteCond %{HTTP_HOST} !^www.example.com$ [NC]
+    #RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
+
+    RewriteCond %{SCRIPT_FILENAME} !-f
+    RewriteCond %{SCRIPT_FILENAME} !-d
+
+    #RewriteRule /*\.(css|js|php|php|gif|png|jpe?g)$ - [NC,L]
+    RewriteRule "^(.*)$"    "index.php" [QSA,L]
+
+</IfModule>

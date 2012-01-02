@@ -3,7 +3,7 @@ namespace Shift1\Core\Response;
 
 use Shift1\Core\Response\Header\iHeader;
 
-interface iResponse {
+interface ResponseInterface {
 
     /**
      * @abstract

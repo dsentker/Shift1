@@ -2,7 +2,7 @@
 
 namespace Shift1\Core\Router;
 
-use Shift1\Core\Config\File\iConfigFile;
+use Shift1\Core\Config\File\ConfigFileInterface;
 
 class Router extends AbstractRouter {
 
@@ -11,7 +11,7 @@ class Router extends AbstractRouter {
      * @param \Shift1\Core\Config\File\iConfigFile $file
      * @return Router
      */
-    public static function fromConfig(iConfigFile $file) {
+    public static function fromConfig(ConfigFileInterface $file) {
         $routes = $file->toArray();
         $router = new self();
         foreach($routes as $name => $route) {

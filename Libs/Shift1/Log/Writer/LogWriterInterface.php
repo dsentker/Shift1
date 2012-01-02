@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Log\Writer;
 
-interface iLogWriter {
+interface LogWriterInterface {
 
     /**
      * @return void

@@ -1,20 +1,34 @@
 <?php
+/**
+ *
+ *	SHIFT1 Framework
+ *	(C) 2011 by Daniel Sentker
+ *	Version: 1.0 (pre-alpha)
+ *
+ *	Licensed under MIT License
+ *  see license.txt for further information
+ *
+ *  @package SHIFT1 Framework
+ *  @author Daniel Sentker
+ *
+ */
 namespace Application\Boot;
 
 use Shift1\Core\Config\Manager\Manager as ConfigManager;
-use Shift1\Core\FrontController\FrontController;
+use Shift1\Core\FrontController;
 use Shift1\Core\Router;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Autoloader\Autoloader;
 use Shift1\Core\Config\File;
 use Shift1\Core\Service\ServiceContainer;
-use Shift1\Core\Request\HttpRequest;
+use Shift1\Core\Request\Request;
 use Shift1\Core\Debug;
-use Shift1\Core\App;
 
 class Bootstrapper  {
 
-    public static function init() {
+    protected static function init($environment) {
+
+        define('BASEPATH', \realpath(__DIR__ . '/../../'));
 
         require \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
 
@@ -22,36 +36,57 @@ class Bootstrapper  {
         $shift1Loader->register();
 
         Debug\HTMLResponseExceptionHandler::register();
-        #Debug\SilentExceptionHandler::register();
 
-        /** @var \Shift1\Core\App $app */
-        $app = App::getInstance();
-        $serviceContainer = new ServiceContainer();
-        $app->setServiceContainer($serviceContainer);
+        /** @var $fc \Shift1\Core\FrontController\FrontController */
+        $fc = FrontController::getInstance();
 
-        $configFilePath = new InternalFilePath('Application/Config/AppConfig.ini');
-        $configFile = new File\IniFile($configFilePath, true);
-        $configManager = new ConfigManager($configFile, 'development');
-        $app->setConfig($configManager);
+        $fc->setServiceContainer(new ServiceContainer());
+
+        $configFile = new File\IniFile(new InternalFilePath('Application/Config/AppConfig.ini'), true);
+        $configManager = new ConfigManager($configFile, $environment);
+        $fc->setConfig($configManager);
 
         $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
         $router = Router\Router::fromConfig($routes);
-        $request = new HttpRequest($router);
-        $frontController = new FrontController($request);
-        $app->setFrontController($frontController);
-
-        self::beforeExecute($app);
-        self::executeApp($app);
+        $fc->setRouter($router);
+        
+        return $fc;
 
     }
 
-    public static function beforeExecute(App $app) {
+    public static function runDev() {
+
         \error_reporting(-1);
-        $app->getServiceContainer()->get('Log')->registerErrorHandler(0);
+        \ini_set('display_errors', 1);
+
+        $fc = self::init('development');
+        $fc->getServiceContainer()->get('Log')->registerErrorHandler(false);
+        self::execute($fc);
+    }
+
+    public static function runStaging() {
+        \error_reporting(-1);
+        $fc = self::init('staging');
+        $fc->getServiceContainer()->get('Log')->registerErrorHandler(false);
+        self::execute($fc);
+
+    }
+
+    public static function runProd() {
+
+        \error_reporting(0);
+        \ini_set('display_errors', 0);
+
+        /** @var $fc \Shift1\Core\FrontController\FrontController */
+        $fc = self::init('production');
+        Debug\SilentExceptionHandler::register();
+        self::execute($fc);
     }
 
 
-    protected static function executeApp(App $app) {
-        $app->execute();
+    public static function execute(FrontController $fc) {
+        $request = Request::fromGlobals();
+        $fc->handle($request);
     }
+
 }

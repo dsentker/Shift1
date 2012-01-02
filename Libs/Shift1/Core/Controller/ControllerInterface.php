@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Controller;
 
-interface iController {
+interface ControllerInterface {
 
     /**
      * @abstract
