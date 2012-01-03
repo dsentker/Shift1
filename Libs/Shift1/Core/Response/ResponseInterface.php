@@ -27,7 +27,7 @@ interface ResponseInterface {
 
     /**
      * @abstract
-     * @return Header\iHeader
+     * @return Header\iHeaderInterface
      */
     public function getHeader();
 

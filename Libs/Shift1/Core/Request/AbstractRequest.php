@@ -129,7 +129,10 @@ abstract class AbstractRequest {
      * @return string
      */
     public function getProjectUri($appWebRoot) {
-        return \str_replace($this->getDomain() . $appWebRoot, '', $this->getDomain() . $this->getRequestUri());
+        $requestString = ($this->getIsInternal())
+                            ? $this->getRequestUri()
+                            : $this->getDomain() . $this->getRequestUri();
+        return \str_replace($this->getDomain() . $appWebRoot, '', $requestString);
     }
 
     public function setCookie($cookie) {

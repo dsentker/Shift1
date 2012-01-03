@@ -15,7 +15,7 @@ class ArrayFileTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testInterface() {
-        $this->assertInstanceOf('\Shift1\Core\Config\File\iConfigFile', $this->arrayFile);
+        $this->assertInstanceOf('\Shift1\Core\Config\File\ConfigFileInterface', $this->arrayFile);
     }
 
     public function testAsArray() {

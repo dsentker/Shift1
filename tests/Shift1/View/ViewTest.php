@@ -3,7 +3,7 @@ namespace Shift1Test\View;
 
 use Shift1\Core\View\View;
 use Shift1\Core\InternalFilePath;
-use Shift1\Core\App;
+use Shift1\Core\FrontController;
 use Shift1\Core\Exceptions\ViewException;
 
 class ViewTest extends \PHPUnit_Framework_TestCase {
@@ -14,7 +14,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     protected $view;
 
     public function setUp() {
-        App::getInstance()->getConfig()->filesystem->defaultViewFolder = 'Shift1/View/ViewFiles';
+        FrontController::getInstance()->getConfig()->filesystem->defaultViewFolder = 'Shift1/View/ViewFiles';
         $this->view = new View();
     }
 
@@ -23,7 +23,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testImplementsInterface() {
-        $this->assertInstanceOf('\Shift1\Core\View\iView', $this->view);
+        $this->assertInstanceOf('\Shift1\Core\View\ViewInterface', $this->view);
     }
 
     public function testFileExistString() {
@@ -52,7 +52,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
 
 
         if(null !== $setConfigStrict) {
-            App::getInstance()->getConfig()->view->strict = $setConfigStrict;
+            FrontController::getInstance()->getConfig()->view->strict = $setConfigStrict;
             $exceptedIsStrict = $setConfigStrict;
         } else {
             $exceptedIsStrict = $strict;
@@ -207,7 +207,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase {
         $this->view->wrappedBy($this->view->newSelf('TinyView'));
         $this->assertTrue($this->view->hasWrapper());
         $this->assertEquals('This is a  test!', $this->view->render());
-        $this->assertInstanceOf('\Shift1\Core\View\iView', $this->view->getWrapper());
+        $this->assertInstanceOf('\Shift1\Core\View\ViewInterface', $this->view->getWrapper());
     }
 
     public function testCommon() {

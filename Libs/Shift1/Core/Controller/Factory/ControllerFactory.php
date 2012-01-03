@@ -7,7 +7,7 @@ use Shift1\Core\FrontController;
 class ControllerFactory implements ControllerFactoryInterface {
 
     /**
-     * @var \Shift1\Core\Config\Manager\iConfigManager
+     * @var \Shift1\Core\Config\Manager\ConfigManagerInterface
      */
     protected $config;
 
@@ -31,7 +31,7 @@ class ControllerFactory implements ControllerFactoryInterface {
     }
 
     /**
-     * @return \Shift1\Core\Response\iResponse
+     * @return \Shift1\Core\Response\ResponseInterface
      */
     public function getController() {
 
@@ -56,10 +56,10 @@ class ControllerFactory implements ControllerFactoryInterface {
     }
 
     /**
-     * @param string $controllerFqNs
+     * @param string $controllerName
      * @param string $actionName
      * @param array $params
-     * @return mixed
+     * @return ControllerAggregate
      */
     protected function getControllerInstance($controllerName, $actionName, array $params = array()) {
 
@@ -90,7 +90,7 @@ class ControllerFactory implements ControllerFactoryInterface {
 
         $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionNameSuffixed));
 
-        return \call_user_func_array(array($controller, $actionNameSuffixed), $actionParams);
+        return new ControllerAggregate($controller, $actionNameSuffixed, $actionParams);
     }
 
     /**
@@ -166,7 +166,7 @@ class ControllerFactory implements ControllerFactoryInterface {
      * @param string $controllerName
      * @param null|string $actionName
      * @param array $params
-     * @return \Shift1\Core\Response\ResponseInterface
+     * @return ControllerAggregate An aggregated controller
      */
     public static function createController($controllerName, $actionName = null, array $params = array()) {
         $factory = new self;

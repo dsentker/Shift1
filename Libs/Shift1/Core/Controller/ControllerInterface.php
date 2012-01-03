@@ -1,31 +1,40 @@
 <?php
 namespace Shift1\Core\Controller;
 
+use Shift1\Core\FrontController;
+
 interface ControllerInterface {
 
     /**
      * @abstract
      * @param array $params
      */
-    public function __construct(array $params = array());
+    function __construct(array $params = array());
 
     /**
      * @abstract
      * @param array $params
      * @return void
      */
-    public function setParams(array $params);
+    function setParams(array $params);
 
     /**
      * @abstract
      * @return void
      */
-    public function getParams();
+    function getParams();
 
     /**
      * @abstract
      * @return void
      */
-    public function init();
+    function init();
+
+    /**
+     * @abstract
+     * @param \Shift1\Core\FrontController $fc
+     * @return void
+     */
+    function setFrontController(FrontController $fc);
 
 }

@@ -42,8 +42,7 @@ class Bootstrapper  {
 
         Debug\HTMLResponseExceptionHandler::register();
 
-        /** @var $fc \Shift1\Core\FrontController */
-        $fc = FrontController::getInstance();
+        $fc = new FrontController();
 
         $fc->setServiceContainer(new ServiceContainer());
 

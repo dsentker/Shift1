@@ -22,10 +22,22 @@ abstract class AbstractController implements ControllerInterface  {
     protected $params = array();
 
     /**
+     * @var FrontController
+     */
+    protected $frontController;
+
+    /**
      * @param array $params
+     * @final
      */
     final public function __construct(array $params = array()) {
         $this->params = $params;
+    }
+
+    /**
+     * @return void
+     */
+    public function init() {
     }
 
     /**
@@ -70,13 +82,6 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @return void
-     */
-    public function init() {
-        
-    }
-
-    /**
      * @static
      * @return string
      */
@@ -110,10 +115,18 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
+     * @param \Shift1\Core\FrontController $fc
+     * @return void
+     */
+    public function setFrontController(FrontController $fc) {
+        $this->frontController = $fc;
+    }
+
+    /**
      * @return \Shift1\Core\FrontController
      */
     public function getFrontController() {
-        return FrontController::getInstance();
+        return $this->frontController;
     }
 
     /**

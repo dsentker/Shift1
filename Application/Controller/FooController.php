@@ -1,6 +1,8 @@
 <?php
 namespace Application\Controller;
 
+use Shift1\Core\Response\Response;
+
 class FooController extends ParentController {
 
     public function indexAction() {
@@ -14,7 +16,7 @@ class FooController extends ParentController {
     }
 
     public function testFooAction() {
-        echo 'Test from ::testFooAction()';
+        return new Response($this->view->render());
     }
 
 }

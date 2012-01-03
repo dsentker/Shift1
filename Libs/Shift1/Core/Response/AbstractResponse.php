@@ -8,7 +8,7 @@ use Shift1\Core\Response\Generator\RedirectGenerator;
 abstract class AbstractResponse implements ResponseInterface {
 
     /**
-     * @var null|Header\iHeader
+     * @var null|Header\HeaderInterface
      */
     protected $header = null;
 
@@ -60,14 +60,14 @@ abstract class AbstractResponse implements ResponseInterface {
     }
 
     /**
-     * @return null|Header\iHeader
+     * @return null|Header\HeaderInterface
      */
     public function getHeader() {
         return $this->header;
     }
 
     /**
-     * @return null|Header\Header|Header\iHeader
+     * @return null|Header\HeaderInterface
      */
     public function getHeaderObject() {
         if($this->getHeader() instanceof HeaderInterface) {
@@ -125,7 +125,6 @@ abstract class AbstractResponse implements ResponseInterface {
             $afterSend();
         }
     }
-
 
     /**
      * @static

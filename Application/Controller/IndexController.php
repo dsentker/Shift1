@@ -54,13 +54,16 @@ class IndexController extends ParentController {
     }
 
     public function HMVCAction() {
-        #echo '<pre>';
-        #die(print_r($_SERVER));
-        #not working yet
-        $req = InternalRequest::generate('index_dev.php/Foo/testFoo');
+
+        $req = InternalRequest::generate('/Foo/testFoo/');
+        $fc2 = clone $this->getFrontController();
+
         $response = $this->getFrontController()->handle($req);
-        print_r($response);
-        exit;
+
+
+        $this->view->foo = $response;
+
+        return new Response($this->view->render());
     }
 
 }

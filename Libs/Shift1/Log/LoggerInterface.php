@@ -12,7 +12,7 @@ interface LoggerInterface {
 
     /**
      * @abstract
-     * @return Writer\iLogWriter
+     * @return Writer\LogWriterInterface
      */
     public function getWriter();
 

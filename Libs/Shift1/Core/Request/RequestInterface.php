@@ -5,4 +5,6 @@ interface RequestInterface {
 
     function getProjectUri($appWebRoot);
 
+    function getIsInternal();
+
 }
