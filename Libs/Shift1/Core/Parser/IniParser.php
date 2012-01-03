@@ -54,7 +54,7 @@ namespace Shift1\Core\Parser;
  * you will get an exception.
  *
  */
-class iniParser implements iParser {
+class iniParser implements ParserInterface {
     /**
      * Inheritance marker
      */

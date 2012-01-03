@@ -102,7 +102,7 @@ class FrontController {
     }
 
     /**
-     * @param Service\iServiceContainer $serviceContainer
+     * @param Service\ServiceContainerInterface $serviceContainer
      * @return void
      */
     public function setServiceContainer(ServiceContainerInterface $serviceContainer) {

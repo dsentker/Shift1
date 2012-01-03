@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response\Header;
 
-interface iHeader {
+interface HeaderInterface {
 
     /**
      * @abstract

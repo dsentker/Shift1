@@ -1,14 +1,14 @@
 <?php
 namespace Shift1\Log;
 
-interface iLogger {
+interface LoggerInterface {
 
     /**
      * @abstract
-     * @param Writer\iLogWriter $writer
+     * @param Writer\LogWriterInterface $writer
      * @return void
      */
-    public function addWriter(Writer\iLogWriter $writer);
+    public function addWriter(Writer\LogWriterInterface $writer);
 
     /**
      * @abstract

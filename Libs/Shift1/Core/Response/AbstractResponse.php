@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response;
 
-use Shift1\Core\Response\Header\iHeader;
+use Shift1\Core\Response\Header\HeaderInterface;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Generator\RedirectGenerator;
 
@@ -29,9 +29,9 @@ abstract class AbstractResponse implements ResponseInterface {
 
     /**
      * @param string $content
-     * @param null|Header\iHeader $header
+     * @param null|Header\HeaderInterface $header
      */
-    public function __construct($content, iHeader $header = null) {
+    public function __construct($content, HeaderInterface $header = null) {
         $this->setContent($content);
         if(!\is_null($header)) $this->setHeader($header);
     }
@@ -70,7 +70,7 @@ abstract class AbstractResponse implements ResponseInterface {
      * @return null|Header\Header|Header\iHeader
      */
     public function getHeaderObject() {
-        if($this->getHeader() instanceof iHeader) {
+        if($this->getHeader() instanceof HeaderInterface) {
             return $this->getHeader();
         } else {
             return new Header();

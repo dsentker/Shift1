@@ -26,6 +26,11 @@ use Shift1\Core\Debug;
 
 class Bootstrapper  {
 
+    /**
+     * @static
+     * @param $environment
+     * @return \Shift1\Core\FrontController
+     */
     protected static function init($environment) {
 
         define('BASEPATH', \realpath(__DIR__ . '/../../'));
@@ -37,7 +42,7 @@ class Bootstrapper  {
 
         Debug\HTMLResponseExceptionHandler::register();
 
-        /** @var $fc \Shift1\Core\FrontController\FrontController */
+        /** @var $fc \Shift1\Core\FrontController */
         $fc = FrontController::getInstance();
 
         $fc->setServiceContainer(new ServiceContainer());
@@ -54,6 +59,12 @@ class Bootstrapper  {
 
     }
 
+    /**
+     * Predfined runtime method in
+     * development environment
+     * @static
+     * @return void
+     */
     public static function runDev() {
 
         \error_reporting(-1);
@@ -64,6 +75,12 @@ class Bootstrapper  {
         self::execute($fc);
     }
 
+    /**
+     * Predfined runtime method in
+     * staging environment
+     * @static
+     * @return void
+     */
     public static function runStaging() {
         \error_reporting(-1);
         $fc = self::init('staging');
@@ -72,6 +89,12 @@ class Bootstrapper  {
 
     }
 
+    /**
+     * Predfined runtime method in
+     * production environment
+     * @static
+     * @return void
+     */
     public static function runProd() {
 
         \error_reporting(0);
@@ -79,12 +102,19 @@ class Bootstrapper  {
 
         /** @var $fc \Shift1\Core\FrontController\FrontController */
         $fc = self::init('production');
+
+        // Override the non-silent exception handler
         Debug\SilentExceptionHandler::register();
         self::execute($fc);
     }
 
 
-    public static function execute(FrontController $fc) {
+    /**
+     * @static
+     * @param \Shift1\Core\FrontController $fc
+     * @return mixed
+     */
+    protected static function execute(FrontController $fc) {
         $request = Request::fromGlobals();
         $fc->handle($request);
     }

@@ -3,7 +3,7 @@ namespace Shift1\Log;
 
 use Shift1\Core\Exceptions\LoggerException;
  
-abstract class AbstractLogger implements iLogger {
+abstract class AbstractLogger implements LoggerInterface {
 
     /**
      * @var array

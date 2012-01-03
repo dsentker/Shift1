@@ -3,7 +3,7 @@ namespace Shift1\Core\Response\Header;
 
 use Shift1\Core\Exceptions\ResponseHeaderException;
 
-abstract class AbstractHeader implements iHeader {
+abstract class AbstractHeader implements HeaderInterface {
 
     /**
      * @var array

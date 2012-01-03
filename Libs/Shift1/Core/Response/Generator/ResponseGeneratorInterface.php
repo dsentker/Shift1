@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response\Generator;
 
-interface iResponseGenerator {
+interface ResponseGeneratorInterface {
 
     /**
      * @abstract
