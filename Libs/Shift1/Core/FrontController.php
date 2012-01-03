@@ -4,6 +4,7 @@ namespace Shift1\Core;
 use Shift1\Core\Service\ServiceContainerInterface;
 use Shift1\Core\Config\Manager\ConfigManagerInterface;
 use Shift1\Core\Controller\Factory\ControllerFactory;
+use Shift1\Core\Exceptions\FrontControllerException;
 use Shift1\Core\Request\RequestInterface;
 use Shift1\Core\Router\AbstractRouter;
 
@@ -16,17 +17,17 @@ class FrontController {
 
 
     /**
-     * @var null|\Shift1\Core\Config\Manager\iConfigManager
+     * @var null|\Shift1\Core\Config\Manager\ConfigManagerInterface
      */
     protected $configManager;
 
     /**
-     * @var null|\Shift1\Core\Service\iServiceContainer
+     * @var null|\Shift1\Core\Service\ServiceContainerInterface
      */
     protected $serviceContainer;
 
     /**
-     * @var null|Shift1\Core\Request\iRequest
+     * @var null|Shift1\Core\Request\RequestInterface
      */
     protected $request;
 
@@ -63,6 +64,8 @@ class FrontController {
      * @return mixed
      */
     public function handle(RequestInterface $request) {
+
+        $this->request = $request;
 
         $uri = $request->getProjectUri($this->getConfig()->route->appWebRoot);
         $data = $this->getRouter()->resolveUri($uri);
@@ -132,6 +135,9 @@ class FrontController {
         $this->router = $router;
     }
 
+    /**
+     * @return null|Shift1\Core\Router\AbstractRouter
+     */
     public function getRouter() {
         return $this->router;
     }

@@ -5,15 +5,16 @@ class FooController extends ParentController {
 
     public function indexAction() {
         print_r($this->getParams());
-        return 'index von fooController';
+        return 'index from fooController';
     }
 
     public function barAction() {
-        echo 'Hallo Welt! <pre>';
+        echo 'Hello World! <pre>';
         print_r($this->getParams());
     }
 
+    public function testFooAction() {
+        echo 'Test from ::testFooAction()';
+    }
+
 }
-
-
-?>

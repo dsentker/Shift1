@@ -110,10 +110,17 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
+     * @return \Shift1\Core\FrontController
+     */
+    public function getFrontController() {
+        return FrontController::getInstance();
+    }
+
+    /**
      * @return \Shift1\Core\Service\ServiceContainerInterface
      */
     public function getContainer() {
-        return FrontController::getInstance()->getServiceContainer();
+        return $this->getFrontController()->getServiceContainer();
     }
 
     /**
@@ -132,15 +139,15 @@ abstract class AbstractController implements ControllerInterface  {
      * @return \Shift1\Core\Config\Manager\ConfigManagerInterface
      */
     public function getConfig() {
-        return FrontController::getInstance()->getConfig();
+       return $this->getFrontController()->getConfig();
     }
 
     /**
      * @return \Shift1\Core\Shift1\Core\Request\RequestInterface
      */
     public function getRequest() {
-        return FrontController::getInstance()->getRequest();
+        return $this->getFrontController()->getRequest();
     }
 
-
+    
 }

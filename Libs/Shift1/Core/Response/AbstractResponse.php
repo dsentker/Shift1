@@ -52,10 +52,10 @@ abstract class AbstractResponse implements ResponseInterface {
     }
 
     /**
-     * @param Header\iHeader $header
+     * @param Header\HeaderInterface $header
      * @return void
      */
-    public function setHeader(iHeader $header) {
+    public function setHeader(HeaderInterface $header) {
         $this->header = $header;
     }
 

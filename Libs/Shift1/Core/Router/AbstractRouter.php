@@ -62,8 +62,9 @@ abstract class AbstractRouter implements RouterInterface {
     }
 
     /**
-     * @param string $param
+     * @param $param
      * @return bool
+     *
      * @TODO swap out this functionality
      */
     protected function transformParamValue($param) {
@@ -79,11 +80,12 @@ abstract class AbstractRouter implements RouterInterface {
 
     /**
      * Returns the key and value from given segment.
-     * Returns FALSE if this segment is not a binded parameter.
+     * Returns <i>false</i> if this segment is not a binded parameter.
      * @param string $segment
      * @return array|bool
      */
     protected function getParamFromSegment($segment) {
+
         if(!\strpos($segment, RouteInterface::URI_PARAM_KEY_SEPARATOR) !== false ) {
             return false;
         }
@@ -117,7 +119,7 @@ abstract class AbstractRouter implements RouterInterface {
     /**
      * @throws \Shift1\Core\Exceptions\RouteException
      * @param $identifier
-     * @return Route\iRoute
+     * @return Route\RouteInterface The matched Route object
      */
     public function getRoute($identifier) {
         if(!$this->hasRoute($identifier)) {
@@ -135,8 +137,8 @@ abstract class AbstractRouter implements RouterInterface {
     }
 
     /**
-     * @param string $identifier
-     * @param RouteInterface $route
+     * @param $identifier
+     * @param Route\RouteInterface $route
      * @return void
      */
     public function addRoute($identifier, RouteInterface $route) {
@@ -162,7 +164,7 @@ abstract class AbstractRouter implements RouterInterface {
      */
     public function getMatchingRoute($compareWithUri) {
         foreach($this->getRoutes() as $routeName => $route) {
-            /** @var $route Route\iRoute */
+            /** @var $route Route\RouteInterface */
             #var_dump($route->getSchemeAsPattern());
             if(\preg_match('#' . $route->getSchemeAsPattern() . '#', $compareWithUri)) {
                 return $routeName;

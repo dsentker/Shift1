@@ -5,6 +5,7 @@ use Shift1\Core\Response\Response;
 use Shift1\Core\Exceptions as E;
 use Shift1\Core\View\View;
 use Shift1\Core\FrontController;
+use Shift1\Core\Request\InternalRequest;
 
 class IndexController extends ParentController {
 
@@ -50,6 +51,16 @@ class IndexController extends ParentController {
 
     public function errorAction() {
         \trigger_error('Foo != Bar!');
+    }
+
+    public function HMVCAction() {
+        #echo '<pre>';
+        #die(print_r($_SERVER));
+        #not working yet
+        $req = InternalRequest::generate('index_dev.php/Foo/testFoo');
+        $response = $this->getFrontController()->handle($req);
+        print_r($response);
+        exit;
     }
 
 }

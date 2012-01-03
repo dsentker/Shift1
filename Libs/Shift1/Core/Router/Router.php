@@ -8,7 +8,7 @@ class Router extends AbstractRouter {
 
     /**
      * @static
-     * @param \Shift1\Core\Config\File\iConfigFile $file
+     * @param \Shift1\Core\Config\File\ConfigFileInterface $file
      * @return Router
      */
     public static function fromConfig(ConfigFileInterface $file) {

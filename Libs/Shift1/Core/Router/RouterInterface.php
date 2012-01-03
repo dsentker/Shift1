@@ -15,8 +15,8 @@ interface RouterInterface {
 
     /**
      * @abstract
-     * @param string $identifier
-     * @param RouteInterface $route
+     * @param $identifier
+     * @param Route\RouteInterface $route
      * @return void
      */
     function addRoute($identifier, RouteInterface $route);

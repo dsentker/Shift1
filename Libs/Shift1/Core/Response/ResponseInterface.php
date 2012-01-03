@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response;
 
-use Shift1\Core\Response\Header\iHeader;
+use Shift1\Core\Response\Header\HeaderInterface;
 
 interface ResponseInterface {
 
@@ -20,10 +20,10 @@ interface ResponseInterface {
 
     /**
      * @abstract
-     * @param Header\iHeader $header
+     * @param Header\HeaderInterface $header
      * @return void
      */
-    public function setHeader(iHeader $header);
+    public function setHeader(HeaderInterface $header);
 
     /**
      * @abstract
