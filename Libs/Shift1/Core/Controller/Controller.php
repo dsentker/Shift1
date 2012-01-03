@@ -11,22 +11,15 @@ class Controller extends AbstractController {
     protected $view;
 
     /**
-     * @param array $params
+     * Prepares the view instance
+     * @return void
      */
-    final public function __construct(array $params = array()) {
-        parent::__construct($params);
-    }
-
     public function init() {
         $this->view = new View();
 
         $dispatched = $this->getParam('_dispatched');
 
         $suggestedViewFile = $dispatched['class'] . '/' . $dispatched['action'];
-
-
-        #die($viewDir . '/' . $suggestedViewFile);
-        #die(var_dump($this->getView()->fileExists($viewDir . '/' . $suggestedViewFile)));
 
         if($this->getView()->fileExists($suggestedViewFile)) {
             $this->getView()->setViewFile($suggestedViewFile);
@@ -37,13 +30,6 @@ class Controller extends AbstractController {
             $this->getView()->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', false);
         }
 
-    }
-
-    /**
-     * @return \Shift1\Core\View\View
-     */
-    public function getView() {
-        return $this->view;
     }
 
 }

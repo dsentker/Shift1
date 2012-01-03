@@ -3,6 +3,8 @@ namespace Shift1\Core\Service;
 
 interface ServiceContainerInterface {
 
-    public function has($serviceName);
+    function has($serviceName);
+
+    function get($serviceName);
     
 }

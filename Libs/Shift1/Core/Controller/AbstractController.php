@@ -2,6 +2,7 @@
 namespace Shift1\Core\Controller;
 
 use Shift1\Core\Exceptions\ControllerException;
+use Shift1\Core\FrontController;
 
 abstract class AbstractController implements ControllerInterface  {
 
@@ -23,7 +24,7 @@ abstract class AbstractController implements ControllerInterface  {
     /**
      * @param array $params
      */
-    public function __construct(array $params = array()) {
+    final public function __construct(array $params = array()) {
         $this->params = $params;
     }
 
@@ -99,5 +100,47 @@ abstract class AbstractController implements ControllerInterface  {
         $parts = \explode('\\', $fqClassname);
         return \array_pop($parts);
     }
+
+
+    /**
+     * @return \Shift1\Core\View\View
+     */
+    public function getView() {
+        return $this->view;
+    }
+
+    /**
+     * @return \Shift1\Core\Service\ServiceContainerInterface
+     */
+    public function getContainer() {
+        return FrontController::getInstance()->getServiceContainer();
+    }
+
+    /**
+     * Provides a symfony2-style getter for a
+     * direct access to a specific service from
+     * a controller
+     * 
+     * @param string $serviceName
+     * @return mixed The Service Object
+     */
+    public function get($serviceName) {
+        return $this->getContainer()->get($serviceName);
+    }
+
+    /**
+     * @return \Shift1\Core\Config\Manager\ConfigManagerInterface
+     */
+    public function getConfig() {
+        return FrontController::getInstance()->getConfig();
+    }
+
+    /**
+     * @return \Shift1\Core\Shift1\Core\Request\RequestInterface
+     */
+    public function getRequest() {
+        return FrontController::getInstance()->getRequest();
+    }
+
 
 }

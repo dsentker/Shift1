@@ -37,7 +37,7 @@ class FrontController {
 
     /**
      * @static
-     * @return self
+     * @return FrontController
      */
     static public function getInstance() {
         if (null === self::$instance) {
@@ -80,10 +80,7 @@ class FrontController {
      * @return bool
      */
     protected function validateRequestResult(array $data) {
-        return (
-          isset($data['_controller'])
-          && isset($data['_action'])
-        );
+        return ( isset($data['_controller']) && isset($data['_action']) );
     }
 
         /**
@@ -121,7 +118,7 @@ class FrontController {
     }
 
     /**
-     * @return null|Shift1\Core\Request\iRequest
+     * @return null|Shift1\Core\Request\RequestInterface
      */
     public function getRequest() {
         return $this->request;
