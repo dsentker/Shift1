@@ -17,6 +17,16 @@ abstract class AbstractService implements ServiceInterface {
     protected $path;
 
     /**
+     * @ var array
+     */
+    protected $necessitates = array();
+
+    /**
+     * @var array
+     */
+    protected $injectedServices = array();
+
+    /**
      * @var array
      */
     protected $constructorArgs = array();
@@ -118,6 +128,27 @@ abstract class AbstractService implements ServiceInterface {
         
         $this->prepare($instance);
         return $instance;
+    }
+
+    protected function necessitate($service) {
+        $this->necessitates[] = $service;
+    }
+
+    public function getNecessitatedServices() {
+        return $this->necessitates;
+    }
+
+    public function hasNecessitatesServices() {
+        return (\count($this->necessitates) > 0);
+    }
+
+
+    public function inject($id, $service) {
+        $this->injectedServices[$id] = $service;
+    }
+
+    public function get($serviceId) {
+        return $this->injectedServices[$serviceId];
     }
 
 }

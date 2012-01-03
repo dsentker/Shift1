@@ -26,8 +26,8 @@ class ControllerFactory implements ControllerFactoryInterface {
      */
     protected $controllerName;
 
-    public function __construct() {
-        $this->config = FrontController::getInstance()->getConfig();
+    public function __construct($config) {
+        $this->config = $config;
     }
 
     /**
@@ -35,18 +35,18 @@ class ControllerFactory implements ControllerFactoryInterface {
      */
     public function getController() {
 
-        $controllerNamespace = $this->config->controller->namespace;
+        $controllerNamespace = $this->config->namespace;
         $controllerName = \ucfirst($this->getControllerName());
         $controllerFqNs = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
         
         if(empty($controllerName)) {
-            $controllerName = $this->config->controller->defaultController;
+            $controllerName = $this->config->defaultController;
             $controllerSuffixed = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
             return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
         }
 
         if(!\class_exists($controllerFqNs)) {
-            $controllerName = $this->config->controller->errorController;
+            $controllerName = $this->config->errorController;
             $controllerSuffixed = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
             return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
         }
@@ -163,13 +163,14 @@ class ControllerFactory implements ControllerFactoryInterface {
 
     /**
      * @static
+     * @param Object $config
      * @param string $controllerName
      * @param null|string $actionName
      * @param array $params
-     * @return ControllerAggregate An aggregated controller
+     * @return \Shift1\Core\Response\ResponseInterface
      */
-    public static function createController($controllerName, $actionName = null, array $params = array()) {
-        $factory = new self;
+    public static function createController($config, $controllerName, $actionName = null, array $params = array()) {
+        $factory = new self($config);
         $factory->setControllerName($controllerName);
         $factory->setActionName($actionName);
         $factory->setParams($params);

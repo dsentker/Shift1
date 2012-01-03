@@ -17,6 +17,7 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return AbstractService
      */
     public function get($serviceName) {
+
         $serviceWrapperNS = '\\Application\\Services\\' . \ucfirst($serviceName) . 'Service';
 
         if(!\class_exists($serviceWrapperNS)) {
@@ -27,7 +28,16 @@ class ServiceContainer implements ServiceContainerInterface {
             return $this->getRunningService($serviceName);
         }
 
+        /** @var $serviceWrapper AbstractService */
         $serviceWrapper = new $serviceWrapperNS;
+
+        if($serviceWrapper->hasNecessitatesServices()) {
+            foreach($serviceWrapper->getNecessitatedServices() as $service) {
+                $serviceInstance = $this->get($service);
+                $serviceWrapper->inject($service, $serviceInstance);
+            }
+        }
+
         $instance = $serviceWrapper->getInstance();
         $this->activeServices[$serviceName] = $instance;
         return $instance;

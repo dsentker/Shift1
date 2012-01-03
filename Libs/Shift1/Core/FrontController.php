@@ -64,7 +64,7 @@ class FrontController {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1));
         }
 
-        $controllerAggregate = ControllerFactory::createController($data['_controller'], $data['_action'], $data);
+        $controllerAggregate = ControllerFactory::createController($this->getConfig()->controller, $data['_controller'], $data['_action'], $data);
         $controllerAggregate->getController()->setFrontController($this);
 
         $response = $controllerAggregate->run();

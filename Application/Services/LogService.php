@@ -11,6 +11,9 @@ class LogService extends AbstractService {
     
     public function __construct() {
         $this->setClassNamespace('\Shift1\Log\Logger');
+
+        $this->necessitate('FirePHP');
+
     }
 
     public function prepare(&$logger) {
@@ -19,14 +22,14 @@ class LogService extends AbstractService {
         $fileWriter = new Writer\FileWriter(new InternalFilePath('Application\Logs\log.txt'));
         $fileWriter->setLevel('debug');
 
-        $firePHPWriter = new Writer\FirePHPWriter();
+        $firePHPWriter = new Writer\FirePHPWriter($this->get('FirePHP'));
 
         $screenWriter = new Writer\ScreenWriter();
         #$screenWriter->setLevel('notice');
 
         #$logger->addWriter($fileWriter);
         #$logger->addWriter($screenWriter);
-        #$logger->addWriter($firePHPWriter);
+        $logger->addWriter($firePHPWriter);
         #$logger->addWriter(new Writer\NullWriter());
 
     }

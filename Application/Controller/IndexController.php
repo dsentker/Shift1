@@ -12,8 +12,8 @@ class IndexController extends ParentController {
     public function init() {
         parent::init();
         /** @var \Shift1\Log\Logger $logger */
-        $logger = FrontController::getInstance()->getServiceContainer()->get('Log');
-        $logger->log('IndexController initiated', 'debug');
+        #$logger = FrontController::getInstance()->getServiceContainer()->get('Log');
+        #$logger->log('IndexController initiated', 'debug');
     }
 
     public function indexAction() {
