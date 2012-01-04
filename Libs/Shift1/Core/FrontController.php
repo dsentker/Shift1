@@ -39,7 +39,7 @@ class FrontController {
 
     /**
      * The only purpose to clone a front controller
-     * is a internal request for hmvc actions. So
+     * is a internal request for HMVC actions. So
      * the request must be resetted.
      * 
      * @return void

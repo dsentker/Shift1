@@ -167,7 +167,7 @@ class ControllerFactory implements ControllerFactoryInterface {
      * @param string $controllerName
      * @param null|string $actionName
      * @param array $params
-     * @return \Shift1\Core\Response\ResponseInterface
+     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
     public static function createController($config, $controllerName, $actionName = null, array $params = array()) {
         $factory = new self($config);

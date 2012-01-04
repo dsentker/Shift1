@@ -38,6 +38,9 @@ class ControllerAggregate {
         return $this->controller;
     }
 
+    /**
+     * @return mixed|\Shift1\Core\Response\ResponseInterface
+     */
     public function run() {
         return \call_user_func_array(array($this->getController(), $this->action), $this->actionParams);
     }
