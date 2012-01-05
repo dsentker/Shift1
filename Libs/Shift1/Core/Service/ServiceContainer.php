@@ -6,6 +6,27 @@ use Shift1\Core\Exceptions\ServiceException;
 
 class ServiceContainer implements ServiceContainerInterface {
 
+    const SERVICENAME_SUFFIX = 'Service';
+
+    /**
+     * @var string
+     */
+    protected $serviceNamespace;
+
+    /**
+     * @param string $serviceNamespace
+     */
+    public function __construct($serviceNamespace) {
+        $this->serviceNamespace = \trim($serviceNamespace, '\\');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getServiceNamespace() {
+        return '\\' . $this->serviceNamespace . '\\';
+    }
+
     /**
      * @var array
      */
@@ -18,13 +39,13 @@ class ServiceContainer implements ServiceContainerInterface {
      */
     public function get($serviceName) {
 
-        $serviceWrapperNS = '\\Application\\Services\\' . \ucfirst($serviceName) . 'Service';
+        $serviceWrapperNS = $this->getServiceNamespace() . \ucfirst($serviceName) . self::SERVICENAME_SUFFIX;
 
         if(!\class_exists($serviceWrapperNS)) {
             throw new ClassNotFoundException($serviceWrapperNS . ' not found');
         }
 
-        if($serviceWrapperNS::$isSingleton && $this->serviceIsRunning($serviceName)) {
+        if($serviceWrapperNS::getIsSingleton() && $this->serviceIsRunning($serviceName)) {
             return $this->getRunningService($serviceName);
         }
 
@@ -48,7 +69,7 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     public function has($serviceName) {
-        $serviceWrapperNS = '\\Application\\Services\\' . \ucfirst($serviceName) . 'Service';
+        $serviceWrapperNS = $this->getServiceNamespace() . \ucfirst($serviceName) . self::SERVICENAME_SUFFIX;
         return \class_exists($serviceWrapperNS);
     }
 

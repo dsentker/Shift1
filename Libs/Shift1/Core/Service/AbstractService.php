@@ -142,13 +142,16 @@ abstract class AbstractService implements ServiceInterface {
         return (\count($this->necessitates) > 0);
     }
 
-
     public function inject($id, $service) {
         $this->injectedServices[$id] = $service;
     }
 
     public function get($serviceId) {
         return $this->injectedServices[$serviceId];
+    }
+
+    static public function getIsSingleton() {
+        return self::$isSingleton;
     }
 
 }

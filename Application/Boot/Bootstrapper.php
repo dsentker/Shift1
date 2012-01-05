@@ -44,7 +44,7 @@ class Bootstrapper  {
 
         $fc = new FrontController();
 
-        $fc->setServiceContainer(new ServiceContainer());
+        $fc->setServiceContainer(new ServiceContainer('Application\Services'));
 
         $configFile = new File\IniFile(new InternalFilePath('Application/Config/AppConfig.ini'), true);
         $configManager = new ConfigManager($configFile, $environment);
