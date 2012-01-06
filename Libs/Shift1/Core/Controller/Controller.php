@@ -14,7 +14,7 @@ class Controller extends AbstractController {
      * Prepares the view instance
      * @return void
      */
-    public function init() {
+    public function initView() {
         $this->view = new View();
 
         $dispatched = $this->getParam('_dispatched');

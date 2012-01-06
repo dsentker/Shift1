@@ -1,5 +1,5 @@
 <?php
-namespace Shift1\Core\Service;
+namespace Shift1\Core\Service\Container;
 
 interface ServiceContainerInterface {
 

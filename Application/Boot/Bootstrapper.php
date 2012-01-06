@@ -20,7 +20,7 @@ use Shift1\Core\Router;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Autoloader\Autoloader;
 use Shift1\Core\Config\File;
-use Shift1\Core\Service\ServiceContainer;
+use Shift1\Core\Service\Container\ServiceContainer;
 use Shift1\Core\Request\Request;
 use Shift1\Core\Debug;
 
@@ -44,11 +44,13 @@ class Bootstrapper  {
 
         $fc = new FrontController();
 
+        /** Gets obsolote */
         $fc->setServiceContainer(new ServiceContainer('Application\Services'));
 
         $configFile = new File\IniFile(new InternalFilePath('Application/Config/AppConfig.ini'), true);
         $configManager = new ConfigManager($configFile, $environment);
         $fc->setConfig($configManager);
+        /** End gehts obsolete */
 
         $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
         $router = Router\Router::fromConfig($routes);

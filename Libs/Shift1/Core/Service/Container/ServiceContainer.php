@@ -1,5 +1,5 @@
 <?php
-namespace Shift1\Core\Service;
+namespace Shift1\Core\Service\Container;
 
 use Shift1\Core\Exceptions\ClassNotFoundException;
 use Shift1\Core\Exceptions\ServiceException;

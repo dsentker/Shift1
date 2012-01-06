@@ -38,6 +38,7 @@ abstract class AbstractController implements ControllerInterface  {
      * @return void
      */
     public function init() {
+        $this->initView();
     }
 
     /**
@@ -161,6 +162,12 @@ abstract class AbstractController implements ControllerInterface  {
     public function getRequest() {
         return $this->getFrontController()->getRequest();
     }
+
+    /**
+     * @abstract
+     * @return void
+     */
+    abstract public function initView();
 
     
 }

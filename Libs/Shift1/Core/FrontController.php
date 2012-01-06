@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core;
 
-use Shift1\Core\Service\ServiceContainerInterface;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Config\Manager\ConfigManagerInterface;
 use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\Exceptions\FrontControllerException;
@@ -66,6 +66,7 @@ class FrontController {
 
         $controllerAggregate = ControllerFactory::createController($this->getConfig()->controller, $data['_controller'], $data['_action'], $data);
         $controllerAggregate->getController()->setFrontController($this);
+        $controllerAggregate->getController()->init();
 
         $response = $controllerAggregate->run();
         

@@ -86,8 +86,6 @@ class ControllerFactory implements ControllerFactoryInterface {
 
         $controller->addParam('_dispatched', $dispatched);
 
-        $controller->init();
-
         $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionNameSuffixed));
 
         return new ControllerAggregate($controller, $actionNameSuffixed, $actionParams);
