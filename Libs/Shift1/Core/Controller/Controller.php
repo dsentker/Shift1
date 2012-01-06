@@ -21,13 +21,16 @@ class Controller extends AbstractController {
 
         $suggestedViewFile = $dispatched['class'] . '/' . $dispatched['action'];
 
-        if($this->getView()->fileExists($suggestedViewFile)) {
-            $this->getView()->setViewFile($suggestedViewFile);
-        } elseif($this->getView()->fileExists('/index')) {
-            $this->getView()->setViewFile('index');
-        } else {
-            // No view file detected
-            $this->getView()->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', false);
+        switch(true) {
+            case $this->view->fileExists($suggestedViewFile):
+                $this->getView()->setViewFile($suggestedViewFile);
+                break;
+            case $this->view->fileExists('index'):
+                $this->getView()->setViewFile('index');
+                break;
+            default:
+                // No view file detected
+                $this->getView()->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', false);
         }
 
     }

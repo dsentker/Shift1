@@ -3,6 +3,7 @@ namespace Shift1\Core\Controller;
 
 use Shift1\Core\Exceptions\ControllerException;
 use Shift1\Core\FrontController;
+use Shift1\Core\Request\RequestInterface;
 
 abstract class AbstractController implements ControllerInterface  {
 
@@ -150,17 +151,16 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @return \Shift1\Core\Config\Manager\ConfigManagerInterface
-     */
-    public function getConfig() {
-       return $this->getFrontController()->getConfig();
-    }
-
     /**
      * @return \Shift1\Core\Shift1\Core\Request\RequestInterface
      */
     public function getRequest() {
         return $this->getFrontController()->getRequest();
+    }
+
+    public function internalRequest(RequestInterface $request) {
+        $fc = clone $this->getFrontController();
+        return $fc->handleRequest($request);
     }
 
     /**

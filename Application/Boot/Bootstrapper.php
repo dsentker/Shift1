@@ -118,7 +118,7 @@ namespace Application\Boot {
          */
         protected static function execute(FrontController $fc) {
             $request = Request::fromGlobals();
-            $fc->handle($request);
+            $fc->handleRequest($request);
         }
 
     }

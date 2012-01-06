@@ -48,7 +48,7 @@ class FrontController {
      * @param Request\RequestInterface $request
      * @return void|string
      */
-    public function handle(RequestInterface $request) {
+    public function handleRequest(RequestInterface $request) {
 
         $this->request = $request;
 

@@ -77,7 +77,6 @@ class View extends AbstractView {
      */
     public function newSelf($viewFile = null, $useDefaultViewFilePath = true) {
 
-        // Copy file, path and isStrict, if not defined
         $viewFile = (null === $viewFile) ? $this->getViewFile() : $viewFile;
 
         $newSelf = new self($this->config, $viewFile, $this->isStrict(), $useDefaultViewFilePath);
@@ -119,13 +118,18 @@ class View extends AbstractView {
 	}
 
     /**
-     * @param View $view
+     * @param View|string $view
      * @param string $slotName
-     * @return void
+     * @return ViewInterface
      */
-    public function wrappedBy(self $view, $slotName = 'content') {
+    public function wrappedBy($view, $slotName = 'content') {
+        if(!($view instanceof ViewInterface)) {
+            $view = $this->newSelf($view);
+        }
         $this->wrapperView = $view;
         $this->wrapperSlot = $slotName;
+
+        return $this->wrapperView;
     }
 
     /**

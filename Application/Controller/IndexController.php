@@ -5,7 +5,7 @@ use Shift1\Core\Response\Response;
 use Shift1\Core\Exceptions as E;
 use Shift1\Core\View\View;
 use Shift1\Core\FrontController;
-use Shift1\Core\Request\InternalRequest;
+use Shift1\Core\Request\Request;
 
 class IndexController extends ParentController {
 
@@ -54,15 +54,10 @@ class IndexController extends ParentController {
     }
 
     public function HMVCAction() {
-
-        $req = InternalRequest::generate('/Foo/testFoo/');
-        $fc2 = clone $this->getFrontController();
-
-        $response = $this->getFrontController()->handle($req);
-
-
+        $req = Request::newInternal('/Foo/testFoo/', $this->getRequest());
+        $response = $this->internalRequest($req);
         $this->view->foo = $response;
-
+        $this->view->foo = 'HA';
         return new Response($this->view->render());
     }
 

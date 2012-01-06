@@ -7,7 +7,7 @@ namespace Shift1\Core\Request;
  * array params from a string, eg. server.http_user_agent
  * to get rid of the getter/setter amount
  */
-abstract class AbstractRequest {
+abstract class AbstractRequest implements RequestInterface {
 
     /**
      * @var array
@@ -75,6 +75,26 @@ abstract class AbstractRequest {
     }
 
     /**
+     * @static
+     * @param $requestUri
+     * @param null|RequestInterface $currentRequest
+     * @return null|InternalRequest|InternalRequestInterface
+     */
+    public static function newInternal($requestUri, RequestInterface $currentRequest = null) {
+
+        if(null === $currentRequest) {
+            $newInternal = new static($requestUri);
+        } else {
+            $newInternal = clone $currentRequest;
+            $newInternal->setRequestUri($requestUri);
+        }
+
+        $newInternal->setIsInternal(true);
+        $newInternal->setUserAgent('Shift1');
+        return $newInternal;
+    }
+
+    /**
      * @return bool If the Request was sent via XMLHttpRequest
      */
     public function isXmlHttp() {
@@ -104,9 +124,7 @@ abstract class AbstractRequest {
      * @return string
      */
     public function getDomain() {
-        return (!empty($this->server['SERVER_NAME']))
-                ? $this->server['SERVER_NAME']
-                : $this->server['HTTP_HOST'];
+        return $this->server['HTTP_HOST'];
     }
 
     /**
