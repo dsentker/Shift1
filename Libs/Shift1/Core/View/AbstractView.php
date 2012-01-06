@@ -3,9 +3,9 @@ namespace Shift1\Core\View;
 
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Exceptions\ViewException;
-use Shift1\Core\FrontController;
+use Shift1\Core\Service\ContainerAccess;
 
-abstract class abstractView implements ViewInterface {
+abstract class abstractView implements ViewInterface/*, ContainerAccess */ {
 
     const VAR_KEY_PREFIX = '__';
 
@@ -36,29 +36,29 @@ abstract class abstractView implements ViewInterface {
     protected $throw = true;
 
     /**
-     * @static
-     * @param string $viewFile
-     * @return self
+     * @var StdClass
      */
-    public static function instance($viewFile) {
-        return new static($viewFile);
-    }
-
+    protected $config;
 
     /**
-     * @param null|string $viewFile
-     * @param null|bool $strict
-     * @param bool $useDefaultViewFilePath
+     * @param \StdClass|Object|\ArrayObject $config
+     * @param null|string                   $viewFile
+     * @param null|bool                     $strict
+     * @param boolean                       $useDefaultViewFilePath
      */
-    public function __construct($viewFile = null, $strict = null, $useDefaultViewFilePath = true) {
+    public function __construct($config, $viewFile = null, $strict = null, $useDefaultViewFilePath = true) {
+
+        if(!\is_object($config)) {
+            throw new ViewException('No valid config date given to create a View');
+        }
+        $this->config = $config;
 
         if(!empty($viewFile)) {
             $this->setViewFile($viewFile, $useDefaultViewFilePath);
         }
 
         if(null === $strict) {
-            $config = FrontController::getInstance()->getConfig();
-            $strict = $config->view->strict;
+            $strict = $this->config->strict;
         }
         $this->setStrict($strict);
 	}
@@ -90,7 +90,7 @@ abstract class abstractView implements ViewInterface {
      */
     protected function completeViewFilename($file) {
         if(\strpos($file, '.') === false) {
-            $file .= '.' . FrontController::getInstance()->getConfig()->filesystem->defaultViewFileExtension;
+            $file .= '.' . $this->config->defaultFileExt;
         }
         return $file;
     }
@@ -102,8 +102,7 @@ abstract class abstractView implements ViewInterface {
      */
     public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
         if(true === $useDefaultViewFilePath) {
-            $config = FrontController::getInstance()->getConfig();
-            $viewFile = $config->filesystem->defaultViewFolder . '/' . $viewFile;
+            $viewFile = $this->config->defaultSrcPath . '/' . $viewFile;
         }
 
         $this->viewFile = $this->completeViewFilename($viewFile);

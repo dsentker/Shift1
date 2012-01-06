@@ -29,5 +29,11 @@ interface ServiceInterface {
      * @return void
      */
     function inject($id, $service);
+
+    /**
+     * @abstract
+     * @return void
+     */
+    function initialize();
     
 }

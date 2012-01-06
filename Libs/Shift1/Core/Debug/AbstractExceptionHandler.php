@@ -1,20 +1,29 @@
 <?php
 namespace Shift1\Core\Debug;
 
-abstract class AbstractExceptionHandler {
+use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 
-    final public static function register() {
-        $handler = new static();
-        /*
-         * Remove the leading cross
-         * to uncomment and test this
-         * handler.
-         */
-        #$handler->handle(new \Exception('Test')); exit();
+abstract class AbstractExceptionHandler implements ContainerAccess {
 
-        \set_exception_handler(array($handler, 'handle'));
+    /**
+     * @var \Shift1\Core\Service\Container\ServiceContainerInterface
+     */
+    protected $container;
+
+    final public function register() {
+
+        \set_exception_handler(array($this, 'handle'));
     }
 
     abstract public function handle(\Exception $e);
 
+
+    public function setContainer(ServiceContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function getContainer() {
+        return $this->container;
+    }
 }

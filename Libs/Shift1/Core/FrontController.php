@@ -18,11 +18,6 @@ class FrontController {
 
 
     /**
-     * @var null|\Shift1\Core\Config\Manager\ConfigManagerInterface
-     */
-    protected $configManager;
-
-    /**
      * @var null|\Shift1\Core\Service\ServiceContainerInterface
      */
     protected $serviceContainer;
@@ -57,14 +52,16 @@ class FrontController {
 
         $this->request = $request;
 
-        $uri = $request->getProjectUri($this->getConfig()->route->appWebRoot);
+        $config = $this->getServiceContainer()->get('shift1.config');
+
+        $uri = $request->getProjectUri($config->route->appWebRoot);
         $data = $this->getRouter()->resolveUri($uri);
 
         if($this->validateRequestResult($data) === false) {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1));
         }
 
-        $controllerAggregate = ControllerFactory::createController($this->getConfig()->controller, $data['_controller'], $data['_action'], $data);
+        $controllerAggregate = ControllerFactory::createController($config->controller, $data['_controller'], $data['_action'], $data);
         $controllerAggregate->getController()->setFrontController($this);
         $controllerAggregate->getController()->init();
 
@@ -88,23 +85,8 @@ class FrontController {
         return ( isset($data['_controller']) && isset($data['_action']) );
     }
 
-        /**
-     * @param Config\Manager\ConfigManagerInterface $config
-     * @return void
-     */
-    public function setConfig(ConfigManagerInterface $config) {
-        $this->configManager = $config;
-    }
-
     /**
-     * @return null|Config\Manager\ConfigManagerInterface
-     */
-    public function getConfig() {
-        return $this->configManager;
-    }
-
-    /**
-     * @param Service\ServiceContainerInterface $serviceContainer
+     * @param Service\Container\ServiceContainerInterface $serviceContainer
      * @return void
      */
     public function setServiceContainer(ServiceContainerInterface $serviceContainer) {
@@ -113,10 +95,10 @@ class FrontController {
 
     /**
      * @throws \RuntimeException
-     * @return Service\ServiceContainerInterface
+     * @return Service\Container\ServiceContainerInterface
      */
     public function getServiceContainer() {
-        if(!($this->serviceContainer instanceof Service\ServiceContainerInterface)) {
+        if(!($this->serviceContainer instanceof Service\Container\ServiceContainerInterface)) {
             throw new \RuntimeException('No service container defined');
         }
         return $this->serviceContainer;

@@ -88,6 +88,13 @@ abstract class AbstractService implements ServiceInterface {
     }
 
     /**
+     * @return void
+     */
+    public function initialize() {
+
+    }
+
+    /**
      * @param array $args
      * @return void
      */
@@ -147,11 +154,18 @@ abstract class AbstractService implements ServiceInterface {
     }
 
     public function get($serviceId) {
+        if(empty($this->injectedServices[$serviceId])) {
+           throw new Exception\ServiceException("Service not found: {$serviceId}");
+        }
         return $this->injectedServices[$serviceId];
     }
 
+    /**
+     * @static
+     * @return bool
+     */
     static public function getIsSingleton() {
-        return self::$isSingleton;
+        return static::$isSingleton;
     }
 
 }

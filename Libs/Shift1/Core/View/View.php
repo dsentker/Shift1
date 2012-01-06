@@ -2,7 +2,6 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
-use Shift1\Core\FrontController;
 use Shift1\Core\InternalFilePath;
 
 class View extends AbstractView {
@@ -58,8 +57,7 @@ class View extends AbstractView {
     public function fileExists($file, $useDefaultViewFilePath = true) {
 
         if(true === $useDefaultViewFilePath) {
-            $config = FrontController::getInstance()->getConfig();
-            $file = $config->filesystem->defaultViewFolder . '/' . $file;
+            $file = $this->config->defaultSrcPath . '/' . $file;
         }
 
         if(!($file instanceof InternalFilePath)) {
@@ -82,7 +80,7 @@ class View extends AbstractView {
         // Copy file, path and isStrict, if not defined
         $viewFile = (null === $viewFile) ? $this->getViewFile() : $viewFile;
 
-        $newSelf = new self($viewFile, $this->isStrict(), $useDefaultViewFilePath);
+        $newSelf = new self($this->config, $viewFile, $this->isStrict(), $useDefaultViewFilePath);
 
         if($this->isThrowingExceptions()) {
             $newSelf->enableExceptions();
@@ -143,6 +141,5 @@ class View extends AbstractView {
     public function getWrapper() {
         return $this->wrapperView;
     }
-
 
 }

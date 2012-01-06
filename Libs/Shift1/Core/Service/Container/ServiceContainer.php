@@ -3,6 +3,7 @@ namespace Shift1\Core\Service\Container;
 
 use Shift1\Core\Exceptions\ClassNotFoundException;
 use Shift1\Core\Exceptions\ServiceException;
+use Shift1\Core\Service\ContainerAccess;
 
 class ServiceContainer implements ServiceContainerInterface {
 
@@ -32,6 +33,15 @@ class ServiceContainer implements ServiceContainerInterface {
      */
     protected $activeServices = array();
 
+
+    /**
+     * @param string $serviceName
+     * @return string
+     */
+    protected function transformServiceName($serviceName) {
+        return \ucfirst(\str_replace('.', '\\', (string) $serviceName));
+    }
+
     /**
      * @throws \Shift1\Core\Exceptions\ClassNotFoundException
      * @param string $serviceName
@@ -39,7 +49,8 @@ class ServiceContainer implements ServiceContainerInterface {
      */
     public function get($serviceName) {
 
-        $serviceWrapperNS = $this->getServiceNamespace() . \ucfirst($serviceName) . self::SERVICENAME_SUFFIX;
+        $serviceName = $this->transformServiceName($serviceName);
+        $serviceWrapperNS = $this->getServiceNamespace() . $serviceName . self::SERVICENAME_SUFFIX;
 
         if(!\class_exists($serviceWrapperNS)) {
             throw new ClassNotFoundException($serviceWrapperNS . ' not found');
@@ -59,7 +70,14 @@ class ServiceContainer implements ServiceContainerInterface {
             }
         }
 
+        $serviceWrapper->initialize();
+
         $instance = $serviceWrapper->getInstance();
+
+        if($instance instanceof ContainerAccess) {
+            $instance->setContainer($this);
+        }
+
         $this->activeServices[$serviceName] = $instance;
         return $instance;
     }
@@ -69,7 +87,7 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     public function has($serviceName) {
-        $serviceWrapperNS = $this->getServiceNamespace() . \ucfirst($serviceName) . self::SERVICENAME_SUFFIX;
+        $serviceWrapperNS = $this->getServiceNamespace() . $this->transformServiceName($serviceName) . self::SERVICENAME_SUFFIX;
         return \class_exists($serviceWrapperNS);
     }
 
@@ -78,6 +96,7 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     protected function serviceIsRunning($serviceName) {
+        $serviceName = $this->transformServiceName($serviceName);
         return isset($this->activeServices[$serviceName]);
     }
 
@@ -94,6 +113,11 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return \Shift1\Core\Service\AbstractService
      */
     protected function getRunningService($serviceName) {
+        /*
+         * At this point, the given $serviceName has to
+         * be sanitized / transformed. So there is no need
+         * to transform it again.
+         */
         if(!$this->serviceIsRunning($serviceName)) {
             throw new ServiceException('Service ' . $serviceName . ' is not running now');
         }

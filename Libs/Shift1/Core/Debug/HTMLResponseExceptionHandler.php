@@ -20,9 +20,13 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
                 $codeRows[$line+1] = $row;
             }
         }
-        $view = new View('Libs/Shift1/Core/Resources/Views/exceptionView', true, false);
-        $view->disableExceptions();
 
+        $view = $this->getContainer()->get('shift1.view');
+        
+        /** @var \Shift1\Core\View\View $view */
+        $view->disableExceptions();
+        $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
+        $view->setStrict(true);
         $view->assignArray(array(
                 'e' => $e,
                 'code' => $codeRows,
@@ -38,4 +42,5 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
 
         exit();
     }
+
 }

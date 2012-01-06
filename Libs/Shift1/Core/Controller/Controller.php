@@ -15,8 +15,8 @@ class Controller extends AbstractController {
      * @return void
      */
     public function initView() {
-        $this->view = new View();
 
+        $this->view = $this->get('shift1.view');
         $dispatched = $this->getParam('_dispatched');
 
         $suggestedViewFile = $dispatched['class'] . '/' . $dispatched['action'];
