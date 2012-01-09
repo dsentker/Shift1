@@ -39,7 +39,11 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return string
      */
     protected function transformServiceName($serviceName) {
-        return \ucfirst(\str_replace('.', '\\', (string) $serviceName));
+        $serviceNameParts = \explode('.', $serviceName);
+        foreach($serviceNameParts as &$part) {
+            $part = \ucfirst($part);
+        }
+        return \implode('\\', $serviceNameParts);
     }
 
     /**

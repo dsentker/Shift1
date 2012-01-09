@@ -137,8 +137,28 @@ abstract class AbstractService implements ServiceInterface {
         return $instance;
     }
 
+    /**
+     * @throws \Shift1\Core\Exceptions\ServiceException
+     * @param string|array $service
+     * @return void
+     */
     protected function necessitate($service) {
-        $this->necessitates[] = $service;
+
+        switch(true) {
+            case \is_array($service):
+                foreach($service as $serviceItem) {
+                    $this->necessitate($serviceItem);
+                }
+                break;
+
+            case \is_string($service):
+                $this->necessitates[] = $service;
+                break;
+
+            default:
+                throw new Exception\ServiceException('Unknown Service necessitated by ' . \get_class($this));
+            
+        }
     }
 
     public function getNecessitatedServices() {
