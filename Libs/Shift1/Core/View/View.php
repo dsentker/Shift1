@@ -2,7 +2,9 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\InternalFilePath;
+
 
 class View implements ViewInterface {
 
@@ -44,23 +46,11 @@ class View implements ViewInterface {
      */
     protected $strict;
 
-
-
     /**
-     * @var null|self
-     */
-    protected $wrapperView = null;
-
-    /**
-     * @var null|string
-     */
-    protected $wrapperSlot = null;
-
-    /**
-     * @param \StdClass|Object|\ArrayObject $config
-     * @param null|string                   $viewFile
-     * @param null|bool                     $strict
-     * @param boolean                       $useDefaultViewFilePath
+     * @throws \Shift1\Core\Exceptions\ViewException
+     * @param \StdClass $config
+     * @param Renderer\RendererInterface $renderer
+     * @return \Shift1\Core\View\View
      */
     public function __construct($config, Renderer\RendererInterface $renderer) {
 
@@ -68,7 +58,6 @@ class View implements ViewInterface {
             throw new ViewException('No valid config date given to create a View');
         }
         $this->config = $config;
-
         $this->renderer = $renderer;
 
 	}
@@ -172,7 +161,7 @@ class View implements ViewInterface {
      */
 	public function get($varKey) {
         if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
-            return $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
+            return $this->helper('escapeOutput')->escape($this->viewVars[self::VAR_KEY_PREFIX . $varKey]);
         } else {
             if($this->isStrict()) {
                 \trigger_error(sprintf('View variable "%s" does not exist for ' . $this->getViewFile(), $varKey), E_USER_NOTICE);
@@ -321,38 +310,6 @@ class View implements ViewInterface {
     }
 
     /**
-     * Creates a new view file. This method is callable
-     * from the view file and is useful when a parent
-     * wrapper is defined.
-
-     * @param null|string $viewFile
-     * @param bool $useDefaultViewFilePath
-     * @return View
-     */
-    public function newSelf($viewFile = null, $useDefaultViewFilePath = true) {
-
-        $viewFile = (null === $viewFile) ? $this->getViewFile() : $viewFile;
-
-        $newSelf = new self($this->config, $viewFile, $this->isStrict(), $useDefaultViewFilePath);
-
-        if($this->isThrowingExceptions()) {
-            $newSelf->enableExceptions();
-        } else {
-            $newSelf->disableExceptions();
-        }
-
-        return $newSelf;
-
-    }
-
-    /**
-     * @return self
-     */
-    public function __clone() {
-        return $this->newSelf();
-    }
-
-    /**
 	 * Calls ::getContent() and returns the content
 	 *
 	 * @access Public
@@ -360,7 +317,11 @@ class View implements ViewInterface {
 	 */
 	public function render() {
 
-        $content = $this->getContent();
+        $renderer = $this->getRenderer();
+        $renderer->setTemplate($this->getViewFile());
+        $renderer->setVars($this->getViewVars());
+
+        $content = $this->getRenderer()->render();
 
         if($this->hasWrapper()) {
             $this->getWrapper()->assign($this->wrapperSlot, $content);
@@ -371,33 +332,5 @@ class View implements ViewInterface {
 
 	}
 
-    /**
-     * @param View|string $view
-     * @param string $slotName
-     * @return ViewInterface
-     */
-    public function wrappedBy($view, $slotName = 'content') {
-        if(!($view instanceof ViewInterface)) {
-            $view = $this->newSelf($view);
-        }
-        $this->wrapperView = $view;
-        $this->wrapperSlot = $slotName;
-
-        return $this->wrapperView;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasWrapper() {
-        return $this->wrapperView instanceof ViewInterface;
-    }
-
-    /**
-     * @return null|View
-     */
-    public function getWrapper() {
-        return $this->wrapperView;
-    }
 
 }

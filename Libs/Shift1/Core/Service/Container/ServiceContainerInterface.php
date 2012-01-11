@@ -6,5 +6,7 @@ interface ServiceContainerInterface {
     function has($serviceName);
 
     function get($serviceName);
+
+    function extendServiceNamespace($base);
     
 }

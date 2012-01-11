@@ -15,6 +15,11 @@ class ServiceContainer implements ServiceContainerInterface {
     protected $serviceNamespace;
 
     /**
+     * @var array
+     */
+    protected $activeServices = array();
+
+    /**
      * @param string $serviceNamespace
      */
     public function __construct($serviceNamespace) {
@@ -27,12 +32,6 @@ class ServiceContainer implements ServiceContainerInterface {
     protected function getServiceNamespace() {
         return '\\' . $this->serviceNamespace . '\\';
     }
-
-    /**
-     * @var array
-     */
-    protected $activeServices = array();
-
 
     /**
      * @param string $serviceName
@@ -126,6 +125,17 @@ class ServiceContainer implements ServiceContainerInterface {
             throw new ServiceException('Service ' . $serviceName . ' is not running now');
         }
         return $this->activeServices[$serviceName];
+    }
+
+    /**
+     * To route the container getter to a specific
+     * base namespace
+     * 
+     * @param string $base
+     * @return void
+     */
+    public function extendServiceNamespace($base) {
+        $this->serviceNamespace .= '\\' . \trim($base, '\\');;
     }
 
 }

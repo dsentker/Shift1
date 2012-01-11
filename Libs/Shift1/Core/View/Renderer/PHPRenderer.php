@@ -6,6 +6,16 @@ use Shift1\Core\InternalFilePath;
  
 class PHPRenderer extends AbstractRenderer {
 
+    /**
+     * @var null|self
+     */
+    protected $wrapperView = null;
+
+    /**
+     * @var null|string
+     */
+    protected $wrapperSlot = null;
+
     public function render() {
         $file = $this->getTemplate();
 
