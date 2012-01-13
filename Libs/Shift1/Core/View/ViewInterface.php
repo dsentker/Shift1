@@ -11,4 +11,16 @@ interface ViewInterface {
      */
     public function render();
 
+    /**
+     * @abstract
+     * @return void
+     */
+    function getViewFile();
+
+    /**
+     * @abstract
+     * @return bool
+     */
+    function isThrowingExceptions();
+
 }

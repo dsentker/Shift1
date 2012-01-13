@@ -1,12 +1,12 @@
 <?php
 namespace Shift1\Core\View\Renderer;
 
+use Shift1\Core\View\ViewInterface;
+
 interface RendererInterface {
 
-    function setVars(array $vars);
+    function render(ViewInterface $view);
 
-    function setTemplate($viewFile);
-
-    function render();
+    function getName();
 
 }

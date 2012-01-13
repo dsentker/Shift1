@@ -26,7 +26,7 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
         /** @var \Shift1\Core\View\View $view */
         $view->disableExceptions();
         $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
-        $view->setStrict(true);
+        $view->setIsStrict(true);
         $view->assignArray(array(
                 'e' => $e,
                 'code' => $codeRows,

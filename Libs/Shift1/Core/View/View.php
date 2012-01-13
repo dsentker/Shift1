@@ -3,10 +3,11 @@ namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
+use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\InternalFilePath;
 
 
-class View implements ViewInterface {
+class View implements ViewInterface, ContainerAccess {
 
     const VAR_KEY_PREFIX = '__';
 
@@ -47,6 +48,21 @@ class View implements ViewInterface {
     protected $strict;
 
     /**
+     * @var ServiceContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @var View
+     */
+    protected $parentView;
+
+    /**
+     * @var string
+     */
+    protected $parentSlot;
+
+    /**
      * @throws \Shift1\Core\Exceptions\ViewException
      * @param \StdClass $config
      * @param Renderer\RendererInterface $renderer
@@ -61,6 +77,27 @@ class View implements ViewInterface {
         $this->renderer = $renderer;
 
 	}
+
+    /**
+     * @return \Shift1\Core\Service\Container\ServiceContainerInterface
+     */
+    public function getContainer() {
+        return $this->container;
+    }
+
+    /**
+     * Access to ServiceContainer
+     * This method prevents the access to another service
+     * than viewHelper services
+     *
+     * @param \Shift1\Core\Service\Container\ServiceContainerInterface $container
+     * @return void
+     */
+    public function setContainer(ServiceContainerInterface $container) {
+        $container = clone $container;
+        $container->extendServiceNamespace('ViewHelper');
+        $this->container = $container;
+    }
 
     /**
      * @return null|Renderer\RendererInterface
@@ -104,7 +141,7 @@ class View implements ViewInterface {
     /**
      * @param string $viewFile
      * @param bool $useDefaultViewFilePath
-     * @return self
+     * @return View
      */
     public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
         if(true === $useDefaultViewFilePath) {
@@ -127,7 +164,7 @@ class View implements ViewInterface {
      * @param string $varKey
      * @param mixed $varValue
      * @param bool $overwrite
-     * @return self
+     * @return View
      */
 	public function assign($varKey, $varValue, $overwrite = true) {
 
@@ -146,7 +183,7 @@ class View implements ViewInterface {
     /**
      * @param array $vars
      * @param bool $overwrite
-     * @return self
+     * @return View
      */
 	public function assignArray(array $vars, $overwrite = false) {
         foreach($vars as $key => $var) {
@@ -286,7 +323,7 @@ class View implements ViewInterface {
         // __toString always excepts a string, not an exception.
         $this->disableExceptions();
 
-        $content = $this->getContent();
+        $content = $this->render();
         if($wasThrowing) $this->enableExceptions();
 
         return $content;
@@ -318,19 +355,78 @@ class View implements ViewInterface {
 	public function render() {
 
         $renderer = $this->getRenderer();
-        $renderer->setTemplate($this->getViewFile());
-        $renderer->setVars($this->getViewVars());
 
-        $content = $this->getRenderer()->render();
+        $content = $renderer->render($this);
 
-        if($this->hasWrapper()) {
-            $this->getWrapper()->assign($this->wrapperSlot, $content);
-            $content = $this->getWrapper()->render();
+        if($this->hasParent()) {
+            $this->getParent()->assign($this->getParentSlot(), $content);
+            $content = $this->getParent()->render();
         }
 
         return $content;
 
 	}
 
+    /**
+     * @return bool
+     */
+    public function hasParent() {
+        return $this->parentView instanceof ViewInterface;
+    }
+
+    /**
+     * @return View
+     */
+    public function getParent() {
+        return $this->parentView;
+    }
+
+    public function setParent($parent, $slot = 'content', $useDefaultViewFilePath = true) {
+        if(!($parent instanceof self)) {
+            $parent = clone $this;
+            $parent->setViewFile($parent, $useDefaultViewFilePath);
+        }
+
+        $this->parentView = $parent;
+        $this->parentSlot = $slot;
+
+        return $parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentSlot() {
+        return $this->parentSlot;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStrict() {
+        return $this->strict;
+    }
+
+    /**
+     * @param bool $flag
+     * @return void
+     */
+    public function setIsStrict($flag) {
+        $this->strict = (bool) $flag;
+    }
+
+    public function newInstance($viewFile = null) {
+        $instance = clone $this;
+        $instance->setViewFile($viewFile);
+        return $instance;
+    }
+
+    /**
+     * @param $name
+     * @return mixed The Helper Object
+     */
+    public function helper($name) {
+        return $this->getContainer()->get($name);
+    }
 
 }
