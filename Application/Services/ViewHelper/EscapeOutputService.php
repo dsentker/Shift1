@@ -3,7 +3,7 @@ namespace Application\Services\ViewHelper;
 
 use Shift1\Core\Service\AbstractService;
 
-class EscapeOutput extends AbstractService  {
+class EscapeOutputService extends AbstractService  {
 
     public static $isSingleton = true;
 

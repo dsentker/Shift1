@@ -1,21 +1,21 @@
 <?php
 /** @var \Shift1\Core\View\View $view */
-$view->setParent('Libs/Shift1/Core/Resources/Views/shift1Layout', 'content', false);
+#$view->setParent('Libs/Shift1/Core/Resources/Views/shift1Layout', 'content', false);
 
 ?>
 <h3>Uncaught Exception</h3>
-    <h4><?php echo $this->e->getMessage(); ?></h4>
+    <h4><?php echo $view->e->getMessage(); ?></h4>
     <div class="exception-block">
-        <p>Uncaught <strong><?php echo \get_class($this->e); ?></strong>, Code <?php echo $this->e->getCode(); ?> in <br />
-        File <strong><?php echo \str_replace(BASEPATH, '', $this->e->getFile()); ?></strong>:</p>
+        <p>Uncaught <strong><?php echo \get_class($view->e); ?></strong>, Code <?php echo $view->e->getCode(); ?> in <br />
+        File <strong><?php echo \str_replace(BASEPATH, '', $view->e->getFile()); ?></strong>:</p>
         <code>
-        <?php foreach($this->code as $line => $code) : ?>
-                <span class="row<?php if($this->e->getLine() == $line) echo ' highlight'; ?>"><span class="line"><?php echo $line; ?></span><span class="lineText"><?php echo $code; ?></span></span>
+        <?php foreach($view->code as $line => $code) : ?>
+                <span class="row<?php if($view->e->getLine() == $line) echo ' highlight'; ?>"><span class="line"><?php echo $line; ?></span><span class="lineText"><?php echo $code; ?></span></span>
             <?php endforeach; ?>
         </code>
 
     <h5>Strack Trace</h5>
-        <div class="fixed-width"><?php foreach($this->e->getTrace() as $ct => $trace) :
+        <div class="fixed-width"><?php foreach($view->e->getTrace() as $ct => $trace) :
             $args = array();
             foreach($trace['args'] as $arg) {
                 if(\is_array($arg)) {

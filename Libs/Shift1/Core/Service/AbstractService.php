@@ -119,7 +119,7 @@ abstract class AbstractService implements ServiceInterface {
         $constructorArgs  = $this->getConstructorArgs();
 
         if(empty($this->namespace)) {
-            throw new Exception\ServiceException('No namespace target defined for ' . \get_class(($this)));
+            throw new Exception\ServiceException('No instance available for ' . \get_class($this) . '. No Namespace defined.');
         }
         
         if(!\class_exists($serviceClassName)) {

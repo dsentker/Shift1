@@ -2,6 +2,8 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
+use Shift1\Core\Exceptions\ClassNotFoundException;
+use Shift1\Core\Exceptions\ServiceException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\InternalFilePath;
@@ -198,7 +200,17 @@ class View implements ViewInterface, ContainerAccess {
      */
 	public function get($varKey) {
         if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
-            return $this->helper('escapeOutput')->escape($this->viewVars[self::VAR_KEY_PREFIX . $varKey]);
+            $var = $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
+            try {
+                $escaped = $this->helper('escapeOutput')->escape($var);
+            } catch(ClassNotFoundException $e) {
+                \trigger_error('No variable escaper found: ' . $e->getMessage(), E_USER_NOTICE);
+                return $var;
+            } catch(ServiceException $e) {
+                \trigger_error('escapeOutput is not a valid service: ' . $e->getMessage(), E_USER_NOTICE);
+                return $var;
+            }
+
         } else {
             if($this->isStrict()) {
                 \trigger_error(sprintf('View variable "%s" does not exist for ' . $this->getViewFile(), $varKey), E_USER_NOTICE);
@@ -206,6 +218,10 @@ class View implements ViewInterface, ContainerAccess {
             return null;
         }
 	}
+
+    /**
+     * @TODO getRaw
+     */
 
     /**
      * @param bool $prefixed Wether the keys get with internal prefix or not
@@ -357,7 +373,6 @@ class View implements ViewInterface, ContainerAccess {
         $renderer = $this->getRenderer();
 
         $content = $renderer->render($this);
-
         if($this->hasParent()) {
             $this->getParent()->assign($this->getParentSlot(), $content);
             $content = $this->getParent()->render();

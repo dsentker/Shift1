@@ -2,7 +2,8 @@
 namespace Shift1\Core\Debug;
 
 use Shift1\Core\View\View;
-use Shift1\Core\Response;
+use Shift1\Core\Response\Response;
+use Shift1\Core\Response\Header\Header;
 
 class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
 
@@ -22,25 +23,24 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
         }
 
         $view = $this->getContainer()->get('shift1.view');
-        
         /** @var \Shift1\Core\View\View $view */
         $view->disableExceptions();
         $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
         $view->setIsStrict(true);
         $view->assignArray(array(
-                'e' => $e,
-                'code' => $codeRows,
+            'e' => $e,
+            'code' => $codeRows,
         ));
 
         if(\headers_sent()) {
             exit($view->render());
         }
 
-        $header = new Response\Header\Header(500);
-        $response = new Response\Response($view->render(), $header);
+        $header = new Header(500);
+        $response = new Response($view->render(), $header);
         $response->sendToClient();
 
-        exit();
+        exit;
     }
 
 }

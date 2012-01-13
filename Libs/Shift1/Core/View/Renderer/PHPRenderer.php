@@ -14,15 +14,12 @@ class PHPRenderer extends AbstractRenderer {
         if(empty($template)) {
             \trigger_error('No view file given', \E_USER_ERROR);
         }
-
         $link = new InternalFilePath($template);
-
         if(!$link->exists()) {
             if($view->isThrowingExceptions()) {
                 \trigger_error("View File {$template} not found", \E_USER_ERROR);
             }
         }
-
         \ob_start(null);
         require $link->getAbsolutePath();
         return \ob_get_clean();
