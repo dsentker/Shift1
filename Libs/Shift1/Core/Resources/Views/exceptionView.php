@@ -1,6 +1,6 @@
 <?php
 /** @var \Shift1\Core\View\View $view */
-#$view->setParent('Libs/Shift1/Core/Resources/Views/shift1Layout', 'content', false);
+$view->setParent('Libs/Shift1/Core/Resources/Views/shift1Layout', 'content', false)->assign('pageTitle', 'Exception');
 
 ?>
 <h3>Uncaught Exception</h3>
@@ -10,7 +10,7 @@
         File <strong><?php echo \str_replace(BASEPATH, '', $view->e->getFile()); ?></strong>:</p>
         <code>
         <?php foreach($view->code as $line => $code) : ?>
-                <span class="row<?php if($view->e->getLine() == $line) echo ' highlight'; ?>"><span class="line"><?php echo $line; ?></span><span class="lineText"><?php echo $code; ?></span></span>
+                <span class="row<?php if($view->e->getLine() === $line) echo ' highlight'; ?>"><span class="line"><?php echo $line; ?></span><span class="lineText"><?php echo $code; ?></span></span>
             <?php endforeach; ?>
         </code>
 
@@ -26,7 +26,6 @@
                     $args[] = '\'' . (string) $arg . '\'';
                 }
             }
-
 
             $class =    (empty($trace['class']))    ? ''            : '\\' . $trace['class'];
             $type  =    (empty($trace['type']))     ? ''            : $trace['type'];

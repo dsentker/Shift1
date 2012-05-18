@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Shift1\Core\Response\Response;
+use Shift1\Core\Request\Request;
 
 class FooController extends ParentController {
 
@@ -16,6 +17,13 @@ class FooController extends ParentController {
     }
 
     public function testFooAction() {
+        $req = Request::newInternal('/doubleAttack', $this->getRequest());
+        $response = $this->internalRequest($req);
+        $this->view->insertme = $response;
+        return new Response($this->view->render());
+    }
+
+    public function doublemvcAction() {
         return new Response($this->view->render());
     }
 

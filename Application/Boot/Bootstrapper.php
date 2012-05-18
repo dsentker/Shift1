@@ -48,7 +48,7 @@ namespace Application\Boot {
 
             $serviceContainer->get('shift1.context')->environment = $environment;
 
-            #$serviceContainer->get('shift1.exceptionHandler')->register();
+            $serviceContainer->get('shift1.exceptionHandler')->register(); // hide me if u got problems
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
@@ -73,7 +73,7 @@ namespace Application\Boot {
             \ini_set('display_errors', 1);
 
             $fc = self::init('development');
-            #$fc->getServiceContainer()->get('Log')->registerErrorHandler(false);
+            $fc->getServiceContainer()->get('Log')->registerErrorHandler(false); // hide me if u got problems
             self::execute($fc);
         }
 

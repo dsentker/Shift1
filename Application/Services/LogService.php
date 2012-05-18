@@ -27,9 +27,9 @@ class LogService extends AbstractService {
         $screenWriter = new Writer\ScreenWriter();
         #$screenWriter->setLevel('notice');
 
-        #$logger->addWriter($fileWriter);
+        $logger->addWriter($fileWriter);
         #$logger->addWriter($screenWriter);
-        $logger->addWriter($firePHPWriter);
+        #$logger->addWriter($firePHPWriter);
         #$logger->addWriter(new Writer\NullWriter());
 
     }

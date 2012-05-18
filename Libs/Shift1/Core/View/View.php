@@ -73,10 +73,11 @@ class View implements ViewInterface, ContainerAccess {
     public function __construct($config, Renderer\RendererInterface $renderer) {
 
         if(!\is_object($config)) {
-            throw new ViewException('No valid config date given to create a View');
+            throw new ViewException('No valid config data given to create a View');
         }
         $this->config = $config;
         $this->renderer = $renderer;
+        $this->setIsStrict($config->strict);
 
 	}
 
@@ -195,29 +196,39 @@ class View implements ViewInterface, ContainerAccess {
 	}
 
     /**
-     * @param $varKey
+     * @param mixed $varKey
+     * @param bool $escape Set to TRUE to escape the html output for security purpose
      * @return mixed|null
      */
-	public function get($varKey) {
+	public function get($varKey, $escape = false) {
         if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
             $var = $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
-            try {
-                $escaped = $this->helper('escapeOutput')->escape($var);
-            } catch(ClassNotFoundException $e) {
-                \trigger_error('No variable escaper found: ' . $e->getMessage(), E_USER_NOTICE);
-                return $var;
-            } catch(ServiceException $e) {
-                \trigger_error('escapeOutput is not a valid service: ' . $e->getMessage(), E_USER_NOTICE);
-                return $var;
-            }
 
+            if($escape) {
+                try {
+                    $escaped = $this->helper('escapeOutput')->escapeHtml($var);
+                } catch(ClassNotFoundException $e) {
+                    \trigger_error('No variable escaper found: ' . $e->getMessage(), E_USER_NOTICE);
+                    return $var;
+                } catch(ServiceException $e) {
+                    \trigger_error('escapeOutput is not a valid service: ' . $e->getMessage(), E_USER_NOTICE);
+                    return $var;
+                }
+                return $escaped;
+            } else {
+                return $var; // unescaped
+            }
         } else {
             if($this->isStrict()) {
-                \trigger_error(sprintf('View variable "%s" does not exist for ' . $this->getViewFile(), $varKey), E_USER_NOTICE);
+                \trigger_error(sprintf('View variable "%s" does not exist for %s!', $varKey, $this->getViewFile()), E_USER_NOTICE);
             }
             return null;
         }
 	}
+
+    public function escape($varKey) {
+        return $this->get($varKey, true);
+    }
 
     /**
      * @TODO getRaw
@@ -396,10 +407,17 @@ class View implements ViewInterface, ContainerAccess {
         return $this->parentView;
     }
 
+    /**
+     * @param \Shift1\Core\View\View|string $parent The name of the parent view
+     * @param string $slot The name of the targetted slot in parent view
+     * @param bool $useDefaultViewFilePath
+     * @return View
+     */
     public function setParent($parent, $slot = 'content', $useDefaultViewFilePath = true) {
-        if(!($parent instanceof self)) {
+        if(!($parent instanceof self) && \is_string($parent)) {
+            $viewFile = $parent;
             $parent = clone $this;
-            $parent->setViewFile($parent, $useDefaultViewFilePath);
+            $parent->setViewFile($viewFile, $useDefaultViewFilePath);
         }
 
         $this->parentView = $parent;
@@ -430,6 +448,10 @@ class View implements ViewInterface, ContainerAccess {
         $this->strict = (bool) $flag;
     }
 
+    /**
+     * @param string|null $viewFile The name of the view file
+     * @return View
+     */
     public function newInstance($viewFile = null) {
         $instance = clone $this;
         $instance->setViewFile($viewFile);
@@ -442,6 +464,15 @@ class View implements ViewInterface, ContainerAccess {
      */
     public function helper($name) {
         return $this->getContainer()->get($name);
+    }
+
+    /**
+     * @return void
+     */
+    public function __clone() {
+        $this->parentView = null;
+        $this->parentSlot = null;
+        $this->viewFile = null;
     }
 
 }

@@ -103,7 +103,6 @@ abstract class AbstractRouter implements RouterInterface {
      * @return array|bool
      */
     public function resolveUri($requestUri) {
-
         $routeName = $this->getMatchingRoute($requestUri);
         return $this->fetchParams($requestUri, $routeName);
 

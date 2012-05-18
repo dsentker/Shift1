@@ -32,7 +32,8 @@ class IndexController extends ParentController {
     }
 
     public function viewAction() {
-        # $this->view->sub = 'A text for placeholder "sub"';
+        $this->view->sub = 'A text for placeholder "sub"';
+        $this->view->inVal = $_GET['foo'];
         return new Response($this->getView()->render());
     }
 
@@ -57,8 +58,8 @@ class IndexController extends ParentController {
         $req = Request::newInternal('/Foo/testFoo/', $this->getRequest());
         $response = $this->internalRequest($req);
         $this->view->foo = $response;
-        $this->view->foo = 'HA';
-        return new Response($this->view->render());
+        #$this->view->foo = 'HA';
+        return new Response($this->getView()->render());
     }
 
 }

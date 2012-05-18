@@ -504,3 +504,63 @@
 
 2011-12-13 16:01:42 debug (90): IndexController initiated
 
+2012-05-18 21:45:51 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:46:34 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:46:35 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:46:51 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:47:14 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:47:25 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:47:26 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:48:51 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+2012-05-18 21:48:52 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-05-18 21:50:49 notice (70): Undefined property: Shift1\Core\View\Renderer\PHPRenderer::$content
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,8 +7,8 @@ class EscapeOutputService extends AbstractService  {
 
     public static $isSingleton = true;
 
-    public static function escape($var) {
-        return (\is_string($var)) ? \htmlspecialchars($var) : $var;
+    public function __construct() {
+        $this->setClassNamespace('\Shift1\Core\View\Helper\EscapeOutput');
     }
 
 }

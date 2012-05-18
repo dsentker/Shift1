@@ -121,9 +121,9 @@
 
     <div class="wrapper">
 
-        <h1><?php echo (isset($pageTitle)) ? $pageTitle : 'Message' ?> - SHIFT 1 Framework</h1>
+        <h1><?php echo (isset($view->pageTitle)) ? $view->pageTitle : 'Message' ?> - SHIFT 1 Framework</h1>
 
-        <?php echo $this->content; ?>
+        <?php echo $view->content; ?>
     </div>
 
 </body>

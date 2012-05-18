@@ -7,6 +7,15 @@ testroute:
     _action:
       default: indexvontestroute
 
+doubleAttack:
+  scheme: /doubleAttack
+  bindings:
+    _controller:
+      default: Foo
+
+    _action:
+      default: doublemvc
+
 nocontroller:
   scheme: foo/@_action/
   bindings:
@@ -17,7 +26,7 @@ nocontroller:
       match: s
 
 default:
-  scheme: @_controller/@_action/
+  scheme: /@_controller/@_action/
   bindings:
     _controller:
       default: Index
