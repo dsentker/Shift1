@@ -1,10 +1,10 @@
 <?php
-namespace Shift1\Core\View\Renderer;
+namespace Shift1\Core\Router\ParamConverter;
 
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
-
-abstract class AbstractRenderer implements RendererInterface, ContainerAccess {
+ 
+abstract class AbstractParamConverter implements ParamConverterInterface, ContainerAccess {
 
     protected $container;
 
@@ -15,5 +15,8 @@ abstract class AbstractRenderer implements RendererInterface, ContainerAccess {
     public function getContainer() {
         return $this->container;
     }
+
+
+
 
 }

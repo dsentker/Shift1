@@ -23,12 +23,9 @@ namespace Application\Boot {
     use Shift1\Core\Config\Manager\Manager as ConfigManager;
     use Shift1\Core\FrontController;
     use Shift1\Core\Router;
-    use Shift1\Core\InternalFilePath;
     use Shift1\Core\Autoloader\Autoloader;
-    use Shift1\Core\Config\File;
-    use Shift1\Core\Service\Container\ServiceContainer;
-    use Shift1\Core\Request\Request;
     use Shift1\Core\Debug;
+    use Shift1\Core\Service\Container\ServiceContainer;
 
     class Bootstrapper  {
 
@@ -52,10 +49,6 @@ namespace Application\Boot {
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
-
-            $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
-            $router = Router\Router::fromConfig($routes);
-            $fc->setRouter($router);
 
             return $fc;
 
@@ -117,8 +110,7 @@ namespace Application\Boot {
          * @return mixed
          */
         protected static function execute(FrontController $fc) {
-            $request = Request::fromGlobals();
-            $fc->handleRequest($request);
+            $fc->execute();
         }
 
     }

@@ -23,6 +23,13 @@ interface RouteInterface {
 
     /**
      * @abstract
+     * @param string $bind
+     * @return void
+     */
+    public function hasBinding($bind);
+
+    /**
+     * @abstract
      * @return string
      */
     public function getScheme();
@@ -39,5 +46,11 @@ interface RouteInterface {
      * @return bool
      */
     public function isBindedSegment($routeSegment);
+
+    /**
+     * @abstract
+     * @return array
+     */
+    public function getSchemeSegments();
 
 }

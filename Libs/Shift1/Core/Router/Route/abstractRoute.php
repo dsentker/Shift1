@@ -38,10 +38,14 @@ class AbstractRoute implements RouteInterface {
      * @return array
      */
     public function getBinding($bind) {
-        if(!isset($this->bindings[$bind])) {
+        if(!$this->hasBinding($bind)) {
             throw new RouteException('Route binding "' . $bind . '" does not exist!');
         }
         return $this->bindings[$bind];
+    }
+
+    public function hasBinding($bind) {
+        return isset($this->bindings[$bind]);
     }
 
     /**
@@ -51,17 +55,27 @@ class AbstractRoute implements RouteInterface {
         return $this->scheme;
     }
 
+    public function getSchemeSegments() {
+        return \explode(self::URI_SEGMENT_SEPARATOR, \rtrim($this->getScheme(), self::URI_SEGMENT_SEPARATOR));
+    }
+
     /**
      * @return string An regular expression string to match this route with a subject
      */
     public function getSchemeAsPattern() {
-        $schemeParts = \explode(self::URI_SEGMENT_SEPARATOR, $this->getScheme());
+
         $pattern = array();
 
-        foreach($schemeParts as $position => $segment) {
+        foreach($this->getSchemeSegments() as $position => $segment) {
             if($this->isBindedSegment($segment)) {
                 $bind = \str_replace(self::KEYBINDING_CHAR, '', $segment);
-                $bindingOpts = $this->getBinding($bind);
+
+                try {
+                    $bindingOpts = $this->getBinding($bind);
+                } catch(RouteException $e) {
+                    
+                }
+
 
                 if(!isset($bindingOpts['default'])) {
                     // There is no default value, so this segment is required

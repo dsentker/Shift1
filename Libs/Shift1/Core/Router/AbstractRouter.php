@@ -3,13 +3,39 @@ namespace Shift1\Core\Router;
 
 use Shift1\Core\Router\Route\RouteInterface;
 use Shift1\Core\Exceptions\RouteException;
+use Shift1\Core\Request\RequestInterface;
+use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 
-abstract class AbstractRouter implements RouterInterface {
+
+abstract class AbstractRouter implements RouterInterface, ContainerAccess {
 
     /**
      * @var array
      */
     protected $routes = array();
+
+    /**
+     * @var \Shift1\Core\Request\RequestInterface
+     */
+    protected $request;
+
+    protected $container;
+
+    /**
+     * @param \Shift1\Core\Request\RequestInterface $request
+     */
+    public function __construct(RequestInterface $request) {
+        $this->request = $request;
+    }
+
+    public function setContainer(ServiceContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function getContainer() {
+        return $this->container;
+    }
 
     /**
      * @param string $requestUri
@@ -31,21 +57,33 @@ abstract class AbstractRouter implements RouterInterface {
 
         if(!empty($requestUri)) {
 
-            $requestUriParts = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($requestUri,'/'));
-            $routeParts =      \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($route->getScheme(), RouteInterface::URI_SEGMENT_SEPARATOR));
+            $requestUriParts    = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($requestUri,'/'));
+            $routeParts         = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($route->getScheme(), RouteInterface::URI_SEGMENT_SEPARATOR));
+            $converterFactory   = $this->getContainer()->get('shift1.paramConverterFactory');
+            /** @var $converterFactory \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory */
 
             foreach($requestUriParts as $position => $segment) {
+                /** @var $converter \Shift1\Core\Router\ParamConverter\AbstractParamConverter */
 
                 if(isset($routeParts[$position])) {
+
+                    // check if current route segment is an binding like @slug
                     if($route->isBindedSegment($routeParts[$position])) {
                         $routeKey = \str_replace(RouteInterface::KEYBINDING_CHAR, '', $routeParts[$position]);
-                        $fetched[$routeKey] = $this->transformParamValue($segment);
+                        $bindingOpts = $route->getBinding($routeKey);
+                        $converterName = (isset($bindingOpts['converter'])) ? $bindingOpts['converter'] : null;
+                        $converter = $converterFactory->createConverter($converterName);
+                        $fetched[$routeKey] = $converter->getActionParam($segment);
+
                     } else {
-                        // This segment is just a text value without special purpose. ignore.
+                        // This segment is just a string without special purpose. ignore.
                     }
                 } else {
+
+                    // check if there is something like param:value in segment
                     if($keyValue = $this->getParamFromSegment($segment)) {
-                        $fetched[$keyValue['key']] = $this->transformParamValue($keyValue['value']);
+                        $converter = $converterFactory->createConverter();
+                        $fetched[$keyValue['key']] = $converter->getActionParam($keyValue['value']);
                     }
                 }
                 
@@ -57,25 +95,7 @@ abstract class AbstractRouter implements RouterInterface {
           'pattern' =>  $route->getSchemeAsPattern(),
           'name'    => $routeName,
         );
-        
         return $fetched;
-    }
-
-    /**
-     * @param $param
-     * @return bool
-     *
-     * @TODO swap out this functionality
-     */
-    protected function transformParamValue($param) {
-        if($param === '1' || $param == 'true') {
-            $value = true;
-        } elseif($param === '0' || $param == 'false') {
-            $value = false;
-        } else {
-            $value = $param;
-        }
-        return $value;
     }
 
     /**
@@ -99,10 +119,12 @@ abstract class AbstractRouter implements RouterInterface {
     }
 
     /**
-     * @param string $requestUri
      * @return array|bool
      */
-    public function resolveUri($requestUri) {
+    public function resolve() {
+
+        $requestUri = $this->request->getAppRequestUri();
+
         $routeName = $this->getMatchingRoute($requestUri);
         return $this->fetchParams($requestUri, $routeName);
 
@@ -169,6 +191,79 @@ abstract class AbstractRouter implements RouterInterface {
                 return $routeName;
             }
         }
-        throw new RouteException("Unabble to find a matching route for {$compareWithUri}");
+        throw new RouteException("Unable to find a matching route for {$compareWithUri}");
+    }
+
+    public function getAnchor(array $params, $routeName = 'default') {
+        if(!$this->hasRoute($routeName)) {
+            throw new RouteException("Could not build an anchor: Route Name '{$routeName}' not found!");
+        }
+
+        $route = $this->getRoute($routeName);
+        $routeSegments = $route->getSchemeSegments();
+
+        $converterFactory   = $this->getContainer()->get('shift1.paramConverterFactory');
+        /** @var $converterFactory \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory */
+
+        foreach($routeSegments as &$segment) {
+            if($route->isBindedSegment($segment)) {
+
+                $routeVariableName = \str_replace($route::KEYBINDING_CHAR, '', $segment);
+
+                try {
+                    $bindingOpts = $route->getBinding($routeVariableName);
+                } catch(RouteException $e) {
+                    // param without bindings - who cares?
+                }
+
+                $converterName = (isset($bindingOpts['converter'])) ? $bindingOpts['converter'] : null;
+                $converter = $converterFactory->createConverter($converterName);
+                /** @var $converter \Shift1\Core\Router\ParamConverter\AbstractParamConverter */
+
+                if(\array_key_exists($routeVariableName, $params)) {
+                    // param was given in $param array
+                    $segment = $converter->getUriParam($params[$routeVariableName]);
+                    unset($params[$routeVariableName]);
+                } else {
+                    // param missing
+                    if(isset($bindingOpts['default'])) {
+                        // missing param was given via routing config
+                        $segment = $converter->getUriParam($bindingOpts['default']);
+                    } else {
+                        throw new RouteException("Could not build an anchor: No value for route param '{$segment}' given.");
+                    }
+                }
+            } 
+        }
+
+        $appUri = \implode($route::URI_SEGMENT_SEPARATOR, $routeSegments);
+        if(!empty($params)) {
+
+            $appUri .= $route::URI_SEGMENT_SEPARATOR;
+            foreach($params as $key => $val) {
+
+                if($route->hasBinding($key)) {
+                    $bindingOpts = $route->getBinding($key);
+                    $converterName = (isset($bindingOpts['converter'])) ? $bindingOpts['converter'] : null;
+                    $converter = $converterFactory->createConverter($converterName);
+                    /** @var $converter \Shift1\Core\Router\ParamConverter\AbstractParamConverter */
+                    $convertedVal = $converter->getUriParam($val);
+                } else {
+                    $converter = $converterFactory->createConverter();
+                    /** @var $converter \Shift1\Core\Router\ParamConverter\AbstractParamConverter */
+                    $convertedVal = $converter->getUriParam($val);
+                }
+
+                $appUri .= $key . $route::URI_PARAM_KEY_SEPARATOR . $convertedVal . $route::URI_SEGMENT_SEPARATOR;
+
+
+            }
+        }
+
+        return '//' . $this->request->getAppRootUri() . \rtrim($appUri, $route::URI_SEGMENT_SEPARATOR) . $route::URI_SEGMENT_SEPARATOR;
+
+
+
+
     }
 }

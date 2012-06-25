@@ -41,15 +41,15 @@ abstract class AbstractRequest implements RequestInterface {
 
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $isInternal;
+    protected $appWebRoot;
 
     /**
-     * @param string $requestUri The GET Request string
+     * @param string $appWebRoot The relative uri where this app begins
      */
-    public function __construct($requestUri = '') {
-        $this->server['REQUEST_URI'] = $requestUri;
+    public function __construct($appWebRoot = '/') {
+        $this->appWebRoot = $appWebRoot;
     }
 
     /**
@@ -63,8 +63,8 @@ abstract class AbstractRequest implements RequestInterface {
      * @static
      * @return Request
      */
-    public static function fromGlobals() {
-        $req = new static();
+    public static function fromGlobals($appWebRootUri) {
+        $req = new static($appWebRootUri);
         $req->setServer($_SERVER);
         $req->setCookie($_COOKIE);
         $req->setEnv($_ENV);
@@ -75,49 +75,10 @@ abstract class AbstractRequest implements RequestInterface {
     }
 
     /**
-     * @static
-     * @param $requestUri
-     * @param null|RequestInterface $currentRequest
-     * @return null|InternalRequest|InternalRequestInterface
-     */
-    public static function newInternal($requestUri, RequestInterface $currentRequest = null) {
-
-        if(null === $currentRequest) {
-            $newInternal = new static($requestUri);
-        } else {
-            $newInternal = clone $currentRequest;
-            $newInternal->setRequestUri($requestUri);
-        }
-
-        $newInternal->setIsInternal(true);
-        $newInternal->setUserAgent('Shift1');
-        return $newInternal;
-    }
-
-    /**
      * @return bool If the Request was sent via XMLHttpRequest
      */
     public function isXmlHttp() {
          return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
-    }
-
-    public function setIsInternal($flag = true) {
-        $this->isInternal = (boolean) $flag;
-    }
-
-    public function getIsInternal() {
-        return $this->isInternal;
-    }
-
-    /**
-     * @param null|bool $flag
-     * @return bool
-     */
-    public function isInternal($flag = null) {
-        if(null !== $flag) {
-            $this->setIsInternal($flag);
-        }
-        return $this->getIsInternal();
     }
 
     /**
@@ -143,14 +104,16 @@ abstract class AbstractRequest implements RequestInterface {
     }
 
     /**
-     * @param string $appWebRoot
      * @return string
      */
-    public function getProjectUri($appWebRoot) {
-        $requestString = ($this->getIsInternal())
-                            ? $this->getRequestUri()
-                            : $this->getDomain() . $this->getRequestUri();
-        return \str_replace($this->getDomain() . $appWebRoot, '', $requestString);
+    public function getAppRequestUri() {
+
+        $requestString = $this->getDomain() . $this->getRequestUri();
+        return \str_replace($this->getAppRootUri(), '', $requestString);
+    }
+
+    public function getAppRootUri() {
+        return $this->getDomain() . $this->appWebRoot;
     }
 
     public function setCookie($cookie) {

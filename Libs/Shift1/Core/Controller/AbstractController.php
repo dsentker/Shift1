@@ -2,7 +2,8 @@
 namespace Shift1\Core\Controller;
 
 use Shift1\Core\Exceptions\ControllerException;
-use Shift1\Core\FrontController;
+use Shift1\Core\Service\Container\ServiceContainer;
+use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\Request\RequestInterface;
 
 abstract class AbstractController implements ControllerInterface  {
@@ -23,9 +24,9 @@ abstract class AbstractController implements ControllerInterface  {
     protected $params = array();
 
     /**
-     * @var FrontController
+     * @var ServiceContainer
      */
-    protected $frontController;
+    protected $serviceContainer;
 
     /**
      * @param array $params
@@ -62,7 +63,7 @@ abstract class AbstractController implements ControllerInterface  {
      * @param mixed $defaultReturn
      * @return mixed
      */
-    protected function getParam($paramIdentifier, $defaultReturn = null) {
+    protected function getParam($paramIdentifier, $defaultReturn = false) {
         return ($this->hasParam($paramIdentifier)) ? $this->params[$paramIdentifier] : $defaultReturn;
     }
 
@@ -117,25 +118,18 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @param \Shift1\Core\FrontController $fc
+     * @param \Shift1\Core\Service\Container\ServiceContainer $container
      * @return void
      */
-    public function setFrontController(FrontController $fc) {
-        $this->frontController = $fc;
+    public function setContainer(ServiceContainer $container) {
+        $this->serviceContainer = $container;
     }
 
     /**
-     * @return \Shift1\Core\FrontController
-     */
-    public function getFrontController() {
-        return $this->frontController;
-    }
-
-    /**
-     * @return \Shift1\Core\Service\ServiceContainerInterface
+     * @return \Shift1\Core\Service\ServiceContainer
      */
     public function getContainer() {
-        return $this->getFrontController()->getServiceContainer();
+        return $this->serviceContainer;
     }
 
     /**
@@ -155,12 +149,19 @@ abstract class AbstractController implements ControllerInterface  {
      * @return \Shift1\Core\Shift1\Core\Request\RequestInterface
      */
     public function getRequest() {
-        return $this->getFrontController()->getRequest();
+        return $this->getContainer()->get('shift1.request');
     }
 
-    public function internalRequest(RequestInterface $request) {
-        $fc = clone $this->getFrontController();
-        return $fc->handleRequest($request);
+    /**
+     * @param string $controller The Controller name (no suffix)
+     * @param string $action  The Action name (no suffix)
+     * @param array  $params The params
+     * @return mixed|\Shift1\Core\Response\ResponseInterface
+     */
+    public function internalRequest($controller, $action, $params) {
+        $controllerFactory = $this->get('shift1.controllerFactory');
+        $controllerAggregate = $controllerFactory->createController($controller, $action, $params);
+        return $controllerAggregate->run();
     }
 
     /**

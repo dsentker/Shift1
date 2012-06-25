@@ -1,11 +1,11 @@
-testroute:
-  scheme: testroute/@_controller/@_action
+shortroute:
+  scheme: /(.*)/s
   bindings:
     _controller:
-      default: Testroutecontroller
+      default: Bla
 
     _action:
-      default: indexvontestroute
+      default: index
 
 doubleAttack:
   scheme: /doubleAttack
@@ -17,13 +17,45 @@ doubleAttack:
       default: doublemvc
 
 nocontroller:
-  scheme: foo/@_action/
+  scheme: foo/@_action
   bindings:
     _controller:
       default: Index
     _action:
       default: index
       match: s
+
+paramconvert:
+  scheme: /convert/@test
+  bindings:
+    _controller:
+      default: Foo
+    _action:
+      default: paramConvert
+    test:
+      converter: TestConverter
+
+paramconvertoptional:
+  scheme: /convert2/
+  bindings:
+    _controller:
+      default: Foo
+    _action:
+      default: paramConvert
+    test:
+      converter: TestConverter
+
+example:
+  scheme: /viewpost/@slug
+  bindings:
+    _controller:
+      default: Post
+
+    _action:
+      default: view
+
+    slug:
+      converter: UnderscoreConverter
 
 default:
   scheme: /@_controller/@_action/

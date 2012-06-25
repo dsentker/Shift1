@@ -17,14 +17,18 @@ class FooController extends ParentController {
     }
 
     public function testFooAction() {
-        $req = Request::newInternal('/doubleAttack', $this->getRequest());
-        $response = $this->internalRequest($req);
-        $this->view->insertme = $response;
+        $response = $this->internalRequest('Foo', 'doublemvc', array('Foo' => 'bar'));
+        #var_dump($response->getContent());
+        $this->view->insertme = $response->getContent();
         return new Response($this->view->render());
     }
 
     public function doublemvcAction() {
         return new Response($this->view->render());
+    }
+
+    public function paramConvertAction(\StdClass $test) {
+        return new Response($test->foobar);
     }
 
 }

@@ -3,8 +3,10 @@ namespace Shift1\Core\Controller\Factory;
 
 use Shift1\Core\Response\ResponseInterface;
 use Shift1\Core\FrontController;
+use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 
-class ControllerFactory implements ControllerFactoryInterface {
+class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
     /**
      * @var \Shift1\Core\Config\Manager\ConfigManagerInterface
@@ -26,12 +28,25 @@ class ControllerFactory implements ControllerFactoryInterface {
      */
     protected $controllerName;
 
+    /**
+     * @var ServiceContainerInterface
+     */
+    protected $container;
+
     public function __construct($config) {
         $this->config = $config;
     }
 
+    public function setContainer(ServiceContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function getContainer() {
+        return $this->container;
+    }
+
     /**
-     * @return \Shift1\Core\Response\ResponseInterface
+     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
     public function getController() {
 
@@ -59,7 +74,7 @@ class ControllerFactory implements ControllerFactoryInterface {
      * @param string $controllerName
      * @param string $actionName
      * @param array $params
-     * @return ControllerAggregate
+     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
     protected function getControllerInstance($controllerName, $actionName, array $params = array()) {
 
@@ -85,7 +100,7 @@ class ControllerFactory implements ControllerFactoryInterface {
         );
 
         $controller->addParam('_dispatched', $dispatched);
-
+        $controller->setContainer($this->getContainer());
         $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionNameSuffixed));
 
         return new ControllerAggregate($controller, $actionNameSuffixed, $actionParams);
@@ -101,11 +116,10 @@ class ControllerFactory implements ControllerFactoryInterface {
 
         foreach($action->getParameters() as $param) {
             /** @var $param \ReflectionParameter */
-
             $paramPosition = $param->getPosition();
 
-            if(isset($uriParams[$param->getName()])) {
-                $actionParams[$paramPosition] = $uriParams[$param->getName()];
+            if(isset($params[$param->getName()])) {
+                $actionParams[$paramPosition] = $params[$param->getName()];
             } else {
                 if($param->isDefaultValueAvailable()) {
                     /*
@@ -160,19 +174,16 @@ class ControllerFactory implements ControllerFactoryInterface {
     }
 
     /**
-     * @static
-     * @param Object $config
      * @param string $controllerName
-     * @param null|string $actionName
+     * @param string|null $actionName
      * @param array $params
      * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
-    public static function createController($config, $controllerName, $actionName = null, array $params = array()) {
-        $factory = new self($config);
-        $factory->setControllerName($controllerName);
-        $factory->setActionName($actionName);
-        $factory->setParams($params);
-        return $factory->getController();
+    public function createController($controllerName, $actionName = null, array $params = array()) {
+        $this->setControllerName($controllerName);
+        $this->setActionName($actionName);
+        $this->setParams($params);
+        return $this->getController();
     }
 
 }

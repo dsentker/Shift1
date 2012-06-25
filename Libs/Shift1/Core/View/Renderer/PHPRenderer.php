@@ -20,6 +20,10 @@ class PHPRenderer extends AbstractRenderer {
                 \trigger_error("View File {$template} not found", \E_USER_ERROR);
             }
         }
+
+        $request = $this->getContainer()->get('shift1.request');
+        $router = $this->getContainer()->get('shift1.router');
+
         \ob_start(null);
         require $link->getAbsolutePath();
         return \ob_get_clean();

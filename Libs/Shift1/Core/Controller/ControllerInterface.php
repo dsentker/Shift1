@@ -30,11 +30,4 @@ interface ControllerInterface {
      */
     function init();
 
-    /**
-     * @abstract
-     * @param \Shift1\Core\FrontController $fc
-     * @return void
-     */
-    function setFrontController(FrontController $fc);
-
 }

@@ -23,57 +23,35 @@ class FrontController {
     protected $serviceContainer;
 
     /**
-     * @var null|\Shift1\Core\Request\RequestInterface
-     */
-    protected $request;
-
-    /**
-     * @var null|\Shift1\Core\Router\AbstractRouter
-     */
-    protected $router;
-
-    /**
-     * The only purpose to clone a front controller
-     * is a internal request for HMVC actions. So
-     * the request must be resetted.
-     * 
-     * @return void
-     */
-    public function __clone() {
-        $this->request = null;
-    }
-
-    /**
      * @throws Exceptions\FrontControllerException
-     * @param Request\RequestInterface $request
      * @return void|string
      */
-    public function handleRequest(RequestInterface $request) {
+    public function execute() {
 
-        $this->request = $request;
+        $config  = $this->getServiceContainer()->get('shift1.config');
+        $request = $this->getServiceContainer()->get('shift1.request');
+        $router  = $this->getServiceContainer()->get('shift1.router');
 
-        $config = $this->getServiceContainer()->get('shift1.config');
+        /**
+         * @var $request \Shift1\Core\Request\RequestInterface
+         * @var $router \Shift1\Core\Router\RouterInterface
+         */
 
-        $uri = $request->getProjectUri($config->route->appWebRoot);
-        $data = $this->getRouter()->resolveUri($uri);
+        $data = $router->resolve();
 
         if($this->validateRequestResult($data) === false) {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1));
         }
 
-        $controllerAggregate = ControllerFactory::createController($config->controller, $data['_controller'], $data['_action'], $data);
-        $controllerAggregate->getController()->setFrontController($this);
-        $controllerAggregate->getController()->init();
-
+        $controllerFactory = $this->getServiceContainer()->get('shift1.controllerFactory');
+        /** @var $controllerFactory \Shift1\Core\Controller\Factory\ControllerFactory */
+        $controllerAggregate = $controllerFactory->createController($data['_controller'], $data['_action'], $data);
         $response = $controllerAggregate->run();
         
         if(!($response instanceof ResponseInterface)) {
             throw new FrontControllerException('No response valid given: ' . \var_export($response, 1));
         }
 
-        if($this->getRequest()->getIsInternal()) {
-            return $response->getContent();
-        }
         $response->sendToClient();
     }
 
@@ -104,25 +82,5 @@ class FrontController {
         return $this->serviceContainer;
     }
 
-    /**
-     * @return null|\Shift1\Core\Request\RequestInterface
-     */
-    public function getRequest() {
-        return $this->request;
-    }
 
-    /**
-     * @param Router\AbstractRouter $router
-     * @return void
-     */
-    public function setRouter(AbstractRouter $router) {
-        $this->router = $router;
-    }
-
-    /**
-     * @return null|\Shift1\Core\Router\AbstractRouter
-     */
-    public function getRouter() {
-        return $this->router;
-    }
 }

@@ -17,7 +17,7 @@ class IndexController extends ParentController {
     }
 
     public function indexAction() {
-        return new Response('<pre>' . print_r($this->getParams(), 1));
+        return new Response('<pre>' . print_r($this->getParams(), true));
     }
 
     public function getLogoAction() {
@@ -33,7 +33,7 @@ class IndexController extends ParentController {
 
     public function viewAction() {
         $this->view->sub = 'A text for placeholder "sub"';
-        $this->view->inVal = $_GET['foo'];
+        $this->view->inVal = '">a</a>';
         return new Response($this->getView()->render());
     }
 

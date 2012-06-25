@@ -564,3 +564,626 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-15 23:16:36 notice (70): Undefined index: foo
+2012-06-15 23:16:36 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+2012-06-15 23:16:36 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+2012-06-15 23:16:36 notice (70): Undefined index: foo
+2012-06-15 23:16:36 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+2012-06-15 23:16:36 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+2012-06-15 23:17:17 notice (70): View variable "subs" does not exist for Application/Views/Index/view.php!
+2012-06-15 23:17:17 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+2012-06-15 23:18:29 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+2012-06-15 23:18:49 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+2012-06-15 23:18:50 notice (70): View variable "inVal" does not exist for Application/Views/Index/view.php!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-15 23:46:43 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:43 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:46:43 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:43 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:46:43 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:43 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:46:43 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:43 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:46:44 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:44 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:46:44 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:44 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:46:44 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:44 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:46:44 warn (60): trim() expects parameter 1 to be string, array given
+2012-06-15 23:46:44 warn (60): Invalid argument supplied for foreach()
+
+
+
+
+
+2012-06-15 23:47:48 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:48 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:48 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:48 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:47:48 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:48 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:48 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:48 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+2012-06-15 23:47:49 warn (60): explode() expects parameter 3 to be long, string given
+2012-06-15 23:47:49 warn (60): Invalid argument supplied for foreach()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-20 21:49:06 notice (70): Undefined index:  appWebRoot
+2012-06-20 21:49:06 err (50): Argument 2 passed to Shift1\Core\Router\Router::fromConfig() must implement interface Shift1\Core\Config\File\ConfigFileInterface, none given, called in D:\xampp\xampp\htdocs\shift1\Application\Services\Shift1\RouterService.php on line 23 and defined
+
+2012-06-20 21:53:27 notice (70): Undefined index:  appWebRoot
+2012-06-20 21:53:27 err (50): Argument 2 passed to Shift1\Core\Router\Router::fromConfig() must implement interface Shift1\Core\Config\File\ConfigFileInterface, none given, called in D:\xampp\xampp\htdocs\shift1\Application\Services\Shift1\RouterService.php on line 23 and defined
+
+2012-06-20 21:56:40 notice (70): Undefined index:  appWebRoot
+2012-06-20 21:56:40 err (50): Argument 2 passed to Shift1\Core\Router\Router::fromConfig() must implement interface Shift1\Core\Config\File\ConfigFileInterface, none given, called in D:\xampp\xampp\htdocs\shift1\Application\Services\Shift1\RouterService.php on line 23 and defined
+
+2012-06-20 21:57:20 err (50): Argument 2 passed to Shift1\Core\Router\Router::fromConfig() must implement interface Shift1\Core\Config\File\ConfigFileInterface, none given, called in D:\xampp\xampp\htdocs\shift1\Application\Services\Shift1\RouterService.php on line 23 and defined
+
+2012-06-20 22:00:12 notice (70): Undefined property: Shift1\Core\Request\Request::$isInternal
+
+2012-06-20 22:00:12 notice (70): Undefined property: Shift1\Core\Request\Request::$isInternal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-22 00:35:41 debug (90): Non-static method Shift1\Core\Controller\Factory\ControllerFactory::createController() should not be called statically, assuming $this from incompatible context
+2012-06-22 00:35:41 err (50): Argument 3 passed to Shift1\Core\Controller\Factory\ControllerFactory::createController() must be an array, string given, called in D:\xampp\xampp\htdocs\shift1\Libs\Shift1\Core\FrontController.php on line 47 and defined
+
+2012-06-22 00:35:56 err (50): Argument 3 passed to Shift1\Core\Controller\Factory\ControllerFactory::createController() must be an array, string given, called in D:\xampp\xampp\htdocs\shift1\Libs\Shift1\Core\FrontController.php on line 47 and defined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-22 00:47:26 notice (70): Undefined variable: response
+
+2012-06-22 00:47:29 debug (90): Non-static method Shift1\Core\Controller\Factory\ControllerFactory::createController() should not be called statically, assuming $this from incompatible context
+2012-06-22 00:47:29 err (50): Argument 3 passed to Shift1\Core\Controller\Factory\ControllerFactory::createController() must be an array, string given, called in D:\xampp\xampp\htdocs\shift1\Libs\Shift1\Core\Controller\AbstractController.php on line 163 and defined
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-22 00:59:44 notice (70): View variable "foo" does not exist for Application/Views/index.php!
+
+
+
+2012-06-22 01:02:18 notice (70): View variable "foo" does not exist for Application/Views/index.php!
+
+2012-06-22 01:02:19 notice (70): View variable "foo" does not exist for Application/Views/index.php!
+
+
+
+
+
+
+
+
+
+2012-06-23 17:56:14 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 17:56:29 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 17:56:29 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 17:56:30 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 17:56:39 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-23 18:04:04 debug (90): Declaration of Application\Config\ParamConverter\TestConverter::getIdentificator() should be compatible with that of Shift1\Core\Router\ParamConverter\AbstractParamConverter::getIdentificator()
+2012-06-23 18:04:04 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 18:04:41 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 18:05:01 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+2012-06-23 18:05:20 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+
+
+
+
+
+
+2012-06-23 18:06:06 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+
+
+2012-06-23 18:09:32 err (50): Argument 1 passed to Application\Controller\FooController::paramConvertAction() must be an instance of stdClass, null given
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-25 21:26:55 err (50): Object of class stdClass could not be converted to string
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-25 21:32:02 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:34:29 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:49:23 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:49:24 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:49:24 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:49:24 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:49:39 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:50:01 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:50:02 err (50): Object of class stdClass could not be converted to string
+
+2012-06-25 21:53:00 notice (70): Trying to get property of non-object
+2012-06-25 21:53:00 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:01 notice (70): Trying to get property of non-object
+2012-06-25 21:53:01 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:13 notice (70): Trying to get property of non-object
+2012-06-25 21:53:13 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:20 notice (70): Trying to get property of non-object
+2012-06-25 21:53:20 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:21 notice (70): Trying to get property of non-object
+2012-06-25 21:53:21 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:35 notice (70): Trying to get property of non-object
+2012-06-25 21:53:35 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:45 notice (70): Trying to get property of non-object
+2012-06-25 21:53:45 notice (70): Trying to get property of non-object
+
+2012-06-25 21:53:54 notice (70): Trying to get property of non-object
+2012-06-25 21:53:54 notice (70): Trying to get property of non-object
+
+2012-06-25 21:54:01 notice (70): Trying to get property of non-object
+2012-06-25 21:54:01 notice (70): Trying to get property of non-object
+
+2012-06-25 21:54:26 notice (70): Trying to get property of non-object
+2012-06-25 21:54:26 notice (70): Trying to get property of non-object
+
+2012-06-25 21:54:30 notice (70): Trying to get property of non-object
+2012-06-25 21:54:30 notice (70): Trying to get property of non-object
+
+2012-06-25 21:55:17 notice (70): Trying to get property of non-object
+2012-06-25 21:55:17 notice (70): Trying to get property of non-object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-06-25 22:05:05 notice (70): Trying to get property of non-object
+
+
+

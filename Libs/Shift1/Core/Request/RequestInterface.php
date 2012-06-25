@@ -3,8 +3,10 @@ namespace Shift1\Core\Request;
 
 interface RequestInterface {
 
-    function getProjectUri($appWebRoot);
+    function getAppRequestUri();
 
-    function getIsInternal();
+    function getAppRootUri();
+
+
 
 }

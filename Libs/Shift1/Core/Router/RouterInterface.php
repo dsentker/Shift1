@@ -8,10 +8,9 @@ interface RouterInterface {
 
     /**
      * @abstract
-     * @param string $uri
      * @return array
      */
-    public function resolveUri($uri);
+    public function resolve();
 
     /**
      * @abstract
