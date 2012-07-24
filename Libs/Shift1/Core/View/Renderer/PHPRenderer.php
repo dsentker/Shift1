@@ -3,8 +3,7 @@ namespace Shift1\Core\View\Renderer;
 
 use Shift1\Core\Exceptions\ViewRendererException as RendererException;
 use Shift1\Core\View\ViewInterface;
-use Shift1\Core\InternalFilePath;
- 
+
 class PHPRenderer extends AbstractRenderer {
 
     public function render(ViewInterface $view) {
@@ -14,18 +13,23 @@ class PHPRenderer extends AbstractRenderer {
         if(empty($template)) {
             \trigger_error('No view file given', \E_USER_ERROR);
         }
-        $link = new InternalFilePath($template);
-        if(!$link->exists()) {
+
+        if(!$template->exists()) {
+            $name = $template->getPath();
+            $errorMessage = "View File {$name} not found";
             if($view->isThrowingExceptions()) {
-                \trigger_error("View File {$template} not found", \E_USER_ERROR);
+                throw new RendererException($errorMessage);
+            } else {
+                \trigger_error($errorMessage, \E_USER_ERROR);
             }
         }
 
-        $request = $this->getContainer()->get('shift1.request');
-        $router = $this->getContainer()->get('shift1.router');
+        $request = $view->getContainer()->get('shift1.request');
+        $router  = $view->getContainer()->get('shift1.router');
+        $vars    = $view->getVariableSet();
 
         \ob_start(null);
-        require $link->getAbsolutePath();
+        require $template->getAbsolutePath();
         return \ob_get_clean();
     }
 

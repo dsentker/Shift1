@@ -17,10 +17,10 @@ class FooController extends ParentController {
     }
 
     public function testFooAction() {
-        $response = $this->internalRequest('Foo', 'doublemvc', array('Foo' => 'bar'));
+        #$response = $this->internalRequest('Foo', 'doublemvc', array('Foo' => 'bar'));
         #var_dump($response->getContent());
-        $this->view->insertme = $response->getContent();
-        return new Response($this->view->render());
+        #$this->view->insertme = $response->getContent();
+        return new Response($this->view);
     }
 
     public function doublemvcAction() {

@@ -2,13 +2,11 @@
 namespace Shift1\Core\Router;
 
 use Shift1\Core\Router\Route\RouteInterface;
+use Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory;
 use Shift1\Core\Exceptions\RouteException;
 use Shift1\Core\Request\RequestInterface;
-use Shift1\Core\Service\ContainerAccess;
-use Shift1\Core\Service\Container\ServiceContainerInterface;
 
-
-abstract class AbstractRouter implements RouterInterface, ContainerAccess {
+abstract class AbstractRouter implements RouterInterface {
 
     /**
      * @var array
@@ -20,21 +18,25 @@ abstract class AbstractRouter implements RouterInterface, ContainerAccess {
      */
     protected $request;
 
-    protected $container;
+    /**
+     * @var \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory
+     */
+    protected $paramConverterFactory;
 
     /**
      * @param \Shift1\Core\Request\RequestInterface $request
+     * @param \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory $converterFactory
      */
-    public function __construct(RequestInterface $request) {
+    public function __construct(RequestInterface $request, ParamConverterFactory $converterFactory) {
         $this->request = $request;
+        $this->paramConverterFactory = $converterFactory;
     }
 
-    public function setContainer(ServiceContainerInterface $container) {
-        $this->container = $container;
-    }
-
-    public function getContainer() {
-        return $this->container;
+    /**
+     * @return ParamConverter\Factory\ParamConverterFactory
+     */
+    public function getParamConverterFactory() {
+        return $this->paramConverterFactory;
     }
 
     /**
@@ -59,8 +61,7 @@ abstract class AbstractRouter implements RouterInterface, ContainerAccess {
 
             $requestUriParts    = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($requestUri,'/'));
             $routeParts         = \explode(RouteInterface::URI_SEGMENT_SEPARATOR, \trim($route->getScheme(), RouteInterface::URI_SEGMENT_SEPARATOR));
-            $converterFactory   = $this->getContainer()->get('shift1.paramConverterFactory');
-            /** @var $converterFactory \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory */
+            $converterFactory   = $this->getParamConverterFactory();
 
             foreach($requestUriParts as $position => $segment) {
                 /** @var $converter \Shift1\Core\Router\ParamConverter\AbstractParamConverter */
@@ -201,9 +202,7 @@ abstract class AbstractRouter implements RouterInterface, ContainerAccess {
 
         $route = $this->getRoute($routeName);
         $routeSegments = $route->getSchemeSegments();
-
-        $converterFactory   = $this->getContainer()->get('shift1.paramConverterFactory');
-        /** @var $converterFactory \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory */
+        $converterFactory   = $this->getParamConverterFactory();
 
         foreach($routeSegments as &$segment) {
             if($route->isBindedSegment($segment)) {

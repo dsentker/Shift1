@@ -38,6 +38,14 @@ class InternalFilePath {
         return BASEPATH . \DIRECTORY_SEPARATOR . $this->path;
     }
 
+    public function getPath() {
+        return $this->path;
+    }
+
+    public function getAbsolutePathAsArray() {
+        return \explode(\DIRECTORY_SEPARATOR, $this->getAbsolutePath());
+    }
+
     /**
      * @return string
      */

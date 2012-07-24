@@ -28,12 +28,9 @@ class FrontController {
      */
     public function execute() {
 
-        $config  = $this->getServiceContainer()->get('shift1.config');
-        $request = $this->getServiceContainer()->get('shift1.request');
         $router  = $this->getServiceContainer()->get('shift1.router');
 
         /**
-         * @var $request \Shift1\Core\Request\RequestInterface
          * @var $router \Shift1\Core\Router\RouterInterface
          */
 

@@ -4,22 +4,17 @@ namespace Shift1\Core\View;
 use Shift1\Core\Exceptions\ViewException;
 use Shift1\Core\Exceptions\ClassNotFoundException;
 use Shift1\Core\Exceptions\ServiceException;
+use Shift1\Core\View\ControllerViewReloader\ControllerViewReloader;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Response\Renderable;
 use Shift1\Core\InternalFilePath;
 
 
-class View implements ViewInterface, ContainerAccess {
-
-    const VAR_KEY_PREFIX = '__';
+class View implements ViewInterface, ContainerAccess, Renderable {
 
     /**
-     * @var array
-     */
-    protected $viewVars = array();
-
-    /**
-     * @var string
+     * @var null|InternalFilePath
      */
     protected $viewFile;
 
@@ -45,39 +40,52 @@ class View implements ViewInterface, ContainerAccess {
     protected $renderer;
 
     /**
-     * @var bool
-     */
-    protected $strict;
-
-    /**
      * @var ServiceContainerInterface
      */
     protected $container;
 
     /**
-     * @var View
+     * @var TemplateAnnotationReader\TemplateAnnotationReader
      */
-    protected $parentView;
+    protected $annotationReader;
 
     /**
-     * @var string
+     * @var \Shift1\Core\View\ControllerViewReloader\ControllerViewReloader
      */
-    protected $parentSlot;
+    protected $controllerViewReloader;
 
     /**
-     * @throws \Shift1\Core\Exceptions\ViewException
-     * @param \StdClass $config
+     * @var Shift1\Core\View\VariableSet\VariableSetInterface
+     */
+    protected $variableSet;
+
+    /**
+     * @var array
+     */
+    protected $slots = array();
+
+
+    /**
+     * @param \ArrayObject $config
+     * @param VariableSet\VariableSetInterface $variableSet
      * @param Renderer\RendererInterface $renderer
-     * @return \Shift1\Core\View\View
+     * @param TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader
+     * @param ControllerViewReloader\ControllerViewReloader $controllerViewReloader
+     *
      */
-    public function __construct($config, Renderer\RendererInterface $renderer) {
+    public function __construct(
+        $config,
+        VariableSet\VariableSetInterface $variableSet,
+        Renderer\RendererInterface $renderer,
+        TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader,
+        ControllerViewReloader $controllerViewReloader
+) {
 
-        if(!\is_object($config)) {
-            throw new ViewException('No valid config data given to create a View');
-        }
         $this->config = $config;
+        $this->variableSet = $variableSet;
         $this->renderer = $renderer;
-        $this->setIsStrict($config->strict);
+        $this->annotationReader = $annotationReader;
+        $this->controllerReloader = $controllerViewReloader;
 
 	}
 
@@ -90,16 +98,20 @@ class View implements ViewInterface, ContainerAccess {
 
     /**
      * Access to ServiceContainer
-     * This method prevents the access to another service
-     * than viewHelper services
-     *
+
      * @param \Shift1\Core\Service\Container\ServiceContainerInterface $container
      * @return void
      */
     public function setContainer(ServiceContainerInterface $container) {
-        $container = clone $container;
-        $container->extendServiceNamespace('ViewHelper');
         $this->container = $container;
+    }
+
+
+    /**
+     * @return \Shift1\Core\View\VariableSet\VariableSetInterface
+     */
+    public function getVariableSet() {
+        return $this->variableSet;
     }
 
     /**
@@ -151,13 +163,13 @@ class View implements ViewInterface, ContainerAccess {
             $viewFile = $this->config->defaultSrcPath . '/' . $viewFile;
         }
 
-        $this->viewFile = $this->completeViewFilename($viewFile);
+        $this->viewFile = new InternalFilePath($this->completeViewFilename($viewFile));
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return InternalFilePath
      */
     public function getViewFile() {
         return $this->viewFile;
@@ -166,10 +178,9 @@ class View implements ViewInterface, ContainerAccess {
     /**
      * @param string $varKey
      * @param mixed $varValue
-     * @param bool $overwrite
      * @return View
      */
-	public function assign($varKey, $varValue, $overwrite = true) {
+	public function assign($varKey, $varValue) {
 
         $varKey = \trim($varKey);
 
@@ -177,150 +188,23 @@ class View implements ViewInterface, ContainerAccess {
             throw new ViewException('Assignment failed: Empty keys are not allowed!');
         }
 
-        if(!($this->varKeyExists($varKey) && $overwrite === false)) {
-            $this->viewVars[self::VAR_KEY_PREFIX . $varKey] = $varValue;
-        }
+        $this->variableSet->add($varKey, $varValue);
         return $this;
 	}
 
     /**
      * @param array $vars
-     * @param bool $overwrite
      * @return View
      */
-	public function assignArray(array $vars, $overwrite = false) {
+	public function assignArray(array $vars) {
         foreach($vars as $key => $var) {
-            $this->assign($key, $var, $overwrite);
+            $this->assign($key, $var);
         }
         return $this;
 	}
 
-    /**
-     * @param mixed $varKey
-     * @param bool $escape Set to TRUE to escape the html output for security purpose
-     * @return mixed|null
-     */
-	public function get($varKey, $escape = false) {
-        if(isset($this->viewVars[self::VAR_KEY_PREFIX . $varKey])) {
-            $var = $this->viewVars[self::VAR_KEY_PREFIX . $varKey];
-
-            if($escape) {
-                try {
-                    $escaped = $this->helper('escapeOutput')->escapeHtml($var);
-                } catch(ClassNotFoundException $e) {
-                    \trigger_error('No variable escaper found: ' . $e->getMessage(), E_USER_NOTICE);
-                    return $var;
-                } catch(ServiceException $e) {
-                    \trigger_error('escapeOutput is not a valid service: ' . $e->getMessage(), E_USER_NOTICE);
-                    return $var;
-                }
-                return $escaped;
-            } else {
-                return $var; // unescaped
-            }
-        } else {
-            if($this->isStrict()) {
-                \trigger_error(sprintf('View variable "%s" does not exist for %s!', $varKey, $this->getViewFile()), E_USER_NOTICE);
-            }
-            return null;
-        }
-	}
-
-    public function escape($varKey) {
-        return $this->get($varKey, true);
-    }
-
-    /**
-     * @TODO getRaw
-     */
-
-    /**
-     * @param bool $prefixed Wether the keys get with internal prefix or not
-     * @return array
-     */
-    public function getViewVars($prefixed = false) {
-
-        if($prefixed) {
-            return $this->viewVars;
-        }
-
-        $returnArray = array();
-        foreach($this->viewVars as $key => $value) {
-            $cleanKey = \str_replace(self::VAR_KEY_PREFIX, '', $key);
-            $returnArray[$cleanKey] = $value;
-        }
-
-        return $returnArray;
-
-    }
-
-    /**
-     * @return array
-     */
-    public function getViewKeys() {
-        return \array_keys($this->getViewVars());
-    }
-
-    /**
-     * @return array
-     */
-    public function getViewValues() {
-        return \array_values($this->getViewVars());
-    }
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function varKeyExists($key) {
-        return isset($this->viewVars[self::VAR_KEY_PREFIX . $key]);
-    }
-
-    /**
-     * Just an alias to varKeyExists()
-     * @param string $key
-     * @return bool
-     */
-    public function has($key) {
-        return $this->varKeyExists($key);
-    }
-
-    /**
-     * Just an alias to varKeyExists()
-     * @param string $key
-     * @return bool
-     */
-    public function __isset($key) {
-        return $this->varKeyExists($key);
-    }
-
-    /**
-     * Remove a VarKey. Returns true is the
-     * deletion was successfull.
-     * @param $key
-     * @return bool
-     */
-    public function removeVar($key) {
-        if(isset($this->viewVars[self::VAR_KEY_PREFIX . $key])) {
-            unset($this->viewVars[self::VAR_KEY_PREFIX . $key]);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function __unset($key) {
-        return $this->removeVar($key);
-    }
-
-    /**
-     * @return void
-     */
-    public function clearVars() {
-        $this->viewVars = array();
+    public function helper($service) {
+        return $this->getContainer()->get('viewHelper.' . $service);
     }
 
     /**
@@ -332,13 +216,27 @@ class View implements ViewInterface, ContainerAccess {
         $this->assign($key, $val);
 	}
 
+    public function __clone() {
+        $this->annotationReader = clone $this->annotationReader;
+        $this->slots = array();
+    }
+
     /**
-     * @param string $var
-     * @return mixed|null
+     * @param $slotName
+     * @return mixed
      */
-	public function __get($var) {
-        return $this->get($var);
-	}
+    public function slot($slotName) {
+        return $this->slots[$slotName];
+    }
+
+    /**
+     * @param $slotName
+     * @param mixed $view
+     * @return void
+     */
+    public function setSlot($slotName, $view) {
+        $this->slots[$slotName] = $view;
+    }
 
     /**
      * @return string
@@ -374,19 +272,45 @@ class View implements ViewInterface, ContainerAccess {
     }
 
     /**
-	 * Calls ::getContent() and returns the content
-	 *
-	 * @access Public
-	 * @return string
-	 */
+     * @return string
+     */
+    public function renderPartial() {
+        return $this->getRenderer()->render($this);
+    }
+
+    /**
+     * @return string
+     */
 	public function render() {
 
-        $renderer = $this->getRenderer();
+        $content = $this->getRenderer()->render($this);
 
-        $content = $renderer->render($this);
-        if($this->hasParent()) {
-            $this->getParent()->assign($this->getParentSlot(), $content);
-            $content = $this->getParent()->render();
+        $this->annotationReader->setTemplate($this->getViewFile());
+        $this->annotationReader->parse();
+
+        if($this->annotationReader->hasAnnotation('hasParent') && $this->annotationReader->hasAnnotationParameterCount('hasParent', 2) ) {
+
+            $parentViewOptions = $this->annotationReader->getAnnotationParameter('hasParent');
+            $parentViewFile = $parentViewOptions[0];
+            $parentViewSlot = $parentViewOptions[1];
+
+            if($this->annotationReader->hasAnnotation('renderedByController')) {
+                if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
+                    $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
+                    $parentView = $this->controllerViewReloader->loadByControllerDefinition($definition[0]);
+                } else {
+                    $parentView = $this->controllerViewReloader->loadByTemplateLocation($parentViewFile);
+                }
+
+            } else {
+                // no controller for this parent view
+                $parentView = clone $this;
+                $parentView->setViewFile($parentViewFile);
+            }
+
+            $parentView->setSlot($parentViewSlot, $content);
+            $content = $parentView->render();
+            
         }
 
         return $content;
@@ -394,85 +318,28 @@ class View implements ViewInterface, ContainerAccess {
 	}
 
     /**
+     * @param string $controller
+     * @param string $action
      * @return bool
      */
-    public function hasParent() {
-        return $this->parentView instanceof ViewInterface;
-    }
+    public function setActionView($controller, $action) {
 
-    /**
-     * @return View
-     */
-    public function getParent() {
-        return $this->parentView;
-    }
+        $suggestedViewFile = $controller . '/' . $action;
 
-    /**
-     * @param \Shift1\Core\View\View|string $parent The name of the parent view
-     * @param string $slot The name of the targetted slot in parent view
-     * @param bool $useDefaultViewFilePath
-     * @return View
-     */
-    public function setParent($parent, $slot = 'content', $useDefaultViewFilePath = true) {
-        if(!($parent instanceof self) && \is_string($parent)) {
-            $viewFile = $parent;
-            $parent = clone $this;
-            $parent->setViewFile($viewFile, $useDefaultViewFilePath);
+        switch(true) {
+            case $this->fileExists($suggestedViewFile):
+                $this->setViewFile($suggestedViewFile);
+                break;
+            case $this->fileExists('index'):
+                $this->setViewFile('index');
+                break;
+            default:
+                // No view file detected
+                $this->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', false);
+                return false;
         }
 
-        $this->parentView = $parent;
-        $this->parentSlot = $slot;
-
-        return $parent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getParentSlot() {
-        return $this->parentSlot;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isStrict() {
-        return $this->strict;
-    }
-
-    /**
-     * @param bool $flag
-     * @return void
-     */
-    public function setIsStrict($flag) {
-        $this->strict = (bool) $flag;
-    }
-
-    /**
-     * @param string|null $viewFile The name of the view file
-     * @return View
-     */
-    public function newInstance($viewFile = null) {
-        $instance = clone $this;
-        $instance->setViewFile($viewFile);
-        return $instance;
-    }
-
-    /**
-     * @param $name
-     * @return mixed The Helper Object
-     */
-    public function helper($name) {
-        return $this->getContainer()->get($name);
-    }
-
-    /**
-     * @return void
-     */
-    public function __clone() {
-        $this->parentView = null;
-        $this->parentSlot = null;
-        $this->viewFile = null;
+        return true;
     }
 
 }

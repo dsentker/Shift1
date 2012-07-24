@@ -2,6 +2,7 @@
 namespace Shift1\Core\Debug;
 
 use Shift1\Core\View\View;
+use Shift1\Core\View\ViewInterface;
 use Shift1\Core\Response\Response;
 use Shift1\Core\Response\Header\Header;
 
@@ -10,6 +11,28 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
     const FETCH_LINES_BEFORE = 6;
 
     const FETCH_LINES_AFTER = 3;
+
+    /**
+     * @var \Shift1\Core\View\ViewInterface|\Shift1\Core\View\View
+     */
+    protected $exceptionView;
+
+    /**
+     * @param \Shift1\Core\View\ViewInterface $view
+     * @return void
+     */
+    public function setExceptionView(ViewInterface $view) {
+        if($view instanceof View) {
+            $view->disableExceptions();
+            $view->setIsStrict(true);
+
+        }
+        $this->exceptionView = $view;
+    }
+
+    public function getExceptionView() {
+        return $this->exceptionView;
+    }
 
     public function handle(\Exception $e) {
         $codeLine = $e->getLine();
@@ -22,22 +45,18 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
             }
         }
 
-        $view = $this->getContainer()->get('shift1.view');
-        /** @var \Shift1\Core\View\View $view */
-        $view->disableExceptions();
-        $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
-        $view->setIsStrict(true);
-        $view->assignArray(array(
+
+        $this->getExceptionView()->assignArray(array(
             'e' => $e,
             'code' => $codeRows,
         ));
 
         if(\headers_sent()) {
-            exit($view->render());
+            exit($this->getExceptionView()->render());
         }
 
         $header = new Header(500);
-        $response = new Response($view->render(), $header);
+        $response = new Response($this->getExceptionView()->render(), $header);
         $response->sendToClient();
 
         exit;

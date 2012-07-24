@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SHIFT1 PHP Framework Test page</title>
+    <title>Sample Blog</title>
+    <style>
+        body {
+            background-color: #eee;
+            font-family: Arial;
+            font-size: 11px;
+            color: #444;
+        }
+        .wrapper {
+            width: 760px;
+            margin: 0 auto;
+            background: #fff none;
+            padding: 20px;
+            box-shadow: 0 0 4px #aaa;
+        }
+    </style>
 </head>
+
 <body>
-<h1>index.php Test page</h1>
-<p>Hello, World...</p>
 
-<p>Testing $view->foo : <br />
-<?php echo $view->foo; ?></p>
-<p>This a paragraph between $view->foo and $view->content.</p>
-<?php echo $view->content; ?>
+    <div class="wrapper">
 
-<p style="border-top: 1px solid #aaa;">This is the last paragraph</p>
+        <div id="content">
+            <?= $view->slot('content') ?>
+        </div>
+
+    </div>
 </body>
 </html>

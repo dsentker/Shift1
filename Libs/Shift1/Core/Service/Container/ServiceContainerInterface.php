@@ -7,6 +7,4 @@ interface ServiceContainerInterface {
 
     function get($serviceName);
 
-    function extendServiceNamespace($base);
-    
 }

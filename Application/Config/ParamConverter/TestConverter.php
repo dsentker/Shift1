@@ -11,7 +11,9 @@ class TestConverter extends AbstractParamConverter {
 
     public function getActionParam($identificator) {
         $class = new \StdClass();
-        $class->foobar = 'This is a converter test';
+        $class->title = 'I am a blog post<a href="a">a</a>';
+        $class->body = 'Hello World. I am a content from a fictional blog post.';
+        $class->author = 'Daniel Sentker';
         return $class;
     }
 

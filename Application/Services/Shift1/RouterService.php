@@ -12,7 +12,7 @@ class RouterService extends AbstractService {
     public static $isSingleton = true;
 
     public function __construct() {
-        $this->necessitate('shift1.request');
+        $this->necessitate(array('shift1.request', 'shift1.paramConverterFactory'));
         $this->setClassNamespace('\Shift1\Core\Router\Router');
     }
 
@@ -20,7 +20,7 @@ class RouterService extends AbstractService {
 
         $classNamespace = $this->getClassNamespace();
         $routes = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
-        return $classNamespace::fromConfig($this->get('shift1.request'), $routes);
+        return $classNamespace::fromConfig($this->get('shift1.request'), $routes, $this->get('shift1.paramConverterFactory'));
 
     }
 }

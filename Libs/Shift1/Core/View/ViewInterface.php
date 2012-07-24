@@ -1,19 +1,19 @@
 <?php
 namespace Shift1\Core\View;
 
-interface ViewInterface {
+use Shift1\Core\View\VariableSet\VariableSetInterface;
 
-    /** @todo check implementation details */
+interface ViewInterface {
 
     /**
      * @abstract
      * @return string
      */
-    public function render();
+    #function render();
 
     /**
      * @abstract
-     * @return void
+     * @return \Shift1\Core\InternalFilePath
      */
     function getViewFile();
 
@@ -22,5 +22,11 @@ interface ViewInterface {
      * @return bool
      */
     function isThrowingExceptions();
+
+    /**
+     * @abstract
+     * @return \Shift1\Core\View\VariableSet\VariableSetInterface;
+     */
+    function getVariableSet();
 
 }

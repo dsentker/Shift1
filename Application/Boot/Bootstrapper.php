@@ -45,7 +45,7 @@ namespace Application\Boot {
 
             $serviceContainer->get('shift1.context')->environment = $environment;
 
-            $serviceContainer->get('shift1.exceptionHandler')->register(); // hide me if u got problems
+            #$serviceContainer->get('shift1.exceptionHandler')->register(); // hide me if u got problems
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);

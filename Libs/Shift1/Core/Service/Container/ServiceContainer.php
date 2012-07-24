@@ -15,11 +15,6 @@ class ServiceContainer implements ServiceContainerInterface {
     protected $serviceNamespace;
 
     /**
-     * @var array
-     */
-    protected $activeServices = array();
-
-    /**
      * @param string $serviceNamespace
      */
     public function __construct($serviceNamespace) {
@@ -81,7 +76,7 @@ class ServiceContainer implements ServiceContainerInterface {
             $instance->setContainer($this);
         }
 
-        $this->activeServices[$serviceName] = $instance;
+        RunningServicesRegistry::add($serviceName, $instance);
         return $instance;
     }
 
@@ -100,14 +95,18 @@ class ServiceContainer implements ServiceContainerInterface {
      */
     protected function serviceIsRunning($serviceName) {
         $serviceName = $this->transformServiceName($serviceName);
-        return isset($this->activeServices[$serviceName]);
+        return RunningServicesRegistry::has($serviceName);
     }
 
     /**
      * @return array
      */
     public function getRunningServices() {
-        return $this->activeServices;
+        return RunningServicesRegistry::getAll();
+    }
+
+    public function getRunningServiceNames() {
+        return \array_keys(self::getRunningServices());
     }
 
     /**
@@ -124,18 +123,7 @@ class ServiceContainer implements ServiceContainerInterface {
         if(!$this->serviceIsRunning($serviceName)) {
             throw new ServiceException('Service ' . $serviceName . ' is not running now');
         }
-        return $this->activeServices[$serviceName];
-    }
-
-    /**
-     * To route the container getter to a specific
-     * base namespace
-     * 
-     * @param string $base
-     * @return void
-     */
-    public function extendServiceNamespace($base) {
-        $this->serviceNamespace .= '\\' . \trim($base, '\\');;
+        return RunningServicesRegistry::get($serviceName);
     }
 
 }

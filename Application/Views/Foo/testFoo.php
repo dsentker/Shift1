@@ -1,5 +1,6 @@
 <?php
 /** @var \Shift1\Core\View\View $view  */
+$view->setParent('index')->foo = 'Try...';
 ?>
 <p style="background-color: #ffe4c4;">This is a text part from FooController::fooTest !</p>
 

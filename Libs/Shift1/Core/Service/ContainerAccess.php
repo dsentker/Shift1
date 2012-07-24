@@ -7,7 +7,7 @@ interface ContainerAccess {
 
     /**
      * @abstract
-     * @param Container\ServiceContainerInterface
+     * @param Container\ServiceContainerInterface $container
      * @return void
      */
     function setContainer(ServiceContainerInterface $container);

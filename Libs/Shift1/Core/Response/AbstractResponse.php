@@ -4,6 +4,7 @@ namespace Shift1\Core\Response;
 use Shift1\Core\Response\Header\HeaderInterface;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Generator\RedirectGenerator;
+use Shift1\Core\View\ViewInterface;
 
 abstract class AbstractResponse implements ResponseInterface {
 
@@ -41,14 +42,22 @@ abstract class AbstractResponse implements ResponseInterface {
      * @return void
      */
     public function setContent($content) {
-        $this->content = (string) $content;
+        $this->content = $content;
     }
 
     /**
-     * @return string
+     * @return string|\Shift1\Core\View\ViewInterface
      */
     public function getContent() {
-        return (string) $this->content;
+
+        switch(true) {
+            case \is_string($this->content):
+            case $this->content instanceof ViewInterface:
+                return $this->content;
+            default:
+                return (string) $this->content;
+        }
+
     }
 
     /**
@@ -118,7 +127,11 @@ abstract class AbstractResponse implements ResponseInterface {
         }
 
         $this->getHeaderObject()->send();
-        echo $this->getContent();
+        $content = $this->getContent();
+        if($content instanceof Renderable) {
+            $content->render();
+        }
+        echo $content;
 
         if(null !== $this->getAfterSend()) {
             $afterSend = $this->getAfterSend();

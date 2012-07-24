@@ -1,61 +1,12 @@
-shortroute:
-  scheme: /(.*)/s
-  bindings:
-    _controller:
-      default: Bla
-
-    _action:
-      default: index
-
-doubleAttack:
-  scheme: /doubleAttack
-  bindings:
-    _controller:
-      default: Foo
-
-    _action:
-      default: doublemvc
-
-nocontroller:
-  scheme: foo/@_action
-  bindings:
-    _controller:
-      default: Index
-    _action:
-      default: index
-      match: s
-
-paramconvert:
-  scheme: /convert/@test
-  bindings:
-    _controller:
-      default: Foo
-    _action:
-      default: paramConvert
-    test:
-      converter: TestConverter
-
-paramconvertoptional:
-  scheme: /convert2/
-  bindings:
-    _controller:
-      default: Foo
-    _action:
-      default: paramConvert
-    test:
-      converter: TestConverter
-
-example:
-  scheme: /viewpost/@slug
+viewpost:
+  scheme: /viewpost/@post
   bindings:
     _controller:
       default: Post
-
     _action:
       default: view
-
-    slug:
-      converter: UnderscoreConverter
+    post:
+      converter: TestConverter
 
 default:
   scheme: /@_controller/@_action/

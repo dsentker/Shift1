@@ -14,7 +14,7 @@ interface ResponseInterface {
 
     /**
      * @abstract
-     * @return string
+     * @return string|\Shift1\Core\View\ViewInterface
      */
     public function getContent();
 

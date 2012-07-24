@@ -55,9 +55,8 @@ class IndexController extends ParentController {
     }
 
     public function HMVCAction() {
-        $req = Request::newInternal('/Foo/testFoo/', $this->getRequest());
-        $response = $this->internalRequest($req);
-        $this->view->foo = $response;
+        $fooResponse = $this->internalRequest('Foo', 'testFoo', $this->getParams());
+        $this->view->foo = $fooResponse->getContent()->render(false);
         #$this->view->foo = 'HA';
         return new Response($this->getView()->render());
     }
