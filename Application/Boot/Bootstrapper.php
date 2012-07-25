@@ -41,7 +41,7 @@ namespace Application\Boot {
             $shift1Loader = new Autoloader();
             $shift1Loader->register();
 
-            $serviceContainer = new ServiceContainer('Application\Services');
+            $serviceContainer = new ServiceContainer('Application\ServiceLocator');
 
             $serviceContainer->get('shift1.context')->environment = $environment;
 

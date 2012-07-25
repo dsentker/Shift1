@@ -7,7 +7,7 @@ use Shift1\Core\Service\ContainerAccess;
 
 class ServiceContainer implements ServiceContainerInterface {
 
-    const SERVICENAME_SUFFIX = 'Service';
+    const LOCATOR_CLASS_SUFFIX = 'Locator';
 
     /**
      * @var string
@@ -48,7 +48,7 @@ class ServiceContainer implements ServiceContainerInterface {
     public function get($serviceName) {
 
         $serviceName = $this->transformServiceName($serviceName);
-        $serviceWrapperNS = $this->getServiceNamespace() . $serviceName . self::SERVICENAME_SUFFIX;
+        $serviceWrapperNS = $this->getServiceNamespace() . $serviceName . self::LOCATOR_CLASS_SUFFIX;
 
         if(!\class_exists($serviceWrapperNS)) {
             throw new ClassNotFoundException($serviceWrapperNS . ' not found');
@@ -85,7 +85,7 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     public function has($serviceName) {
-        $serviceWrapperNS = $this->getServiceNamespace() . $this->transformServiceName($serviceName) . self::SERVICENAME_SUFFIX;
+        $serviceWrapperNS = $this->getServiceNamespace() . $this->transformServiceName($serviceName) . self::LOCATOR_CLASS_SUFFIX;
         return \class_exists($serviceWrapperNS);
     }
 

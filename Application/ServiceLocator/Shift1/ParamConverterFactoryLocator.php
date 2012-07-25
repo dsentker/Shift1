@@ -1,13 +1,11 @@
 <?php
-namespace Application\Services\Shift1;
+namespace Application\ServiceLocator\Shift1;
 
-use Shift1\Core\Service\AbstractService;
+use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Config\File;
 
-
-
-class ParamConverterFactoryService extends AbstractService {
+class ParamConverterFactoryLocator extends AbstractServiceLocator {
 
     public static $isSingleton = true;
 

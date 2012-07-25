@@ -13,6 +13,8 @@ use Shift1\Core\InternalFilePath;
 
 class View implements ViewInterface, ContainerAccess, Renderable {
 
+    const FILTER_SEPARATOR = ' ';
+
     /**
      * @var null|InternalFilePath
      */
@@ -30,7 +32,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected $throw = true;
 
     /**
-     * @var StdClass
+     * @var \StdClass
      */
     protected $config;
 
@@ -55,7 +57,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected $controllerViewReloader;
 
     /**
-     * @var Shift1\Core\View\VariableSet\VariableSetInterface
+     * @var \Shift1\Core\View\VariableSet\VariableSetInterface
      */
     protected $variableSet;
 
@@ -63,6 +65,11 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      * @var array
      */
     protected $slots = array();
+
+    /**
+     * @var array
+     */
+    protected $defaultFilter = array();
 
 
     /**
@@ -122,38 +129,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
-     * @return void
-     */
-    public function disableExceptions() {
-        $this->throw = false;
-    }
-
-    /**
-     * @return void
-     */
-    public function enableExceptions() {
-        $this->throw = true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isThrowingExceptions() {
-        return $this->throw;
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    protected function completeViewFilename($file) {
-        if(\strpos($file, '.') === false) {
-            $file .= '.' . $this->config->defaultFileExt;
-        }
-        return $file;
-    }
-
-    /**
      * @param string $viewFile
      * @param bool $useDefaultViewFilePath
      * @return View
@@ -178,6 +153,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     /**
      * @param string $varKey
      * @param mixed $varValue
+     * @throws \Shift1\Core\Exceptions\ViewException
      * @return View
      */
 	public function assign($varKey, $varValue) {
@@ -203,25 +179,50 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $this;
 	}
 
+    /**
+     * @param string $service
+     * @return mixed
+     */
     public function helper($service) {
         return $this->getContainer()->get('viewHelper.' . $service);
     }
 
     /**
-     * @param string $key
-     * @param mixed $val
-     * @return void
+     * @param string $var
+     * @param string $filterNames
+     * @return mixed
      */
-	public function __set($key, $val) {
-        $this->assign($key, $val);
-	}
+    public function filter($var, $filterNames) {
+        $currentFilter = $this->splitFilter($filterNames);
+        $defaultFilter = $this->defaultFilter;
+        $filterStack = \array_merge($currentFilter, $defaultFilter);
 
-    public function __clone() {
-        $this->annotationReader = clone $this->annotationReader;
-        $this->slots = array();
+        foreach($filterStack as $filterName) {
+            $locator = 'viewFilter.' . $filterName;
+            if ($this->getContainer()->has($locator)) {
+                $filter = $this->getContainer()->get($locator);
+                /** @var $filter \Shift1\Core\View\Filter\ViewFilterInterface */
+                $var = $filter->setVal($var)->getVal();
+            }
+
+        }
+
+        return $var;
     }
 
+    public function setDefaultFilter($filterNames) {
+        $this->defaultFilter = $this->splitFilter($filterNames);
+    }
+
+    protected function splitFilter($filterNames) {
+        return \explode(self::FILTER_SEPARATOR, \strtolower($filterNames));
+    }
+
+
+
     /**
+     * Acts as a getter
+     *
      * @param $slotName
      * @return mixed
      */
@@ -236,39 +237,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      */
     public function setSlot($slotName, $view) {
         $this->slots[$slotName] = $view;
-    }
-
-    /**
-     * @return string
-     */
-	public function __toString() {
-
-        $wasThrowing = $this->isThrowingExceptions();
-
-        // __toString always excepts a string, not an exception.
-        $this->disableExceptions();
-
-        $content = $this->render();
-        if($wasThrowing) $this->enableExceptions();
-
-        return $content;
-	}
-
-    /**
-     * @param string|Shift1\Core\InternalFilePath $file
-     * @param bool $useDefaultViewFilePath
-     * @return bool
-     */
-    public function fileExists($file, $useDefaultViewFilePath = true) {
-
-        if(true === $useDefaultViewFilePath) {
-            $file = $this->config->defaultSrcPath . '/' . $file;
-        }
-
-        if(!($file instanceof InternalFilePath)) {
-            $file = new InternalFilePath($this->completeViewFilename($file));
-        }
-        return $file->exists();
     }
 
     /**
@@ -340,6 +308,93 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         }
 
         return true;
+    }
+
+    /**
+     * @param string $file
+     * @return string
+     */
+    protected function completeViewFilename($file) {
+        if(\strpos($file, '.') === false) {
+            $file .= '.' . $this->config->defaultFileExt;
+        }
+        return $file;
+    }
+
+    /**
+     * @param string|Shift1\Core\InternalFilePath $file
+     * @param bool $useDefaultViewFilePath
+     * @return bool
+     */
+    public function fileExists($file, $useDefaultViewFilePath = true) {
+
+        if(true === $useDefaultViewFilePath) {
+            $file = $this->config->defaultSrcPath . '/' . $file;
+        }
+
+        if(!($file instanceof InternalFilePath)) {
+            $file = new InternalFilePath($this->completeViewFilename($file));
+        }
+        return $file->exists();
+    }
+
+
+
+
+
+
+
+    /**
+     * @return void
+     */
+    public function disableExceptions() {
+        $this->throw = false;
+    }
+
+    /**
+     * @return void
+     */
+    public function enableExceptions() {
+        $this->throw = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isThrowingExceptions() {
+        return $this->throw;
+    }
+
+
+
+    /**
+     * @param string $key
+     * @param mixed $val
+     * @return void
+     */
+    public function __set($key, $val) {
+        $this->assign($key, $val);
+    }
+
+    public function __clone() {
+        $this->annotationReader = clone $this->annotationReader;
+        $this->slots = array();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+
+        $wasThrowing = $this->isThrowingExceptions();
+
+        // __toString always excepts a string, not an exception.
+        $this->disableExceptions();
+
+        $content = $this->render();
+        if($wasThrowing) $this->enableExceptions();
+
+        return $content;
     }
 
 }

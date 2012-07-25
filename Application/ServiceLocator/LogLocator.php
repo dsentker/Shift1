@@ -1,11 +1,11 @@
 <?php
-namespace Application\Services;
+namespace Application\ServiceLocator;
 
-use Shift1\Core\Service\AbstractService;
+use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Log\Writer;
 use Shift1\Core\InternalFilePath;
 
-class LogService extends AbstractService {
+class LogLocator extends AbstractServiceLocator {
 
     static public $isSingleton = true;
     

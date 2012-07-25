@@ -1,10 +1,10 @@
 <?php
-namespace Shift1\Core\Service;
+namespace Shift1\Core\Service\Locator;
 
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Exceptions as Exception;
 
-abstract class AbstractService implements ServiceInterface {
+abstract class AbstractServiceLocator implements ServiceLocatorInterface {
 
     /**
      * @var string

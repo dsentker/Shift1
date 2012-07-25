@@ -1,14 +1,9 @@
 <?php
 namespace Shift1\Core\View\VariableSet;
 
-use Shift1\Core\Service\ContainerAccess;
-use Shift1\Core\Service\Container\ServiceContainerInterface;
- 
-class AbstractVariableSet implements VariableSetInterface, ContainerAccess {
+class AbstractVariableSet implements VariableSetInterface {
 
     protected $vars;
-
-    protected $container;
 
     public function add($key, $var) {
         $this->vars[$key] = $var;
@@ -26,6 +21,10 @@ class AbstractVariableSet implements VariableSetInterface, ContainerAccess {
         return (!empty($this->vars[$key]));
     }
 
+    public function __iset($key) {
+        return $this->has($key);
+    }
+
     public function getKeys() {
         return \array_keys($this->vars);
     }
@@ -34,12 +33,6 @@ class AbstractVariableSet implements VariableSetInterface, ContainerAccess {
         return $this->vars;
     }
 
-    public function setContainer(ServiceContainerInterface $container) {
-        $this->container = $container;
-    }
 
-    function getContainer() {
-        return $this->container;
-    }
 
 }

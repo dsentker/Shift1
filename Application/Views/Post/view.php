@@ -1,11 +1,10 @@
 <?php
 /**
  * @var \Shift1\Core\View\ViewInterface $view
- * @var \Shift1\Core\View\VariableSet\FilteredVariableSet $vars
+ * @var \Shift1\Core\View\VariableSet\VariableSetInterface $vars
  * @hasParent('index', 'content')
  */
-$vars->setDefaultFilter('escape');
+$view->setDefaultFilter('escape');
 ?>
-<h2><?= $vars->post->title ?></h2>
+<h2><?= $view->filter($vars->post->title, 'toLower') ?></h2>
 <p><?= $vars->post->body ?></p>
-<p><?= $vars->filter('escape')->foo ?></p>

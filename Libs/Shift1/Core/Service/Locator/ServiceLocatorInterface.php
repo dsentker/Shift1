@@ -1,7 +1,7 @@
 <?php
-namespace Shift1\Core\Service;
+namespace Shift1\Core\Service\Locator;
 
-interface ServiceInterface {
+interface ServiceLocatorInterface {
 
     /**
      * @abstract

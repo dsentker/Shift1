@@ -1,9 +1,9 @@
 <?php
-namespace Application\Services;
+namespace Application\ServiceLocator;
 
-use Shift1\Core\Service\AbstractService;
+use Shift1\Core\Service\Locator\AbstractServiceLocator;
 
-class PdoService extends AbstractService {
+class PdoLocator extends AbstractServiceLocator {
     
     public function __construct() {
         $this->setClassNamespace('\PDO');

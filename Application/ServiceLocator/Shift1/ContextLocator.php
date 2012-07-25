@@ -1,10 +1,9 @@
 <?php
-namespace Application\Services\Shift1;
+namespace Application\ServiceLocator\Shift1;
 
-use Shift1\Core\Service\AbstractService;
+use Shift1\Core\Service\Locator\AbstractServiceLocator;
 
-
-class ContextService extends AbstractService {
+class ContextLocator extends AbstractServiceLocator {
 
     public static $isSingleton = true;
 
