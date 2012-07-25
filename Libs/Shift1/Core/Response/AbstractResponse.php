@@ -50,13 +50,7 @@ abstract class AbstractResponse implements ResponseInterface {
      */
     public function getContent() {
 
-        switch(true) {
-            case \is_string($this->content):
-            case $this->content instanceof ViewInterface:
-                return $this->content;
-            default:
-                return (string) $this->content;
-        }
+        return $this->content;
 
     }
 
@@ -127,10 +121,13 @@ abstract class AbstractResponse implements ResponseInterface {
         }
 
         $this->getHeaderObject()->send();
+
         $content = $this->getContent();
+
         if($content instanceof Renderable) {
-            $content->render();
+            $content = $content->render();
         }
+
         echo $content;
 
         if(null !== $this->getAfterSend()) {

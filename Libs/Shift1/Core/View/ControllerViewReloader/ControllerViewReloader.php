@@ -4,6 +4,7 @@ namespace Shift1\Core\View\ControllerViewReloader;
 use Shift1\Core\Controller\Factory\ControllerFactoryInterface;
 use Shift1\Core\View\ViewInterface;
 use Shift1\Core\Exceptions\ControllerViewReloaderException;
+use Shift1\Core\InternalFilePath;
 
 class ControllerViewReloader {
 
@@ -18,13 +19,16 @@ class ControllerViewReloader {
 
 
     /**
-     * @param string $path
-     * @return \Shift1\Core\View\ViewInterface
+     * @param \Shift1\Core\InternalFilePath $path
+     * @return \Shift1\Core\View\ViewInterface|string
      */
-    public function loadByTemplateLocation($path) {
-        $pathParts = \explode('/', $path);
-        $controller = $pathParts[0];
-        $action = (isset($pathParts[1])) ? $pathParts[1] : null;
+    public function loadByTemplateLocation(InternalFilePath $path) {
+        $pathParts = $path->getAbsolutePathAsArray();
+        $file = \array_pop($pathParts);
+        $fileSplit = \explode('.', $file, 2);
+        $action = $fileSplit[0];
+        $controller = \array_pop($pathParts);
+
         return $this->reloadView($controller, $action);
     }
 

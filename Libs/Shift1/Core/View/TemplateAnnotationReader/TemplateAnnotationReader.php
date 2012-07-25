@@ -26,17 +26,9 @@ class TemplateAnnotationReader implements TemplateAnnotationReaderInterface {
         $this->elements = array();
     }
 
+    public function parse($file) {
 
-    /**
-     * @param string $file
-     */
-    public function setTemplate($file) {
-        $this->file = $file;
-    }
-
-    public function parse() {
-
-        $fileLines = \file($this->file, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+        $fileLines = \file($file, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
 
         foreach($fileLines as $lineNr => $line) {
             $line = trim($line);

@@ -187,7 +187,7 @@ abstract class AbstractRouter implements RouterInterface {
     public function getMatchingRoute($compareWithUri) {
         foreach($this->getRoutes() as $routeName => $route) {
             /** @var $route Route\RouteInterface */
-            #var_dump($route->getSchemeAsPattern());
+
             if(\preg_match('#' . $route->getSchemeAsPattern() . '#', $compareWithUri)) {
                 return $routeName;
             }

@@ -13,7 +13,6 @@ class ControllerViewReloaderLocator extends AbstractServiceLocator {
         $this->necessitate(array(
                         'shift1.controllerFactory',
                    ));
-
     }
 
     public function initialize() {

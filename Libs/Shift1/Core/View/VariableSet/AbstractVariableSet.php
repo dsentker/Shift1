@@ -33,6 +33,10 @@ class AbstractVariableSet implements VariableSetInterface {
         return $this->vars;
     }
 
+    public function __clone() {
+        #$this->vars = array();
+    }
+
 
 
 }

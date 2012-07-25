@@ -15,7 +15,22 @@
             background: #fff none;
             padding: 20px;
             box-shadow: 0 0 4px #aaa;
+            overflow: hidden;
         }
+
+        #content {
+            float: left;
+            width: 520px;
+            margin-right: 20px;
+        }
+
+        #sidebar  {
+            float: left;
+            width: 210px;
+            padding: 5px;
+            background-color: #f4f4f4;
+        }
+
     </style>
 </head>
 
@@ -23,8 +38,14 @@
 
     <div class="wrapper">
 
+        <h1>A sample blog</h1>
+
         <div id="content">
-            <?= $view->slot('content') ?>
+            <?php echo $view->slot('content') ?>
+        </div>
+
+        <div id="sidebar">
+            <?php echo  $view->renderTemplate('page/sidebar') ?>
         </div>
 
     </div>

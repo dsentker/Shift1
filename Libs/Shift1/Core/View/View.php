@@ -92,7 +92,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         $this->variableSet = $variableSet;
         $this->renderer = $renderer;
         $this->annotationReader = $annotationReader;
-        $this->controllerReloader = $controllerViewReloader;
+        $this->controllerViewReloader = $controllerViewReloader;
 
 	}
 
@@ -139,6 +139,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         }
 
         $this->viewFile = new InternalFilePath($this->completeViewFilename($viewFile));
+        $this->annotationReader->parse($this->viewFile);
 
         return $this;
     }
@@ -218,8 +219,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return \explode(self::FILTER_SEPARATOR, \strtolower($filterNames));
     }
 
-
-
     /**
      * Acts as a getter
      *
@@ -247,35 +246,31 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
+     * @param string $templateFile
+     * @return string
+     */
+    public function renderTemplate($templateFile) {
+        $template = clone $this;
+        $template->setViewFile($templateFile);
+
+        if($template->isRenderedByController()) {
+            $template = $template->renderByController();
+        }
+
+        return $template->render();
+    }
+
+    /**
      * @return string
      */
 	public function render() {
 
         $content = $this->getRenderer()->render($this);
 
-        $this->annotationReader->setTemplate($this->getViewFile());
-        $this->annotationReader->parse();
+        if($this->hasParent()) {
 
-        if($this->annotationReader->hasAnnotation('hasParent') && $this->annotationReader->hasAnnotationParameterCount('hasParent', 2) ) {
-
-            $parentViewOptions = $this->annotationReader->getAnnotationParameter('hasParent');
-            $parentViewFile = $parentViewOptions[0];
-            $parentViewSlot = $parentViewOptions[1];
-
-            if($this->annotationReader->hasAnnotation('renderedByController')) {
-                if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
-                    $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
-                    $parentView = $this->controllerViewReloader->loadByControllerDefinition($definition[0]);
-                } else {
-                    $parentView = $this->controllerViewReloader->loadByTemplateLocation($parentViewFile);
-                }
-
-            } else {
-                // no controller for this parent view
-                $parentView = clone $this;
-                $parentView->setViewFile($parentViewFile);
-            }
-
+            $parentView = $this->getParentView();
+            $parentViewSlot = $this->getParentSlot();
             $parentView->setSlot($parentViewSlot, $content);
             $content = $parentView->render();
             
@@ -284,6 +279,56 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $content;
 
 	}
+
+    protected function hasParent() {
+        return ($this->annotationReader->hasAnnotation('hasParent') && $this->annotationReader->hasAnnotationParameterCount('hasParent', 2) );
+    }
+
+    protected function getParentTemplate() {
+        if (!$this->hasParent()) {
+            return null;
+        }
+        $parentViewOptions = $this->annotationReader->getAnnotationParameter('hasParent');
+        return $parentViewOptions[0];
+    }
+
+    protected function getParentSlot() {
+        if (!$this->hasParent()) {
+            return null;
+        }
+        $parentViewOptions = $this->annotationReader->getAnnotationParameter('hasParent');
+        return $parentViewOptions[1];
+    }
+
+    protected function renderByController() {
+        if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
+            $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
+            $view = $this->controllerViewReloader->loadByControllerDefinition($definition[0]);
+        } else {
+            $view = $this->controllerViewReloader->loadByTemplateLocation($this->getViewFile());
+        }
+        return $view;
+    }
+
+    protected function getParentView() {
+
+        if (!$this->hasParent()) {
+            return null;
+        }
+
+        $parentView = clone $this;
+        $parentView->setViewFile($this->getParentTemplate());
+
+        if($this->isRenderedByController()) {
+            $parentView = $this->renderByController();
+        }
+
+        return $parentView;
+    }
+
+    protected function isRenderedByController() {
+        return ($this->annotationReader->hasAnnotation('renderedByController'));
+    }
 
     /**
      * @param string $controller
@@ -338,12 +383,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $file->exists();
     }
 
-
-
-
-
-
-
     /**
      * @return void
      */
@@ -378,6 +417,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
     public function __clone() {
         $this->annotationReader = clone $this->annotationReader;
+        $this->variableSet = clone $this->variableSet;
         $this->slots = array();
     }
 

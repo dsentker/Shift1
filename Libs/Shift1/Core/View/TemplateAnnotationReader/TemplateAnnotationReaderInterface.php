@@ -3,9 +3,7 @@ namespace Shift1\Core\View\TemplateAnnotationReader;
 
 interface TemplateAnnotationReaderInterface {
 
-    function setTemplate($file);
-
-    function parse();
+    function parse($file);
 
     function getResult();
 
