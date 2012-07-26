@@ -3,6 +3,7 @@
  * @var \Shift1\Core\View\ViewInterface $view
  * @var \Shift1\Core\View\VariableSet\VariableSetInterface $vars
  * @hasParent('index', 'content')
+ * @renderedByController
  */
 $view->addDefaultFilter('escape');
 ?>

@@ -81,7 +81,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      *
      */
     public function __construct(
-        $config,
+        \ArrayObject $config,
         VariableSet\VariableSetInterface $variableSet,
         Renderer\RendererInterface $renderer,
         TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader,
@@ -197,7 +197,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         $currentFilter = $this->splitFilter($filterNames);
         $defaultFilter = $this->defaultFilter;
         $filterStack = \array_unique(\array_merge($currentFilter, $defaultFilter));
-        
+
         foreach($filterStack as $filterName) {
             $locator = 'viewFilter.' . $filterName;
             if ($this->getContainer()->has($locator)) {
