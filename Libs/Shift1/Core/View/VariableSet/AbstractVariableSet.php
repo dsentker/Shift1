@@ -37,6 +37,10 @@ class AbstractVariableSet implements VariableSetInterface {
         #$this->vars = array();
     }
 
+    public function merge(VariableSetInterface $variableSet) {
+        $this->vars = \array_merge($this->getAll(), $variableSet->getAll());
+    }
+
 
 
 }

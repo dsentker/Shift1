@@ -11,12 +11,12 @@ class PostController extends ParentController {
 
     public function init() {
         parent::init();
-
     }
 
     public function viewAction(\StdClass $post) {
+
         $this->view->post = $post;
-        $this->view->foo = '<a href="#">AA</a> ';
+        $this->view->foo = '<a href="#">AA<';
         #print_r($this->view->render());
         return new Response($this->view);
     }

@@ -6,9 +6,9 @@
  * @__reeenderedByController('a/b/::c, 'a')
  * @__haasParent('index', 'content')
  */
+$view->addDefaultFilter('escape');
 ?>
 <p>Hello, it's me, a sidebar!</p>
 
-<p>Data from action page::sidebar:  <?= $vars->data ?></p>
-
-    <pre><?php print_r($vars->getAll()); ?>
+<p><?= $view->filter($vars->foo, 'escape') ?></p>
+<p>Data from action page::sidebar: <?= $vars->data ?></p>

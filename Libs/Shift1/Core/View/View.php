@@ -193,11 +193,11 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      * @param string $filterNames
      * @return mixed
      */
-    public function filter($var, $filterNames) {
+    public function filter($var, $filterNames = '') {
         $currentFilter = $this->splitFilter($filterNames);
         $defaultFilter = $this->defaultFilter;
-        $filterStack = \array_merge($currentFilter, $defaultFilter);
-
+        $filterStack = \array_unique(\array_merge($currentFilter, $defaultFilter));
+        
         foreach($filterStack as $filterName) {
             $locator = 'viewFilter.' . $filterName;
             if ($this->getContainer()->has($locator)) {
@@ -211,10 +211,19 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $var;
     }
 
-    public function setDefaultFilter($filterNames) {
-        $this->defaultFilter = $this->splitFilter($filterNames);
+    /**
+     * @param string|array $filterNames
+     */
+    public function addDefaultFilter($filterNames) {
+
+        $filter = (!is_array($filterNames)) ? $this->splitFilter($filterNames) : $filterNames;
+        $this->defaultFilter = \array_merge($this->defaultFilter, $filter);
     }
 
+    /**
+     * @param string $filterNames
+     * @return array
+     */
     protected function splitFilter($filterNames) {
         return \explode(self::FILTER_SEPARATOR, \strtolower($filterNames));
     }
@@ -247,17 +256,26 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
     /**
      * @param string $templateFile
-     * @return string
+     * @return View
      */
-    public function renderTemplate($templateFile) {
+    public function createTemplate($templateFile) {
         $template = clone $this;
         $template->setViewFile($templateFile);
 
         if($template->isRenderedByController()) {
-            $template = $template->renderByController();
+            $templateVars = $template->renderByController()->getVariableSet();
+            $template->getVariableSet()->merge($templateVars);
         }
 
-        return $template->render();
+        return $template;
+    }
+
+    /**
+     * @param string $templateFile
+     * @return string
+     */
+    public function renderTemplate($templateFile) {
+        return $this->createTemplate($templateFile)->render();
     }
 
     /**
@@ -269,7 +287,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
         if($this->hasParent()) {
 
-            $parentView = $this->getParentView();
+            $parentView = $this->createTemplate($this->getParentTemplate());
             $parentViewSlot = $this->getParentSlot();
             $parentView->setSlot($parentViewSlot, $content);
             $content = $parentView->render();
@@ -280,10 +298,17 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
 	}
 
+    /**
+     * @return bool
+     */
     protected function hasParent() {
-        return ($this->annotationReader->hasAnnotation('hasParent') && $this->annotationReader->hasAnnotationParameterCount('hasParent', 2) );
+        return ($this->annotationReader->hasAnnotation('hasParent')
+            && $this->annotationReader->hasAnnotationParameterCount('hasParent', 2) );
     }
 
+    /**
+     * @return null|string
+     */
     protected function getParentTemplate() {
         if (!$this->hasParent()) {
             return null;
@@ -292,6 +317,9 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $parentViewOptions[0];
     }
 
+    /**
+     * @return null|string
+     */
     protected function getParentSlot() {
         if (!$this->hasParent()) {
             return null;
@@ -300,6 +328,9 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $parentViewOptions[1];
     }
 
+    /**
+     * @return ViewInterface|string
+     */
     protected function renderByController() {
         if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
             $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
@@ -310,22 +341,9 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $view;
     }
 
-    protected function getParentView() {
-
-        if (!$this->hasParent()) {
-            return null;
-        }
-
-        $parentView = clone $this;
-        $parentView->setViewFile($this->getParentTemplate());
-
-        if($this->isRenderedByController()) {
-            $parentView = $this->renderByController();
-        }
-
-        return $parentView;
-    }
-
+    /**
+     * @return bool
+     */
     protected function isRenderedByController() {
         return ($this->annotationReader->hasAnnotation('renderedByController'));
     }
@@ -404,8 +422,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         return $this->throw;
     }
 
-
-
     /**
      * @param string $key
      * @param mixed $val
@@ -417,7 +433,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
     public function __clone() {
         $this->annotationReader = clone $this->annotationReader;
-        $this->variableSet = clone $this->variableSet;
+        #$this->variableSet = clone $this->variableSet;
         $this->slots = array();
     }
 

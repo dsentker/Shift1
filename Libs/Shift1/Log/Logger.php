@@ -121,6 +121,7 @@ class Logger extends AbstractLogger {
         $event = $this->createEvent($msg, $errLevel, $errLevelName);
 
         foreach($this->getWriter() as $writer) {
+
             /** @var Writer\AbstractWriter $writer */
             if((int) $errLevel <= $this->getLevel($writer->getLevel())) {
                 $writer->addEvent($event);

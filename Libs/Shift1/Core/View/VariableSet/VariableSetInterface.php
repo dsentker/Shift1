@@ -15,4 +15,6 @@ interface VariableSetInterface {
 
     function has($key);
 
+    function merge(VariableSetInterface $variableSet);
+
 }
