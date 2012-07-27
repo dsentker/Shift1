@@ -1,3 +1,9 @@
+<?php
+/*
+ * @var \Shift1\Core\View\ViewInterface $view
+ * @var \Shift1\Core\View\VariableSet\VariableSetInterface $vars
+ */
+?>
 <!DOCTYPE html>
 <html>
 <head>

@@ -271,11 +271,14 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
+     * Just a shortcut to ->createTemplate(foo)->renderPartial()
+     * Meant to access from a template file
+     *
      * @param string $templateFile
      * @return string
      */
     public function renderTemplate($templateFile) {
-        return $this->createTemplate($templateFile)->render();
+        return $this->createTemplate($templateFile)->renderPartial();
     }
 
     /**
