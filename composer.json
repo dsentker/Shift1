@@ -1,0 +1,18 @@
+{
+    "name": "shift1/shift1",
+    "description": "A small, flexible PHP 5.3 Framework",
+    "require": {
+        "symfony/yaml": "v2.0.16",
+        "symfony/class-loader": "v2.0.16"
+    },
+    "config": {
+            "vendor-dir" : "Libs/vendor",
+            "bin-dir": "Libs/vendor/bin"
+        },
+    "authors": [
+        {
+            "name": "Zeichen32",
+            "email": "j.averkamp@itm-systems.com"
+        }
+    ]
+}
