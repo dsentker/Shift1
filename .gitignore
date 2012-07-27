@@ -1,2 +1,4 @@
-.idea/
-Libs/vendor
+/.idea
+/Libs/vendor/*
+/composer.phar
+/composer.lock
