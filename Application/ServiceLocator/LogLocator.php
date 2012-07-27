@@ -12,7 +12,7 @@ class LogLocator extends AbstractServiceLocator {
     public function __construct() {
         $this->setClassNamespace('\Shift1\Log\Logger');
 
-        $this->necessitate('FirePHP');
+        #$this->necessitate('FirePHP');
 
     }
 
@@ -22,7 +22,7 @@ class LogLocator extends AbstractServiceLocator {
         $fileWriter = new Writer\FileWriter(new InternalFilePath('Application\Logs\log.txt'));
         $fileWriter->setLevel('debug');
 
-        $firePHPWriter = new Writer\FirePHPWriter($this->get('FirePHP'));
+        #$firePHPWriter = new Writer\FirePHPWriter($this->get('FirePHP'));
 
         $screenWriter = new Writer\ScreenWriter();
         #$screenWriter->setLevel('notice');

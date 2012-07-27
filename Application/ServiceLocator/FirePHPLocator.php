@@ -10,7 +10,7 @@ class FirePHPLocator extends AbstractServiceLocator {
     static public $isSingleton = true;
     
     public function __construct() {
-        $this->setClassNamespace('\FirePHP', 'Libs/FirePHPCore/fb.php');
+        $this->setClassNamespace('\FirePHP', 'Libs/vendor/FirePHPCore/fb.php');
     }
 
     public function getInstance() {

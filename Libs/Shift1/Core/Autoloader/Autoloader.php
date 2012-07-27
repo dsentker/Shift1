@@ -3,7 +3,7 @@ namespace Shift1\Core\Autoloader;
 
 use \Symfony\Component\ClassLoader;
 
-require_once realpath(BASEPATH . '/Libs/Symfony/Component/ClassLoader/UniversalClassLoader.php');
+require_once realpath(BASEPATH . '/Libs/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php');
 
 class Autoloader extends ClassLoader\UniversalClassLoader {
 
@@ -11,7 +11,7 @@ class Autoloader extends ClassLoader\UniversalClassLoader {
 
         $this->registerNamespace('Shift1', BASEPATH . '/Libs/');
         $this->registerNamespace('Application', BASEPATH . '/');
-        $this->registerNamespace('Symfony', BASEPATH . '/Libs/');
+        $this->registerNamespace('Symfony', BASEPATH . '/Libs/vendor/');
         
     }
     
