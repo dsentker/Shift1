@@ -29,4 +29,12 @@ interface ViewInterface {
      */
     function getVariableSet();
 
+
+    /**
+     * @abstract
+     * @param string $templateFile
+     * @return string
+     */
+    function renderTemplate($templateFile);
+
 }
