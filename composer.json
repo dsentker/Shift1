@@ -2,8 +2,10 @@
     "name": "shift1/shift1",
     "description": "A small, flexible PHP 5.3 Framework",
     "require": {
-        "symfony/yaml": "v2.0.16",
-        "symfony/class-loader": "v2.0.16"
+        "symfony/yaml": "dev-master",
+        "symfony/class-loader": "dev-master",
+        "symfony/event-dispatcher": "dev-master",
+        "symfony/finder": "dev-master"
     },
     "config": {
             "vendor-dir" : "Libs/vendor",
