@@ -1,3 +1,4 @@
+# route schemes
 viewpost:
   scheme: /viewpost/@post
   bindings:

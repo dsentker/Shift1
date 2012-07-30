@@ -112,7 +112,7 @@ class ServiceContainer implements ServiceContainerInterface {
     /**
      * @throws \Shift1\Core\Exceptions\ServiceException
      * @param string $serviceName
-     * @return \Shift1\Core\Service\AbstractService
+     * @return \Shift1\Core\Service\Locator\AbstractServiceLocator
      */
     protected function getRunningService($serviceName) {
         /*
