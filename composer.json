@@ -13,8 +13,13 @@
         },
     "authors": [
         {
+            "name": "dsentker",
+            "email": "tracid2008@gmail.com"
+        },
+        {
             "name": "Zeichen32",
             "email": "j.averkamp@itm-systems.com"
         }
+
     ]
 }
