@@ -2,7 +2,7 @@
 namespace Application\Controller;
 
 
-use Application\Event\TestEvent;
+use Application\Events\ViewEvent;
 
 use Shift1\Core\Response\Response;
 use Shift1\Core\Exceptions as E;
@@ -21,12 +21,11 @@ class PostController extends ParentController {
     public function viewAction(\StdClass $post) {
 
         $this->view->post = $post;
-        $this->view->foo = '<a href="#">AA<';
+        $this->view->foo = '<a href="#">A<'; // sic! to test the html output escaper
 
         $dispatcher = $this->getContainer()->get('EventDispatcher');
-        $dispatcher->dispatch('kernel.response', new TestEvent());
+        $dispatcher->dispatch('kernel.response', new ViewEvent($this->view));
 
-        #print_r($this->view->render());
         return new Response($this->view);
     }
 

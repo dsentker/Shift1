@@ -4,7 +4,7 @@ namespace Application\Listener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event as MyEvent;
 
-class TestListener implements EventSubscriberInterface
+class ViewListener implements EventSubscriberInterface
 {
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -33,9 +33,10 @@ class TestListener implements EventSubscriberInterface
         );
     }
 
-    public function onKernelResponsePre(MyEvent $event)
-    {
-        echo 'event';
+    public function onKernelResponsePre(MyEvent $event) {
+
+        echo $event->view->getViewFile()->__toString();
+
     }
 
 }
