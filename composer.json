@@ -1,7 +1,11 @@
 {
     "name": "shift1/shift1",
     "description": "A small, flexible PHP 5.3 Framework",
+    "type": "framework",
+    "keywords": ["framework"],
+    "homepage": "http://framework.shiftedwork.de",
     "require": {
+        "php": ">=5.3.2",
         "symfony/yaml": "dev-master",
         "symfony/class-loader": "dev-master",
         "symfony/event-dispatcher": "dev-master",
