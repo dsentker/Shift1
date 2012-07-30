@@ -23,7 +23,7 @@ class PostController extends ParentController {
         $this->view->post = $post;
         $this->view->foo = '<a href="#">AA<';
 
-        $dispatcher = $this->getContainer()->get('shift1.EventDispatcher');
+        $dispatcher = $this->getContainer()->get('EventDispatcher');
         $dispatcher->dispatch('kernel.response', new TestEvent());
 
         #print_r($this->view->render());

@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator\Shift1;
+namespace Application\ServiceLocator;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 
