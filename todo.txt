@@ -1,5 +1,0 @@
-link builder:
-::make('auth::login/lang:de/foo:bar');
-::make('::login', array('id' => $id));
-
-builder for controller::action(params), usage in frontcontroller and error handler etc
