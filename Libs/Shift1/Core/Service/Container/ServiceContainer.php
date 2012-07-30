@@ -43,7 +43,7 @@ class ServiceContainer implements ServiceContainerInterface {
     /**
      * @throws \Shift1\Core\Exceptions\ClassNotFoundException
      * @param string $serviceName
-     * @return AbstractService
+     * @return \Shift1\Core\Service\Locator\AbstractServiceLocator
      */
     public function get($serviceName) {
 

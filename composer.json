@@ -8,7 +8,8 @@
         "php": ">=5.3.2",
         "symfony/yaml": "dev-master",
         "symfony/class-loader": "dev-master",
-        "symfony/event-dispatcher": "dev-master"
+        "symfony/event-dispatcher": "dev-master",
+        "symfony/console": "2.*"
     },
     "config": {
             "vendor-dir" : "Libs/vendor",

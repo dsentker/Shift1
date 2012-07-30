@@ -138,3 +138,11 @@
 
 
 
+2012-07-30 17:12:03 notice (70): Undefined index: HTTP_HOST
+2012-07-30 17:12:03 notice (70): Undefined index: REQUEST_URI
+2012-07-30 17:12:03 notice (70): Undefined index: HTTP_HOST
+
+2012-07-30 17:13:07 notice (70): Undefined index: REQUEST_URI
+
+
+

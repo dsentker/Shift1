@@ -103,6 +103,14 @@ namespace Application\Boot {
             self::execute($fc);
         }
 
+        /**
+         * @static
+         * @return \Shift1\Core\FrontController
+         */
+        public static function runConsole() {
+            return self::init('development');
+        }
+
 
         /**
          * @static

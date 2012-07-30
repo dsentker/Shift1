@@ -85,7 +85,7 @@ abstract class AbstractRequest implements RequestInterface {
      * @return string
      */
     public function getDomain() {
-        return $this->server['HTTP_HOST'];
+        return (isset($this->server['HTTP_HOST'])) ? $this->server['HTTP_HOST'] : '';
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class AbstractRequest implements RequestInterface {
      * @return string
      */
     public function getRequestUri() {
-        return $this->server['REQUEST_URI'];
+        return isset($this->server['REQUEST_URI']) ? $this->server['REQUEST_URI'] : '';
     }
 
     /**
