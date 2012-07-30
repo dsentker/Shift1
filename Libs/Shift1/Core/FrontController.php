@@ -28,12 +28,8 @@ class FrontController {
      */
     public function execute() {
 
+        /** @var $router \Shift1\Core\Router\RouterInterface */
         $router  = $this->getServiceContainer()->get('shift1.router');
-
-        /**
-         * @var $router \Shift1\Core\Router\RouterInterface
-         */
-
         $data = $router->resolve();
 
         if($this->validateRequestResult($data) === false) {

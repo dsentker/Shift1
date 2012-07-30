@@ -1,12 +1,7 @@
-2012-07-26 11:57:04 emerg (20): Ein Test
 
 
 
-2012-07-26 11:57:58 info (80): Ein Test
 
-2012-07-26 11:59:10 info (80): Post::init()
-2012-07-26 11:59:10 info (80): Post::view()
-2012-07-26 11:59:10 info (80): SidebarAction()
 
 
 
@@ -22,61 +17,6 @@
 
 
 
-
-
-
-
-
-
-
-
-2012-07-26 12:21:07 warn (60): array_unique() expects parameter 2 to be long, array given
-2012-07-26 12:21:07 warn (60): Invalid argument supplied for foreach()
-2012-07-26 12:21:07 warn (60): array_unique() expects parameter 2 to be long, array given
-2012-07-26 12:21:07 warn (60): Invalid argument supplied for foreach()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2012-07-27 16:10:09 notice (70): Undefined variable: post
-2012-07-27 16:10:17 notice (70): Trying to get property of non-object
 
 
 
