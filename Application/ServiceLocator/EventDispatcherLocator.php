@@ -2,9 +2,8 @@
 namespace Application\ServiceLocator;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
-use Shift1\InternalFilePath;
+use Shift1\Core\InternalFilePath;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface as EventSubscriber;
 
 class EventDispatcherLocator extends AbstractServiceLocator {
@@ -22,28 +21,18 @@ class EventDispatcherLocator extends AbstractServiceLocator {
     {
         parent::prepare($serviceInstance);
 
-        // Pfade setzen
-        /** @TODO: Konfigurierbar machen */
+        $listenerConfigPath = new \Shift1\Core\InternalFilePath('Application/Config/listener.yml');
+        $listenerEntries = new \Shift1\Core\Config\File\YamlFile($listenerConfigPath);
 
-        $path = new \Shift1\Core\InternalFilePath('Application/Listener');
+        foreach($listenerEntries->toArray() as $namespace => $listenerClasses) {
 
-        $namespace = '\Application\Listener\\';
-
-        // Alle Listener im Ordner finden
-        $finder = new Finder();
-        $iterator = $finder
-            ->files()
-            ->name('*Listener.php')
-            ->depth(0)
-            ->in($path->getAbsolutePath());
-
-        foreach($iterator as $listener)
-        {
-            $class = $namespace . $listener->getBasename('.php');
-
-            // Listener hinzufügen
-            if(class_exists($class))
-                $serviceInstance->addSubscriber(new $class);
+            foreach($listenerClasses as $listenerClass) {
+                $class = '\\' . $namespace . $listenerClass;
+                if(\class_exists($class)) {
+                    $serviceInstance->addSubscriber(new $class);
+                }
+            }
         }
+
     }
 }

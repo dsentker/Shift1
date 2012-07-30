@@ -1,27 +1,3 @@
-viewpost:
-  scheme: /viewpost/@post
-  bindings:
-    _controller:
-      default: Post
-    _action:
-      default: view
-    post:
-      converter: TestConverter
-
-default:
-  scheme: /@_controller/@_action/
-  bindings:
-    _controller:
-      default: Index
-
-    _action:
-      default: index
-      match: .*
-
-fallback:
-  scheme:
-  bindings:
-    _controller:
-      default: Error
-    _action:
-      default: index
+Application\Listener\:
+  - ViewListener
+  - TestListener
