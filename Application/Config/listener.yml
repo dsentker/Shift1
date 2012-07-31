@@ -1,4 +1,4 @@
 # Listener Sets
-"Application\Listener\":
+Application\Listener\:
   - ViewListener
   - TestListener

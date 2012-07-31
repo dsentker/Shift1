@@ -146,3 +146,25 @@
 
 
 
+2012-07-31 15:12:44 err (50): Argument 2 passed to Shift1\Core\View\View::__construct() must be an instance of Shift1\Core\View\VariableSet\VariableSetInterface, instance of Shift1\Core\VariableSet\VariableSet given
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

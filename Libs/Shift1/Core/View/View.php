@@ -9,6 +9,7 @@ use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Response\Renderable;
 use Shift1\Core\InternalFilePath;
+use Shift1\Core\VariableSet\VariableSetInterface;
 
 
 class View implements ViewInterface, ContainerAccess, Renderable {
@@ -57,7 +58,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected $controllerViewReloader;
 
     /**
-     * @var \Shift1\Core\View\VariableSet\VariableSetInterface
+     * @var \Shift1\Core\VariableSet\VariableSetInterface
      */
     protected $variableSet;
 
@@ -74,7 +75,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
     /**
      * @param \ArrayObject $config
-     * @param VariableSet\VariableSetInterface $variableSet
+     * @param VariableSetInterface $variableSet
      * @param Renderer\RendererInterface $renderer
      * @param TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader
      * @param ControllerViewReloader\ControllerViewReloader $controllerViewReloader
@@ -82,7 +83,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      */
     public function __construct(
         \ArrayObject $config,
-        VariableSet\VariableSetInterface $variableSet,
+        VariableSetInterface $variableSet,
         Renderer\RendererInterface $renderer,
         TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader,
         ControllerViewReloader $controllerViewReloader
@@ -115,7 +116,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
 
     /**
-     * @return \Shift1\Core\View\VariableSet\VariableSetInterface
+     * @return \Shift1\Core\VariableSet\VariableSetInterface
      */
     public function getVariableSet() {
         return $this->variableSet;
@@ -436,7 +437,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
     public function __clone() {
         $this->annotationReader = clone $this->annotationReader;
-        #$this->variableSet = clone $this->variableSet;
         $this->slots = array();
     }
 
