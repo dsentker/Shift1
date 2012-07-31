@@ -1,5 +1,5 @@
 <?php
-namespace Shift1\Core\View\VariableSet;
+namespace Shift1\Core\VariableSet;
 
 class AbstractVariableSet implements VariableSetInterface {
 
@@ -7,6 +7,14 @@ class AbstractVariableSet implements VariableSetInterface {
 
     public function add($key, $var) {
         $this->vars[$key] = $var;
+    }
+
+    public function remove($key) {
+        if($this->has($key)) {
+            unset($this->vars[$key]);
+            return true;
+        }
+        return false;
     }
 
     public function get($key) {

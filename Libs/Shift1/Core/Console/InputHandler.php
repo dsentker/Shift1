@@ -7,16 +7,13 @@ class InputHandler {
 
         $args = $this->parseArguments();
 
-        echo print_r($args);exit;
+        #echo print_r($args);exit;
 
         $handler = $this->getCommandHandler($args['command']);
         $handler->setParameter($args['params']);
-        $handler->execute();
+        $output = $handler->execute();
 
-
-
-
-
+        print $output;
 
     }
 

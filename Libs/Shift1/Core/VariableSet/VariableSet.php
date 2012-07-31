@@ -1,6 +1,6 @@
 <?php
-namespace Shift1\Core\View\VariableSet;
- 
+namespace Shift1\Core\VariableSet;
+
 class VariableSet extends AbstractVariableSet {
 
 

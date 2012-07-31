@@ -1,5 +1,5 @@
 <?php
-namespace Shift1\Core\View\VariableSet\FilteredVariableWrapper;
+namespace Shift1\Core\VariableSet\FilteredVariableWrapper;
  
 class FilteredVariableWrapper implements \ArrayAccess {
 
@@ -35,7 +35,7 @@ class FilteredVariableWrapper implements \ArrayAccess {
             } elseif(is_int($requested)) {
                 return  $requested;
             } else {
-                throw new Exception("Unknown type of variable: "  .  gettype($requested));
+                throw new \Exception("Unknown type of variable: "  .  gettype($requested));
             }
         }
 

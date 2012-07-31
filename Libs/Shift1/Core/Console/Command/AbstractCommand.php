@@ -18,4 +18,15 @@ class AbstractCommand {
 
     }
 
+    public function dialog($prompt, array $valid_inputs = array(), $default = '') {
+        while(!empty($valid_inputs) || !isset($input) || !in_array($input, $valid_inputs)) {
+            echo $prompt . \PHP_EOL;
+            $input = strtolower(trim(fgets(\STDIN)));
+            if(empty($input) && !empty($default)) {
+                $input = $default;
+            }
+        }
+        return $input;
+    }
+
 }

@@ -29,6 +29,6 @@ class PostController extends ParentController {
         return new Response($this->view);
     }
 
-
+    /* MARKER_APPEND */
 
 }
