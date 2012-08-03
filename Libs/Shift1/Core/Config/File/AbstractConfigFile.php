@@ -3,7 +3,7 @@ namespace Shift1\Core\Config\File;
 
 use Shift1\Core\Exceptions\FileNotFoundException;
 
-abstract class AbstractConfigFile implements ConfigFileInterface {
+abstract class AbstractConfigFile extends \SplFileObject implements ConfigFileInterface {
 
     /**
      * @var string
@@ -38,6 +38,8 @@ abstract class AbstractConfigFile implements ConfigFileInterface {
     }
 
     /**
+     * Acts recursive.
+     *
      * @param array|null $arrItems
      * @return \ArrayObject
      */
