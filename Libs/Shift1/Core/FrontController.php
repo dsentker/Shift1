@@ -38,7 +38,7 @@ class FrontController {
 
         $controllerFactory = $this->getServiceContainer()->get('shift1.controllerFactory');
         /** @var $controllerFactory \Shift1\Core\Controller\Factory\ControllerFactory */
-        $controllerAggregate = $controllerFactory->createController($data['_controller'], $data['_action'], $data);
+        $controllerAggregate = $controllerFactory->createController($data['_bundle'], $data['_controller'], $data['_action'], $data);
         $response = $controllerAggregate->run();
         
         if(!($response instanceof ResponseInterface)) {

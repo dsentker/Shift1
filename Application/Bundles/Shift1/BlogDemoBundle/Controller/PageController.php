@@ -1,5 +1,5 @@
 <?php
-namespace Application\Controller;
+namespace Bundles\Shift1\BlogDemoBundle\Controller;
 
 use Shift1\Core\Response\Response;
 use Shift1\Core\Request\Request;

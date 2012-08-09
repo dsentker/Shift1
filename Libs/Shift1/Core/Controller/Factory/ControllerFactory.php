@@ -9,11 +9,6 @@ use Shift1\Core\Service\Container\ServiceContainerInterface;
 class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
     /**
-     * @var \Shift1\Core\Config\Manager\ConfigManagerInterface
-     */
-    protected $config;
-
-    /**
      * @var array
      */
     protected $params = array();
@@ -21,7 +16,7 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
     /**
      * @var string
      */
-    protected $actionName;
+    protected $bundleName;
 
     /**
      * @var string
@@ -29,12 +24,17 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
     protected $controllerName;
 
     /**
+     * @var string
+     */
+    protected $actionName;
+
+    /**
      * @var ServiceContainerInterface
      */
     protected $container;
 
-    public function __construct($config) {
-        $this->config = $config;
+    public function __construct() {
+
     }
 
     public function setContainer(ServiceContainerInterface $container) {
@@ -50,23 +50,16 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
      */
     public function getController() {
 
-        $controllerNamespace = $this->config->namespace;
-        $controllerName = \ucfirst($this->getControllerName());
-        $controllerFqNs = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
+        $controllerNamespace = '\\Bundles\\' . \ucfirst($this->getBundleName()) . '\\Controller\\' . \ucfirst($this->getControllerName());
+
+        $controllerNamespaceSuffixed = $controllerNamespace . self::CONTROLLER_SUFFIX;
         
-        if(empty($controllerName)) {
-            $controllerName = $this->config->defaultController;
-            $controllerSuffixed = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
-            return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
+        if(!\class_exists($controllerNamespaceSuffixed)) {
+            /** @TODO : Throw exception here */
+            die('CONTROLLER NOT FOUND :' . $controllerNamespaceSuffixed );
         }
 
-        if(!\class_exists($controllerFqNs)) {
-            $controllerName = $this->config->errorController;
-            $controllerSuffixed = $controllerNamespace . $controllerName . self::CONTROLLER_SUFFIX;
-            return $this->getControllerInstance($controllerNamespace . $controllerName, $controllerSuffixed::getDefaultActionName());
-        }
-
-        return $this->getControllerInstance($controllerNamespace . $controllerName, $this->getActionName(), $this->getParams());
+        return $this->getControllerInstance($controllerNamespaceSuffixed, $this->getActionName(), $this->getParams());
 
     }
 
@@ -76,22 +69,20 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
      * @param array $params
      * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
-    protected function getControllerInstance($controllerName, $actionName, array $params = array()) {
+    protected function getControllerInstance($controllerClass, $actionName, array $params = array()) {
 
-        $controllerNameSuffixed = $controllerName . self::CONTROLLER_SUFFIX;
         $actionNameSuffixed = $actionName . self::ACTION_SUFFIX;
 
-        $rfController = new \ReflectionClass($controllerNameSuffixed);
+        $rfController = new \ReflectionClass($controllerClass);
 
         /** @var $controller \Shift1\Core\Controller\AbstractController */
         $controller = $rfController->newInstanceArgs(array($params));
 
         if(! \method_exists($controller, $actionNameSuffixed)) {
-            $actionName = $controller::getNotFoundActionName();
-            $actionNameSuffixed = $actionName . self::ACTION_SUFFIX;
+            $actionNameSuffixed = $controller::getNotFoundActionName()  . self::ACTION_SUFFIX;
         }
 
-        $controllerNameParts = \explode('\\', $controllerName);
+        $controllerNameParts = \explode('\\', $controllerClass);
         
         
         $dispatched = array(
@@ -138,6 +129,14 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
         return $actionParams;
     }
 
+    public function setBundleName($bundle) {
+        $this->bundleName = $bundle . 'Bundle';
+    }
+
+    public function getBundleName() {
+        return $this->bundleName;
+    }
+
     public function setControllerName($controller) {
         $this->controllerName = $controller;
     }
@@ -174,12 +173,14 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
     }
 
     /**
+     * @param string $bundleName
      * @param string $controllerName
      * @param string|null $actionName
      * @param array $params
      * @return \Shift1\Core\Controller\Factory\ControllerAggregate
      */
-    public function createController($controllerName, $actionName = null, array $params = array()) {
+    public function createController($bundleName, $controllerName, $actionName = null, array $params = array()) {
+        $this->setBundleName($bundleName);
         $this->setControllerName($controllerName);
         $this->setActionName($actionName);
         $this->setParams($params);

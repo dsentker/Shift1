@@ -2,6 +2,8 @@
 viewpost:
   scheme: /viewpost/@post
   bindings:
+    _bundle:
+      default: Shift1\BlogDemo
     _controller:
       default: Post
     _action:
@@ -10,7 +12,7 @@ viewpost:
       converter: TestConverter
 
 default:
-  scheme: /@_controller/@_action/
+  scheme: /@_bundle/@_controller/@_action/
   bindings:
     _controller:
       default: Index
@@ -20,8 +22,10 @@ default:
       match: .*
 
 fallback:
-  scheme:
+  scheme: /
   bindings:
+    _bundle:
+      default: CoreBundle
     _controller:
       default: Error
     _action:

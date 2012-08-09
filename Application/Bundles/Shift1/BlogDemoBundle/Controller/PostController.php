@@ -1,5 +1,5 @@
 <?php
-namespace Application\Controller;
+namespace Bundles\Shift1\BlogDemoBundle\Controller;
 
 
 use Application\Events\ViewEvent;
