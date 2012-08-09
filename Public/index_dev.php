@@ -1,7 +1,5 @@
 <?php
-use \Application\Boot\Bootstrapper;
+use \Application\Kernel\Bootstrapper;
 
-
-require_once \realpath('../Libs/vendor/autoload.php');
-require_once \realpath('../Application/Boot/Bootstrapper.php');
+require_once \realpath('../Application/Kernel/Bootstrapper.php');
 Bootstrapper::runDev();

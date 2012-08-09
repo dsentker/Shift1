@@ -1,76 +1,51 @@
 <?php
 namespace Shift1\Core\Service\Container;
 
-use Shift1\Core\Exceptions\ClassNotFoundException;
-use Shift1\Core\Exceptions\ServiceException;
+use Shift1\Core\Service\Exceptions\ServiceContainerException;
 use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Service\Locator\ServiceLocatorInterface;
+use Shift1\Core\Service\Locator\ParameterLocator;
 
 class ServiceContainer implements ServiceContainerInterface {
 
-    const LOCATOR_CLASS_SUFFIX = 'Locator';
+    /**
+     * @var array
+     */
+    protected $serviceLocators = array();
 
     /**
-     * @var string
+     * @param array $locators
+     * @return \Shift1\Core\Service\Container\ServiceContainer
      */
-    protected $serviceNamespace;
-
-    /**
-     * @param string $serviceNamespace
-     */
-    public function __construct($serviceNamespace) {
-        $this->serviceNamespace = \trim($serviceNamespace, '\\');
+    public function __construct(array $locators) {
+        $this->serviceLocators = $locators;
+        $this->add('parameter', new ParameterLocator());
     }
 
     /**
-     * @return string
-     */
-    protected function getServiceNamespace() {
-        return '\\' . $this->serviceNamespace . '\\';
-    }
-
-    /**
-     * @param string $serviceName
-     * @return string
-     */
-    protected function transformServiceName($serviceName) {
-        $serviceNameParts = \explode('.', $serviceName);
-        foreach($serviceNameParts as &$part) {
-            $part = \ucfirst($part);
-        }
-        return \implode('\\', $serviceNameParts);
-    }
-
-    /**
-     * @throws \Shift1\Core\Exceptions\ClassNotFoundException
+     * @throws \Shift1\Core\Service\Exceptions\ServiceContainerException
      * @param string $serviceName
      * @return \Shift1\Core\Service\Locator\AbstractServiceLocator
      */
     public function get($serviceName) {
 
-        $serviceName = $this->transformServiceName($serviceName);
-        $serviceWrapperNS = $this->getServiceNamespace() . $serviceName . self::LOCATOR_CLASS_SUFFIX;
+        $serviceLocator = $this->getServiceLocator($serviceName);
 
-        if(!\class_exists($serviceWrapperNS)) {
-            throw new ClassNotFoundException($serviceWrapperNS . ' not found');
-        }
 
-        if($serviceWrapperNS::getIsSingleton() && $this->serviceIsRunning($serviceName)) {
+        if($serviceLocator->getIsSingleton() && $this->serviceIsRunning($serviceName)) {
             return $this->getRunningService($serviceName);
         }
 
-        /** @var $serviceWrapper AbstractService */
-        $serviceWrapper = new $serviceWrapperNS;
-
-        if($serviceWrapper->hasNecessitatesServices()) {
-            foreach($serviceWrapper->getNecessitatedServices() as $service) {
+        if($serviceLocator->hasDependentServices()) {
+            foreach($serviceLocator->getDependentServices() as $service) {
                 $serviceInstance = $this->get($service);
-                $serviceWrapper->inject($service, $serviceInstance);
+                $serviceLocator->injectService($service, $serviceInstance);
             }
         }
 
-        $serviceWrapper->initialize();
+        $serviceLocator->initialize();
 
-        $instance = $serviceWrapper->getInstance();
+        $instance = $serviceLocator->getInstance();
 
         if($instance instanceof ContainerAccess) {
             $instance->setContainer($this);
@@ -85,8 +60,25 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     public function has($serviceName) {
-        $serviceWrapperNS = $this->getServiceNamespace() . $this->transformServiceName($serviceName) . self::LOCATOR_CLASS_SUFFIX;
-        return \class_exists($serviceWrapperNS);
+        return !empty($this->serviceLocators[$serviceName]);
+    }
+
+    public function add($locatorKey, ServiceLocatorInterface $locator) {
+        $this->serviceLocators[$locatorKey] = $locator;
+    }
+
+    /**
+     * @param $serviceName
+     * @return ServiceLocatorInterface
+     * @throws \Shift1\Core\Service\Exceptions\ServiceContainerException
+     */
+    public function getServiceLocator($serviceName) {
+        if(!$this->has($serviceName)) {
+            throw new ServiceContainerException("ServiceLocator key '{$serviceName}' not found.", ServiceContainerException::LOCATOR_NOT_FOUND);
+        } elseif(!($this->serviceLocators[$serviceName] instanceof ServiceLocatorInterface)) {
+            throw new ServiceContainerException("'{$serviceName}' must be an instance of ServiceLocatorInterface", ServiceContainerException::BAD_INTERFACE);
+        }
+        return $this->serviceLocators[$serviceName];
     }
 
     /**
@@ -94,7 +86,6 @@ class ServiceContainer implements ServiceContainerInterface {
      * @return bool
      */
     protected function serviceIsRunning($serviceName) {
-        $serviceName = $this->transformServiceName($serviceName);
         return RunningServicesRegistry::has($serviceName);
     }
 
@@ -110,8 +101,9 @@ class ServiceContainer implements ServiceContainerInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ServiceException
+     *
      * @param string $serviceName
+     * @throws \Shift1\Core\Service\Exceptions\ServiceContainerException
      * @return \Shift1\Core\Service\Locator\AbstractServiceLocator
      */
     protected function getRunningService($serviceName) {
@@ -121,7 +113,7 @@ class ServiceContainer implements ServiceContainerInterface {
          * to transform it again.
          */
         if(!$this->serviceIsRunning($serviceName)) {
-            throw new ServiceException('Service ' . $serviceName . ' is not running now');
+            throw new ServiceContainerException('Service ' . $serviceName . ' is not running now', ServiceContainerException::SERVICE_NOT_RUNNING);
         }
         return RunningServicesRegistry::get($serviceName);
     }

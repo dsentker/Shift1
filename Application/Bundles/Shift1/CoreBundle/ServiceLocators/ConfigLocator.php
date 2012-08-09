@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator\Shift1;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\InternalFilePath;
@@ -12,12 +12,12 @@ class ConfigLocator extends AbstractServiceLocator {
 
     public function __construct() {
         $this->setClassNamespace('\Shift1\Core\Config\Manager\Manager');
-        $this->necessitate('shift1.context');
+        $this->dependsOn('parameter');
     }
 
     public function initialize() {
         $configFile = new File\IniFile(new InternalFilePath('Application/Config/AppConfig.ini'), true);
-        $environment = $this->get('shift1.context')->environment;
+        $environment = $this->getService('parameter')->environment;
         $this->setConstructorArgs(array($configFile, $environment));
     }
 }

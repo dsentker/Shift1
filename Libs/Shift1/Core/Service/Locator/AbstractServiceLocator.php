@@ -2,7 +2,7 @@
 namespace Shift1\Core\Service\Locator;
 
 use Shift1\Core\InternalFilePath;
-use Shift1\Core\Exceptions as Exception;
+use Shift1\Core\Service\Exceptions\ServiceLocatorException;
 
 abstract class AbstractServiceLocator implements ServiceLocatorInterface {
 
@@ -61,21 +61,23 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ClassNotFoundException|\Shift1\Core\Exceptions\FileNotFoundException
-     * @return mixed
+     * @throws \Shift1\Core\Service\Exceptions\ServiceLocatorException
+     * @return bool
      */
     public function getRessource() {
 
         if(empty($this->path)) {
-            throw new Exception\ClassNotFoundException($this->namespace);
+            throw new ServiceLocatorException("Could not load '{$this->namespace}': Autoloading failed, and locator does not provide a file path.", ServiceLocatorException::NO_PATH_PROVIDED);
         }
 
         $ressourcePath = new InternalFilePath($this->getPath());
-        if(\file_exists($ressourcePath)) {
-            require_once $ressourcePath;
-        } else {
-            throw new Exception\FileNotFoundException($ressourcePath);
+
+        if(!\file_exists($ressourcePath->getAbsolutePath())) {
+            throw new ServiceLocatorException("Could not load '{$this->namespace}': '{$ressourcePath->getAbsolutePath()}' is not a valid path.", ServiceLocatorException::PATH_ERROR);
         }
+
+        require_once $ressourcePath->getAbsolutePath();
+        return true;
         
     }
 
@@ -119,7 +121,7 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
         $constructorArgs  = $this->getConstructorArgs();
 
         if(empty($this->namespace)) {
-            throw new Exception\ServiceException('No instance available for ' . \get_class($this) . '. No Namespace defined.');
+            throw new ServiceLocatorException('Instance failed for ' . $this->getId() . ': No Namespace defined.', ServiceLocatorException::NAMESPACE_ERROR);
         }
         
         if(!\class_exists($serviceClassName)) {
@@ -142,12 +144,12 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
      * @param string|array $service
      * @return void
      */
-    protected function necessitate($service) {
+    protected function dependsOn($service) {
 
         switch(true) {
             case \is_array($service):
                 foreach($service as $serviceItem) {
-                    $this->necessitate($serviceItem);
+                    $this->dependsOn($serviceItem);
                 }
                 break;
 
@@ -156,36 +158,63 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
                 break;
 
             default:
-                throw new Exception\ServiceException('Unknown Service necessitated by ' . \get_class($this));
+                throw new ServiceLocatorException('Requested service name must be a string!', ServiceLocatorException::UNKNOWN_SERVICE);
             
         }
     }
 
-    public function getNecessitatedServices() {
+    /**
+     * @return array
+     */
+    public function getDependentServices() {
         return $this->necessitates;
     }
 
-    public function hasNecessitatesServices() {
+    /**
+     * @return bool
+     */
+    public function hasDependentServices() {
         return (\count($this->necessitates) > 0);
     }
 
-    public function inject($id, $service) {
+    /**
+     * @param string $id
+     * @param string $service
+     */
+    public function injectService($id, $service) {
         $this->injectedServices[$id] = $service;
     }
 
-    public function get($serviceId) {
+    /**
+     * @param $serviceId
+     * @return mixed
+     * @throws \Shift1\Core\Exceptions\ServiceException
+     */
+    public function getService($serviceId) {
         if(empty($this->injectedServices[$serviceId])) {
-           throw new Exception\ServiceException("Service not found: {$serviceId}");
+           throw new ServiceLocatorException("Service, requested by {$this->getId()}, not found: {$serviceId}", ServiceLocatorException::UNKNOWN_SERVICE);
         }
         return $this->injectedServices[$serviceId];
     }
 
     /**
-     * @static
      * @return bool
      */
-    static public function getIsSingleton() {
+    public function getIsSingleton() {
         return static::$isSingleton;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId() {
+        $bundleManagerNamespaceParts = \explode('\\', \get_class($this));
+        $locatorName = \array_pop($bundleManagerNamespaceParts);
+
+        // remove the "Locator" suffix
+        $suffixPos = \strrpos($locatorName, self::SERVICE_LOCATOR_SUFFIX);
+        return \substr($locatorName, 0, $suffixPos);
+
     }
 
 }

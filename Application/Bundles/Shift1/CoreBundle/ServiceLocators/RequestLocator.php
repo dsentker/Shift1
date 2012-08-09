@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator\Shift1;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\InternalFilePath;
@@ -13,13 +13,13 @@ class RequestLocator extends AbstractServiceLocator {
     public function __construct() {
 
         $this->setClassNamespace('\Shift1\Core\Request\Request');
-        $this->necessitate('shift1.config');
+        $this->dependsOn('shift1.config');
     }
 
     public function getInstance() {
 
         $classNamespace = $this->getClassNamespace();
-        return $classNamespace::fromGlobals($this->get('shift1.config')->route->appWebRoot);
+        return $classNamespace::fromGlobals($this->getService('shift1.config')->route->appWebRoot);
 
     }
 

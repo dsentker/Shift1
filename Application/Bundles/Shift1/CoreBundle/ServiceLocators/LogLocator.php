@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Log\Writer;

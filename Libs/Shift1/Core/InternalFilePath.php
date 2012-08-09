@@ -25,10 +25,27 @@ class InternalFilePath {
     }
 
     /**
+     * Checks if this path exists, regardless of
+     * a file was given or just a dir
+     *
      * @return bool
      */
     public function exists() {
-        return (\file_exists($this->getAbsolutePath()) && \is_file($this->getAbsolutePath()));
+        return (\file_exists($this->getAbsolutePath()));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFile() {
+        return (\is_file($this->getAbsolutePath()));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDir() {
+        return (\is_dir($this->getAbsolutePath()));
     }
 
     /**

@@ -174,3 +174,53 @@
 
 
 
+2012-08-09 17:26:17 notice (70): Undefined index:  environment
+2012-08-09 17:26:18 warn (60): Illegal offset type
+2012-08-09 17:26:18 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:26:58 notice (70): Undefined index:  environment
+2012-08-09 17:26:58 warn (60): Illegal offset type
+2012-08-09 17:26:58 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:26:59 notice (70): Undefined index:  environment
+2012-08-09 17:26:59 warn (60): Illegal offset type
+2012-08-09 17:26:59 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:27:15 notice (70): Undefined index:  environment
+2012-08-09 17:27:15 warn (60): Illegal offset type
+2012-08-09 17:27:15 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:27:15 notice (70): Undefined index:  environment
+2012-08-09 17:27:16 warn (60): Illegal offset type
+2012-08-09 17:27:16 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:27:27 notice (70): Undefined index:  environment
+2012-08-09 17:27:27 warn (60): Illegal offset type
+2012-08-09 17:27:27 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:28:18 notice (70): Undefined index:  environment
+2012-08-09 17:28:18 warn (60): Illegal offset type
+2012-08-09 17:28:18 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:28:55 notice (70): Undefined index:  environment
+2012-08-09 17:28:55 warn (60): Illegal offset type
+2012-08-09 17:28:55 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:29:05 notice (70): Undefined index:  environment
+2012-08-09 17:29:05 warn (60): Illegal offset type
+2012-08-09 17:29:05 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+2012-08-09 17:29:05 notice (70): Undefined index:  environment
+2012-08-09 17:29:05 warn (60): Illegal offset type
+2012-08-09 17:29:06 err (50): Argument 1 passed to Shift1\Core\Config\Manager\AbstractManager::__construct() must be an instance of ArrayObject, null given, called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Config\Manager\Manager.php on line 14 and defined
+
+
+
+
+
+
+
+
+
+
+

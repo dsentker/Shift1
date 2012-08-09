@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator\Shift1;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\Debug\HTMLResponseExceptionHandler;
@@ -9,16 +9,17 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
     public static $isSingleton = true;
 
     public function __construct() {
-        $this->necessitate('shift1.context');
-        $this->necessitate('shift1.view');
-
+        $this->dependsOn(array(
+            'shift1.context',
+            'shift1.view',
+        ));
     }
 
     public function initialize() {
 
         $handlerNS = '\\Shift1\\Core\Debug\\';
 
-        switch($this->get('shift1.context')->environment) {
+        switch($this->getService('shift1.context')->environment) {
             case 'production':
             case 'staging':
                 $handlerNS .= 'SilentExceptionHandler';
@@ -38,7 +39,7 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
          */
 
         if($serviceInstance instanceof HTMLResponseExceptionHandler) {
-            $view = $this->get('shift1.view');
+            $view = $this->getService('shift1.view');
             $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
             $serviceInstance->setExceptionView($view);
         }

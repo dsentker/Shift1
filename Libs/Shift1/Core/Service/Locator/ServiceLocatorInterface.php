@@ -3,6 +3,8 @@ namespace Shift1\Core\Service\Locator;
 
 interface ServiceLocatorInterface {
 
+    const SERVICE_LOCATOR_SUFFIX = 'Locator';
+
     /**
      * @abstract
      * @return object
@@ -14,13 +16,19 @@ interface ServiceLocatorInterface {
      * @abstract
      * @return void
      */
-    static function getIsSingleton();
+    function getIsSingleton();
 
     /**
      * @abstract
-     * @return void
+     * @return bool
      */
-    function hasNecessitatesServices();
+    function hasDependentServices();
+
+    /**
+     * @abstract
+     * @return array
+     */
+    function getDependentServices();
 
     /**
      * @abstract
@@ -28,12 +36,18 @@ interface ServiceLocatorInterface {
      * @param string $service
      * @return void
      */
-    function inject($id, $service);
+    function injectService($id, $service);
 
     /**
      * @abstract
      * @return void
      */
     function initialize();
+
+    /**
+     * @abstract
+     * @return string
+     */
+    function getId();
     
 }

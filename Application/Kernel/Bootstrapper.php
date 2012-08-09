@@ -18,7 +18,7 @@ namespace Shift1 {
     define('BASEPATH', \realpath(__DIR__ . '/../../'));
 }
 
-namespace Application\Boot {
+namespace Application\Kernel {
 
     use Shift1\Core\Config\Manager\Manager as ConfigManager;
     use Shift1\Core\FrontController;
@@ -26,6 +26,7 @@ namespace Application\Boot {
     use Shift1\Core\Autoloader\Autoloader;
     use Shift1\Core\Debug;
     use Shift1\Core\Service\Container\ServiceContainer;
+    use Shift1\Core\Bundle\Converger\BundleServiceLocatorConverger;
 
     class Bootstrapper  {
 
@@ -36,15 +37,18 @@ namespace Application\Boot {
          */
         protected static function init($environment) {
 
+            require_once \realpath('../Libs/vendor/autoload.php');
             require \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
 
             $shift1Loader = new Autoloader();
             $shift1Loader->register();
 
-            $serviceContainer = new ServiceContainer('Application\ServiceLocator');
+            $serviceLocatorConverger = new BundleServiceLocatorConverger('Application\Bundles');
+            $serviceLocators = $serviceLocatorConverger->getServiceLocators();
+            $serviceContainer = new ServiceContainer($serviceLocators);
 
-            $serviceContainer->get('shift1.context')->environment = $environment;
 
+            $serviceContainer->get('parameter')->environment = $environment;
             #$serviceContainer->get('shift1.exceptionHandler')->register(); // hide me if u got problems
 
             $fc = new FrontController();
@@ -66,7 +70,7 @@ namespace Application\Boot {
             \ini_set('display_errors', 1);
 
             $fc = self::init('development');
-            $fc->getServiceContainer()->get('Log')->registerErrorHandler(false); // hide me if u got problems
+            $fc->getServiceContainer()->get('shift1.log')->registerErrorHandler(false); // hide me if u got problems
             self::execute($fc);
         }
 
@@ -79,7 +83,7 @@ namespace Application\Boot {
         public static function runStaging() {
             \error_reporting(-1);
             $fc = self::init('staging');
-            $fc->getServiceContainer()->get('Log')->registerErrorHandler(false);
+            $fc->getServiceContainer()->get('shift1.log')->registerErrorHandler(false);
             self::execute($fc);
 
         }

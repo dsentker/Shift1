@@ -1,17 +1,14 @@
 <?php
-namespace Application\ServiceLocator\Shift1;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
-use Shift1\Core\InternalFilePath;
-use Shift1\Core\Config\File;
-
 
 class ViewLocator extends AbstractServiceLocator {
 
     public function __construct() {
 
         $this->setClassNamespace('\Shift1\Core\View\View');
-        $this->necessitate(array(
+        $this->dependsOn(array(
                         'shift1.config',
                         'shift1.variableSet',
                         'shift1.viewRenderer',
@@ -24,11 +21,11 @@ class ViewLocator extends AbstractServiceLocator {
     public function initialize() {
 
         $this->setConstructorArgs(array(
-                       $this->get('shift1.config')->view,
-                       $this->get('shift1.variableSet'),
-                       $this->get('shift1.viewRenderer'),
-                       $this->get('shift1.templateAnnotationReader'),
-                       $this->get('shift1.controllerViewReloader'),
+                       $this->getService('shift1.config')->view,
+                       $this->getService('shift1.variableSet'),
+                       $this->getService('shift1.viewRenderer'),
+                       $this->getService('shift1.templateAnnotationReader'),
+                       $this->getService('shift1.controllerViewReloader'),
                   ));
 
     }
