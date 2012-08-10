@@ -61,12 +61,21 @@ class TemplateDefinition extends BundleDefinition {
          * @TODO
          */
         $path = $filepath->getAbsolutePath();
-        $identificator = 'Bundle' . \DIRECTORY_SEPARATOR . 'Views/';
-        $pos = strpos($path, 'Bundle/Views/') + strlen($identificator) - 1;
+        $pathIdentificator = 'Application' . \DIRECTORY_SEPARATOR . 'Bundles' . \DIRECTORY_SEPARATOR;
+        $pos = strpos($path, $pathIdentificator) + strlen($pathIdentificator) -1;
         $root = substr($path, $pos);
-        if(false !== \strpos($root, \DIRECTORY_SEPARATOR)) {
-
+        if(false === \strpos($root, \DIRECTORY_SEPARATOR)) {
+            /** @todo throw exception */
         }
+        $rootPathParts = \explode(\DIRECTORY_SEPARATOR, $root);
+
+        if(!isset($rootPathParts[2])) {
+            /** @todo throw exception */
+        }
+
+        $bundleVendor = $rootPathParts[0];
+        $bundleName   = self::removeSuffix($rootPathParts[1], self::BUNDLE_SUFFIX);
+        
 
     }
 
