@@ -28,7 +28,7 @@ class TemplateAnnotationReader implements TemplateAnnotationReaderInterface {
 
     public function parse($file) {
 
-        $fileLines = \file($file, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
+        $fileLines = \file($file, \FILE_SKIP_EMPTY_LINES | \FILE_IGNORE_NEW_LINES);
 
         foreach($fileLines as $lineNr => $line) {
             $line = trim($line);

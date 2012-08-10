@@ -35,7 +35,7 @@ class ViewListener implements EventSubscriberInterface
 
     public function onKernelResponsePre(MyEvent $event) {
 
-        echo $event->view->getViewFile()->__toString();
+        echo "TestOnKernelResponsePre:" . $event->view->getViewFile()->__toString();
 
     }
 

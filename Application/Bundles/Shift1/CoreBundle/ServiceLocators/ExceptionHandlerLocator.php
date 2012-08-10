@@ -10,7 +10,7 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
 
     public function __construct() {
         $this->dependsOn(array(
-            'shift1.context',
+            'parameter',
             'shift1.view',
         ));
     }
@@ -19,7 +19,7 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
 
         $handlerNS = '\\Shift1\\Core\Debug\\';
 
-        switch($this->getService('shift1.context')->environment) {
+        switch($this->getService('parameter')->environment) {
             case 'production':
             case 'staging':
                 $handlerNS .= 'SilentExceptionHandler';

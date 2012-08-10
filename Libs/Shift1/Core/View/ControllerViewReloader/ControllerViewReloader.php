@@ -2,6 +2,7 @@
 namespace Shift1\Core\View\ControllerViewReloader;
 
 use Shift1\Core\Controller\Factory\ControllerFactoryInterface;
+use Shift1\Core\Bundle\Definition\ActionDefinition;
 use Shift1\Core\View\ViewInterface;
 use Shift1\Core\Exceptions\ControllerViewReloaderException;
 use Shift1\Core\InternalFilePath;
@@ -23,6 +24,7 @@ class ControllerViewReloader {
      * @return \Shift1\Core\View\ViewInterface|string
      */
     public function loadByTemplateLocation(InternalFilePath $path) {
+        /** @TODO NOT WORKING ATM */
         $pathParts = $path->getAbsolutePathAsArray();
         $file = \array_pop($pathParts);
         $fileSplit = \explode('.', $file, 2);
@@ -34,18 +36,20 @@ class ControllerViewReloader {
 
 
     /**
-     * @param string $definition
+     * @param \Shift1\Core\Bundle\Definition\ActionDefinition $definition
      * @return \Shift1\Core\View\ViewInterface
      */
-    public function loadByControllerDefinition($definition) {
-        $controllerParts = \explode('::', $definition);
-        $controller = $controllerParts[0];
-        $action = (isset($controllerParts[1])) ? $controllerParts[1] : null;
-        return $this->reloadView($controller, $action);
+    public function loadByActionDefinition(ActionDefinition $definition) {
+
+        $bundleName     = $definition->getBundleName();
+        $controllerName = $definition->getControllerName();
+        $actionName     = $definition->getActionName();
+
+        return $this->reloadView($bundleName, $controllerName, $actionName);
     }
 
-    protected function reloadView($controller, $action = null) {
-        $view = $this->controllerFactory->createController($controller, $action)->run()->getContent();
+    protected function reloadView($bundleName, $controller, $action = null) {
+        $view = $this->controllerFactory->createController($bundleName, $controller, $action)->run()->getContent();
         if(!($view instanceof ViewInterface)) {
             throw new ControllerViewReloaderException("Action {$controller}::{$action} must return a Instance of ViewInterface to reload view!");
         }

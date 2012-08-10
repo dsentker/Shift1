@@ -2,15 +2,9 @@
 namespace Bundles\Shift1\BlogDemoBundle\Controller;
 
 
-use Application\Events\ViewEvent;
+use Bundles\Shift1\BlogDemoBundle\Events\BlogViewEvent;
 
 use Shift1\Core\Response\Response;
-use Shift1\Core\Exceptions as E;
-use Shift1\Core\View\View;
-use Shift1\Core\FrontController;
-use Shift1\Core\Request\Request;
-
-
 
 class PostController extends ParentController {
 
@@ -23,9 +17,9 @@ class PostController extends ParentController {
         $this->view->post = $post;
         $this->view->foo = '<a href="#">A<'; // sic! to test the html output escaper
 
-        $dispatcher = $this->getContainer()->get('EventDispatcher');
-        $dispatcher->dispatch('kernel.response', new ViewEvent($this->view));
-
+        $dispatcher = $this->getContainer()->get('zeichen32.eventDispatcher');
+        $dispatcher->dispatch('kernel.response', new BlogViewEvent($this->view));
+#throw new \Exception("TEST");
         return new Response($this->view);
     }
 

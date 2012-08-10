@@ -1,10 +1,10 @@
 <?php
-namespace Application\Events;
+namespace Bundles\Shift1\BlogDemoBundle\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 use Shift1\Core\View\ViewInterface;
 
-class ViewEvent extends Event {
+class BlogViewEvent extends Event {
 
     /**
      * @var \Shift1\Core\View\ViewInterface

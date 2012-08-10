@@ -24,8 +24,6 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
     public function setExceptionView(ViewInterface $view) {
         if($view instanceof View) {
             $view->disableExceptions();
-            $view->setIsStrict(true);
-
         }
         $this->exceptionView = $view;
     }

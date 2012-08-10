@@ -2,15 +2,16 @@
 namespace Shift1\Core\View;
 
 use Shift1\Core\Exceptions\ViewException;
-use Shift1\Core\Exceptions\ClassNotFoundException;
-use Shift1\Core\Exceptions\ServiceException;
 use Shift1\Core\View\ControllerViewReloader\ControllerViewReloader;
+use Shift1\Core\View\Exceptions\ViewFileException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Response\Renderable;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\VariableSet\VariableSetInterface;
-
+use Shift1\Core\Bundle\Definition\TemplateDefinition;
+use Shift1\Core\Bundle\Definition\ActionDefinition;
+use Shift1\Core\Bundle\Exceptions\DefinitionException;
 
 class View implements ViewInterface, ContainerAccess, Renderable {
 
@@ -130,17 +131,24 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
-     * @param string $viewFile
-     * @param bool $useDefaultViewFilePath
+     * @param string|InternalFilePath $viewFile
      * @return View
      */
-    public function setViewFile($viewFile, $useDefaultViewFilePath = true) {
-        if(true === $useDefaultViewFilePath) {
-            $viewFile = $this->config->defaultSrcPath . '/' . $viewFile;
-        }
+    public function setViewFile($viewFile) {
 
-        $this->viewFile = new InternalFilePath($this->completeViewFilename($viewFile));
-        $this->annotationReader->parse($this->viewFile);
+        if(!($viewFile instanceof InternalFilePath)) {
+            try {
+                $definition = new TemplateDefinition($viewFile);
+                $viewFile = $definition->getTemplateFilePath();
+            } catch (DefinitionException $e) {
+                if($e->getCode() == DefinitionException::TEMPLATE_DEFINITION_INVALID) {
+                    throw new ViewFileException("Invalid view file given: '{$viewFile}'. Provide an InternalFilePath instance or a valid template definition.");
+                }
+            }
+
+        }
+        $this->viewFile = $viewFile;
+        $this->annotationReader->parse($viewFile->getAbsolutePath());
 
         return $this;
     }
@@ -338,7 +346,8 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected function renderByController() {
         if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
             $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
-            $view = $this->controllerViewReloader->loadByControllerDefinition($definition[0]);
+            $actionDefinition = new ActionDefinition($definition[0]);
+            $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);
         } else {
             $view = $this->controllerViewReloader->loadByTemplateLocation($this->getViewFile());
         }
@@ -353,54 +362,13 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
-     * @param string $controller
-     * @param string $action
-     * @return bool
-     */
-    public function setActionView($controller, $action) {
-
-        $suggestedViewFile = $controller . '/' . $action;
-
-        switch(true) {
-            case $this->fileExists($suggestedViewFile):
-                $this->setViewFile($suggestedViewFile);
-                break;
-            case $this->fileExists('index'):
-                $this->setViewFile('index');
-                break;
-            default:
-                // No view file detected
-                $this->setViewFile('Libs/Shift1/Core/Resources/Views/viewNotFound', false);
-                return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string $file
-     * @return string
-     */
-    protected function completeViewFilename($file) {
-        if(\strpos($file, '.') === false) {
-            $file .= '.' . $this->config->defaultFileExt;
-        }
-        return $file;
-    }
-
-    /**
      * @param string|Shift1\Core\InternalFilePath $file
-     * @param bool $useDefaultViewFilePath
      * @return bool
      */
-    public function fileExists($file, $useDefaultViewFilePath = true) {
-
-        if(true === $useDefaultViewFilePath) {
-            $file = $this->config->defaultSrcPath . '/' . $file;
-        }
+    public function fileExists($file) {
 
         if(!($file instanceof InternalFilePath)) {
-            $file = new InternalFilePath($this->completeViewFilename($file));
+            $file = new InternalFilePath($file);
         }
         return $file->exists();
     }

@@ -2,10 +2,8 @@
 namespace Shift1\Core;
 
 use Shift1\Core\Service\Container\ServiceContainerInterface;
-use Shift1\Core\Config\Manager\ConfigManagerInterface;
 use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\Exceptions\FrontControllerException;
-use Shift1\Core\Request\RequestInterface;
 use Shift1\Core\Response\ResponseInterface;
 use Shift1\Core\Router\AbstractRouter;
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \Shift1\Core\View\ViewInterface $view
- * @var \Shift1\Core\View\VariableSet\VariableSetInterface $vars
+ * @var \Shift1\Core\VariableSet\VariableSetInterface $vars
  * @renderedByController
  * @hasParent('index', 'content')
  */

@@ -16,7 +16,7 @@ class ConfigLocator extends AbstractServiceLocator {
     }
 
     public function initialize() {
-        $configFile = new File\IniFile(new InternalFilePath('Application/Config/AppConfig.ini'), true);
+        $configFile = new File\IniFile(new InternalFilePath('Application/Config/app.ini'), true);
         $environment = $this->getService('parameter')->environment;
         $this->setConstructorArgs(array($configFile, $environment));
     }

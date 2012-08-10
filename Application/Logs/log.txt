@@ -238,3 +238,222 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-08-10 13:03:45 notice (70): Undefined property: Shift1\Core\View\View::$e
+
+2012-08-10 13:05:55 notice (70): Undefined property: Shift1\Core\View\View::$e
+
+2012-08-10 13:06:05 notice (70): Undefined property: Shift1\Core\View\View::$e
+
+2012-08-10 13:06:13 warn (60): file(C:\xampp\htdocs\shift1\Application\Views\Libs\Shift1\Core\Resources\Views\shift1Layout.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-10 13:06:13 warn (60): Invalid argument supplied for foreach()
+2012-08-10 13:06:13 err (50): View File Application\Views\Libs\Shift1\Core\Resources\Views\shift1Layout.php not found
+
+
+
+
+
+
+
+
+
+2012-08-10 16:54:56 notice (70): Undefined index:  defaultSrcPath
+2012-08-10 16:54:56 notice (70): Undefined index:  defaultSrcPath
+
+2012-08-10 17:10:04 notice (70): Undefined property: Shift1\Core\Bundle\Definition\ActionDefinition::$getTemplateDefinition
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-08-10 17:22:01 warn (60): Missing argument 1 for Shift1\Core\Bundle\Definition\ControllerDefinition::getControllerName(), called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Bundle\Definition\ControllerDefinition.php on line 50 and defined
+2012-08-10 17:22:01 notice (70): Undefined variable: suffixed
+2012-08-10 17:22:01 warn (60): Missing argument 1 for Shift1\Core\Bundle\Definition\ControllerDefinition::getControllerName(), called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Bundle\Definition\ControllerDefinition.php on line 50 and defined
+2012-08-10 17:22:01 notice (70): Undefined variable: suffixed
+
+2012-08-10 17:22:01 warn (60): Missing argument 1 for Shift1\Core\Bundle\Definition\ControllerDefinition::getControllerName(), called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Bundle\Definition\ControllerDefinition.php on line 50 and defined
+2012-08-10 17:22:02 notice (70): Undefined variable: suffixed
+2012-08-10 17:22:02 warn (60): Missing argument 1 for Shift1\Core\Bundle\Definition\ControllerDefinition::getControllerName(), called in C:\xampp\htdocs\shift1\Libs\Shift1\Core\Bundle\Definition\ControllerDefinition.php on line 50 and defined
+2012-08-10 17:22:02 notice (70): Undefined variable: suffixed
+
+
+
+
+
+
+
+
+
+
+
+
+
+2012-08-10 17:30:10 warn (60): file() [<a href='function.file'>function.file</a>]: Filename cannot be empty
+2012-08-10 17:30:10 warn (60): Invalid argument supplied for foreach()
+2012-08-10 17:30:10 err (50): No view file given
+
+2012-08-10 17:30:32 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:30:32 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:31:20 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:31:20 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:31:29 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:31:29 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:31:30 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:31:30 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:31:54 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:31:54 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:32:10 warn (60): file(C:\xampp\htdocs\shift1\C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Post\view.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:32:10 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:32:52 warn (60): file(C:\xampp\htdocs\shift1\post\post-meta) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-10 17:32:52 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:35:04 warn (60): file(C:\xampp\htdocs\shift1\shift1:blogDemo:post:post-meta) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:35:04 warn (60): Invalid argument supplied for foreach()
+
+
+
+
+
+2012-08-10 17:39:46 warn (60): file(C:\xampp\htdocs\shift1\shift1:blogDemo::post\post-meta) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:39:47 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:40:52 warn (60): file(C:\xampp\htdocs\shift1\shift1:blogDemo::post\post-meta) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:40:52 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:40:53 warn (60): file(C:\xampp\htdocs\shift1\shift1:blogDemo::post\post-meta) [<a href='function.file'>function.file</a>]: failed to open stream: Invalid argument
+2012-08-10 17:40:53 warn (60): Invalid argument supplied for foreach()
+
+
+
+
+
+
+
+
+
+
+
+2012-08-10 17:48:40 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\page\sidebar.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-10 17:48:41 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:58:48 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Page\sidebar.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-10 17:58:49 warn (60): Invalid argument supplied for foreach()
+
+2012-08-10 17:58:50 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogDemoBundle\Views\Page\sidebar.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-10 17:58:50 warn (60): Invalid argument supplied for foreach()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

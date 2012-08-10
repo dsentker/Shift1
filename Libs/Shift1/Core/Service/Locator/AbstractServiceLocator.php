@@ -188,7 +188,7 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
     /**
      * @param $serviceId
      * @return mixed
-     * @throws \Shift1\Core\Exceptions\ServiceException
+     * @throws ServiceLocatorException
      */
     public function getService($serviceId) {
         if(empty($this->injectedServices[$serviceId])) {
@@ -208,8 +208,8 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
      * @return string
      */
     public function getId() {
-        $bundleManagerNamespaceParts = \explode('\\', \get_class($this));
-        $locatorName = \array_pop($bundleManagerNamespaceParts);
+        $locatorNamespaceParts = \explode('\\', \get_class($this));
+        $locatorName = \array_pop($locatorNamespaceParts);
 
         // remove the "Locator" suffix
         $suffixPos = \strrpos($locatorName, self::SERVICE_LOCATOR_SUFFIX);

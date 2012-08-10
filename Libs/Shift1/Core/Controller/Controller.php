@@ -16,9 +16,13 @@ class Controller extends AbstractController {
      */
     public function initView() {
 
+        /** @var $dispatchedDefinition \Shift1\Core\Bundle\Definition\ActionDefinition  */
+        $dispatchedDefinition = $this->getParam('_dispatchedDefinition');
         $this->view = $this->get('shift1.view');
-        $dispatched = $this->getParam('_dispatched');
-        $this->view->setActionView($dispatched['class'], $dispatched['action']);
+
+        $templateDefinition = $dispatchedDefinition->getTemplateDefinition();
+        $suggestedView = $templateDefinition->getTemplateFilePath($dispatchedDefinition->getControllerName(false));
+        $this->view->setViewFile($suggestedView);
 
     }
 

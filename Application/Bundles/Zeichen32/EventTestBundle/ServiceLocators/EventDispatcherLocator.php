@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator;
+namespace Bundles\Zeichen32\EventTestBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\InternalFilePath;

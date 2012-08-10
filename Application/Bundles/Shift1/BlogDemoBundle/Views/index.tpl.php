@@ -1,7 +1,7 @@
 <?php
-/*
- * @var \Shift1\Core\View\ViewInterface $view
- * @var \Shift1\Core\View\VariableSet\VariableSetInterface $vars
+/**
+ * @var \Shift1\Core\View\View $view
+ * @var \Shift1\Core\VariableSet\VariableSetInterface $vars
  */
 ?>
 <!DOCTYPE html>
@@ -51,7 +51,7 @@
         </div>
 
         <div id="sidebar">
-            <?php echo  $view->renderTemplate('page/sidebar') ?>
+            <?php echo $view->renderTemplate('shift1:blogDemo:page/sidebar') ?>
         </div>
 
     </div>

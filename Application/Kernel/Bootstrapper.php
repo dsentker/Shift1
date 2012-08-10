@@ -43,7 +43,7 @@ namespace Application\Kernel {
             $shift1Loader = new Autoloader();
             $shift1Loader->register();
 
-            $serviceLocatorConverger = new BundleServiceLocatorConverger('Application\Bundles');
+            $serviceLocatorConverger = BundleServiceLocatorConverger::factory($environment);
             $serviceLocators = $serviceLocatorConverger->getServiceLocators();
             $serviceContainer = new ServiceContainer($serviceLocators);
 
@@ -99,7 +99,7 @@ namespace Application\Kernel {
             \error_reporting(0);
             \ini_set('display_errors', 0);
 
-            /** @var $fc \Shift1\Core\FrontController\FrontController */
+            /** @var $fc \Shift1\Core\FrontController */
             $fc = self::init('production');
 
             // Override the non-silent exception handler
