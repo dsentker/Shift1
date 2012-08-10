@@ -54,12 +54,20 @@ class TemplateDefinition extends BundleDefinition {
     public static function fromTemplateFile(InternalFilePath $filepath) {
         /*
          * Something like
-         * /www/shift1/application/bundles/vendor/demoBundle/views/index.tpl.php
+         * /www/shift1/application/bundles/vendorA/demoXBundle/views/index.tpl.php
          *    -- O R --
-         * /www/shift1/application/bundles/vendor/demoBundle/views/subfolder/index.tpl.php
+         * /www/shift1/application/bundles/vendorB/demoYBundle/views/subfolder/index.tpl.php
          *
          * @TODO
          */
+        $path = $filepath->getAbsolutePath();
+        $identificator = 'Bundle' . \DIRECTORY_SEPARATOR . 'Views/';
+        $pos = strpos($path, 'Bundle/Views/') + strlen($identificator) - 1;
+        $root = substr($path, $pos);
+        if(false !== \strpos($root, \DIRECTORY_SEPARATOR)) {
+
+        }
+
     }
 
     /**
