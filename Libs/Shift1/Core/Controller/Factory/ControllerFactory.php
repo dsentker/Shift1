@@ -58,7 +58,7 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
         if(!\class_exists($controllerNamespace)) {
             /** @TODO : Throw exception here */
-            die('CONTROLLER NOT FOUND :' . $controllerNamespace );
+            die('CONTROLLER NOT FOUND: ' . $controllerNamespace );
         }
 
         return $this->getControllerInstance($controllerDefinition, $this->getActionName(), $this->getParams());
@@ -173,7 +173,7 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
     /**
      * @param string $bundleDefinition e.g. shift1:foo
-     * @param string $controllerName
+     * @param string $controllerName, non-suffixed
      * @param string|null $actionName
      * @param array $params
      * @return \Shift1\Core\Controller\Factory\ControllerAggregate

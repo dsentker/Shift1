@@ -25,17 +25,19 @@ class ControllerViewReloader {
      */
     public function loadByActionDefinition(ActionDefinition $definition) {
 
-        $bundleName     = $definition->getBundleName();
-        $controllerName = $definition->getControllerName();
-        $actionName     = $definition->getActionName();
+        $bundleDefinition   = $definition->getBundleDefinition();
+        $controllerName     = $definition->getControllerName(false);
+        $actionName         = $definition->getActionName();
 
-        return $this->reloadView($bundleName, $controllerName, $actionName);
+
+        return $this->reloadView($bundleDefinition, $controllerName, $actionName);
     }
 
-    protected function reloadView($bundleName, $controller, $action = null) {
-        $view = $this->controllerFactory->createController($bundleName, $controller, $action)->run()->getContent();
+    protected function reloadView($bundleDefinition, $controller, $action = null) {
+        $controllerResponse = $this->controllerFactory->createController($bundleDefinition, $controller, $action)->run();
+        $view = $controllerResponse->getContent();
         if(!($view instanceof ViewInterface)) {
-            throw new ControllerViewReloaderException("Action {$controller}::{$action} must return a Instance of ViewInterface to reload view!");
+            throw new ControllerViewReloaderException("Action {$controller}::{$action} must return an Instance of ViewInterface to reload view!");
         }
         return $view;
 
