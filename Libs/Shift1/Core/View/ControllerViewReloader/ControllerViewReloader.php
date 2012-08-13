@@ -3,6 +3,7 @@ namespace Shift1\Core\View\ControllerViewReloader;
 
 use Shift1\Core\Controller\Factory\ControllerFactoryInterface;
 use Shift1\Core\Bundle\Definition\ActionDefinition;
+use Shift1\Core\Bundle\Definition\TemplateDefinition;
 use Shift1\Core\View\ViewInterface;
 use Shift1\Core\Exceptions\ControllerViewReloaderException;
 use Shift1\Core\InternalFilePath;
@@ -17,23 +18,6 @@ class ControllerViewReloader {
     public function __construct(ControllerFactoryInterface $controllerFactory) {
         $this->controllerFactory = $controllerFactory;
     }
-
-
-    /**
-     * @param \Shift1\Core\InternalFilePath $path
-     * @return \Shift1\Core\View\ViewInterface|string
-     */
-    public function loadByTemplateLocation(InternalFilePath $path) {
-        /** @TODO NOT WORKING ATM */
-        $pathParts = $path->getAbsolutePathAsArray();
-        $file = \array_pop($pathParts);
-        $fileSplit = \explode('.', $file, 2);
-        $action = $fileSplit[0];
-        $controller = \array_pop($pathParts);
-
-        return $this->reloadView($controller, $action);
-    }
-
 
     /**
      * @param \Shift1\Core\Bundle\Definition\ActionDefinition $definition

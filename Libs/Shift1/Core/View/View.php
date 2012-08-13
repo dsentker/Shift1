@@ -347,10 +347,12 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
             $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
             $actionDefinition = new ActionDefinition($definition[0]);
-            $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);
         } else {
-            $view = $this->controllerViewReloader->loadByTemplateLocation($this->getViewFile());
+            $thisPath = new InternalFilePath($this->getViewFile());
+            $actionDefinition = ActionDefinition::fromTemplateFile($thisPath);
         }
+
+        $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);
         return $view;
     }
 
