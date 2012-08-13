@@ -13,5 +13,6 @@ class DefinitionException extends \RuntimeException {
     const ACTION_DEFINITION_INVALID     = 20;
 
     const TEMPLATE_DEFINITION_INVALID   = 30;
+    const TEMPLATE_PATH_INVALID         = 31;
 
 }

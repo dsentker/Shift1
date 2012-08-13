@@ -3,6 +3,7 @@ namespace Shift1\Core\View\ControllerViewReloader;
 
 use Shift1\Core\Controller\Factory\ControllerFactoryInterface;
 use Shift1\Core\Bundle\Definition\ActionDefinition;
+use Shift1\Core\Bundle\Definition\TemplateDefinition;
 use Shift1\Core\View\ViewInterface;
 use Shift1\Core\Exceptions\ControllerViewReloaderException;
 use Shift1\Core\InternalFilePath;
@@ -18,40 +19,25 @@ class ControllerViewReloader {
         $this->controllerFactory = $controllerFactory;
     }
 
-
-    /**
-     * @param \Shift1\Core\InternalFilePath $path
-     * @return \Shift1\Core\View\ViewInterface|string
-     */
-    public function loadByTemplateLocation(InternalFilePath $path) {
-        /** @TODO NOT WORKING ATM */
-        $pathParts = $path->getAbsolutePathAsArray();
-        $file = \array_pop($pathParts);
-        $fileSplit = \explode('.', $file, 2);
-        $action = $fileSplit[0];
-        $controller = \array_pop($pathParts);
-
-        return $this->reloadView($controller, $action);
-    }
-
-
     /**
      * @param \Shift1\Core\Bundle\Definition\ActionDefinition $definition
      * @return \Shift1\Core\View\ViewInterface
      */
     public function loadByActionDefinition(ActionDefinition $definition) {
 
-        $bundleName     = $definition->getBundleName();
-        $controllerName = $definition->getControllerName();
-        $actionName     = $definition->getActionName();
+        $bundleDefinition   = $definition->getBundleDefinition();
+        $controllerName     = $definition->getControllerName(false);
+        $actionName         = $definition->getActionName();
 
-        return $this->reloadView($bundleName, $controllerName, $actionName);
+
+        return $this->reloadView($bundleDefinition, $controllerName, $actionName);
     }
 
-    protected function reloadView($bundleName, $controller, $action = null) {
-        $view = $this->controllerFactory->createController($bundleName, $controller, $action)->run()->getContent();
+    protected function reloadView($bundleDefinition, $controller, $action = null) {
+        $controllerResponse = $this->controllerFactory->createController($bundleDefinition, $controller, $action)->run();
+        $view = $controllerResponse->getContent();
         if(!($view instanceof ViewInterface)) {
-            throw new ControllerViewReloaderException("Action {$controller}::{$action} must return a Instance of ViewInterface to reload view!");
+            throw new ControllerViewReloaderException("Action {$controller}::{$action} must return an Instance of ViewInterface to reload view!");
         }
         return $view;
 

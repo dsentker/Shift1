@@ -51,34 +51,6 @@ class TemplateDefinition extends BundleDefinition {
         return $withExtension ? $this->templateFile . self::TEMPLATE_EXT : $this->templateFile;
     }
 
-    public static function fromTemplateFile(InternalFilePath $filepath) {
-        /*
-         * Something like
-         * /www/shift1/application/bundles/vendorA/demoXBundle/views/index.tpl.php
-         *    -- O R --
-         * /www/shift1/application/bundles/vendorB/demoYBundle/views/subfolder/index.tpl.php
-         *
-         * @TODO
-         */
-        $path = $filepath->getAbsolutePath();
-        $pathIdentificator = 'Application' . \DIRECTORY_SEPARATOR . 'Bundles' . \DIRECTORY_SEPARATOR;
-        $pos = strpos($path, $pathIdentificator) + strlen($pathIdentificator) -1;
-        $root = substr($path, $pos);
-        if(false === \strpos($root, \DIRECTORY_SEPARATOR)) {
-            /** @todo throw exception */
-        }
-        $rootPathParts = \explode(\DIRECTORY_SEPARATOR, $root);
-
-        if(!isset($rootPathParts[2])) {
-            /** @todo throw exception */
-        }
-
-        $bundleVendor = $rootPathParts[0];
-        $bundleName   = self::removeSuffix($rootPathParts[1], self::BUNDLE_SUFFIX);
-        
-
-    }
-
     /**
      * @param string $subFolder
      * @return \Shift1\Core\InternalFilePath
