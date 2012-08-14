@@ -350,6 +350,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         } else {
             $thisPath = new InternalFilePath($this->getViewFile());
             $actionDefinition = ActionDefinition::fromTemplateFile($thisPath);
+            
         }
 
         $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);
