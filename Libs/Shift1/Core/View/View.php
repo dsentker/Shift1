@@ -4,6 +4,7 @@ namespace Shift1\Core\View;
 use Shift1\Core\Exceptions\ViewException;
 use Shift1\Core\View\ControllerViewReloader\ControllerViewReloader;
 use Shift1\Core\View\Exceptions\ViewFileException;
+use Shift1\Core\View\Exceptions\TemplateException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Response\Renderable;
@@ -213,6 +214,8 @@ class View implements ViewInterface, ContainerAccess, Renderable {
                 $filter = $this->getContainer()->get($locator);
                 /** @var $filter \Shift1\Core\View\Filter\ViewFilterInterface */
                 $var = $filter->setVal($var)->getVal();
+            } else {
+                throw new TemplateException("Filter locator not found: '{$locator}'!", TemplateException::FILTER_NOT_FOUND);
             }
 
         }
@@ -348,9 +351,8 @@ class View implements ViewInterface, ContainerAccess, Renderable {
             $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
             $actionDefinition = new ActionDefinition($definition[0]);
         } else {
-            $thisPath = new InternalFilePath($this->getViewFile());
+            $thisPath = new InternalFilePath($this->getViewFile()->getPath());
             $actionDefinition = ActionDefinition::fromTemplateFile($thisPath);
-            
         }
 
         $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);

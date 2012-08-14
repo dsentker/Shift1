@@ -6,7 +6,7 @@
  * @renderedByController
  */
 $view->addDefaultFilter('escape');
-$view->getVariableSet()->add('foo', 'bar');
+//$view->getVariableSet()->add('foo', 'bar');
 ?>
 <h2><?= $view->filter($vars->post->title, 'toLower') ?></h2>
 <?= $view->renderTemplate('shift1:blogDemo:post/post-meta') ?>

@@ -831,3 +831,228 @@
 2012-08-13 22:15:16 notice (70): Undefined index: _action
 2012-08-13 22:15:16 notice (70): Undefined index: _controller
 
+
+
+
+
+2012-08-14 11:25:34 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:25:34 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:25:34 notice (70): Undefined index: _action
+2012-08-14 11:25:34 notice (70): Undefined index: _controller
+
+
+
+2012-08-14 11:26:44 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:26:44 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:26:44 notice (70): Undefined index: _action
+2012-08-14 11:26:44 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:10 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:10 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:10 notice (70): Undefined index: _action
+2012-08-14 11:27:10 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:11 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:11 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:11 notice (70): Undefined index: _action
+2012-08-14 11:27:11 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:13 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:13 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:13 notice (70): Undefined index: _action
+2012-08-14 11:27:13 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:22 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:23 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:23 notice (70): Undefined index: _action
+2012-08-14 11:27:23 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:24 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:24 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:24 notice (70): Undefined index: _action
+2012-08-14 11:27:24 notice (70): Undefined index: _controller
+
+2012-08-14 11:27:25 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:27:25 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:27:25 notice (70): Undefined index: _action
+2012-08-14 11:27:26 notice (70): Undefined index: _controller
+
+2012-08-14 11:28:11 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:28:11 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:28:11 notice (70): Undefined index: _action
+2012-08-14 11:28:11 notice (70): Undefined index: _controller
+
+2012-08-14 11:28:24 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:28:24 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:28:24 notice (70): Undefined index: _action
+2012-08-14 11:28:25 notice (70): Undefined index: _controller
+
+2012-08-14 11:28:25 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:28:25 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:28:25 notice (70): Undefined index: _action
+2012-08-14 11:28:25 notice (70): Undefined index: _controller
+
+2012-08-14 11:29:36 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:29:36 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:29:36 notice (70): Undefined index: _action
+2012-08-14 11:29:36 notice (70): Undefined index: _controller
+
+2012-08-14 11:29:37 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:29:37 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:29:37 notice (70): Undefined index: _action
+2012-08-14 11:29:37 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:13 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:13 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:13 notice (70): Undefined index: _action
+2012-08-14 11:30:13 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:26 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:26 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:26 notice (70): Undefined index: _action
+2012-08-14 11:30:26 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:33 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:33 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:34 notice (70): Undefined index: _action
+2012-08-14 11:30:34 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:52 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:52 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:52 notice (70): Undefined index: _action
+2012-08-14 11:30:53 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:53 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:53 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:53 notice (70): Undefined index: _action
+2012-08-14 11:30:54 notice (70): Undefined index: _controller
+
+2012-08-14 11:30:54 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:30:54 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:30:54 notice (70): Undefined index: _action
+2012-08-14 11:30:54 notice (70): Undefined index: _controller
+
+2012-08-14 11:31:29 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:31:29 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:31:29 notice (70): Undefined index: _action
+2012-08-14 11:31:29 notice (70): Undefined index: _controller
+
+2012-08-14 11:32:05 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:32:05 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:32:05 notice (70): Undefined index: _action
+2012-08-14 11:32:05 notice (70): Undefined index: _controller
+
+2012-08-14 11:32:16 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:32:16 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:32:16 notice (70): Undefined index: _action
+2012-08-14 11:32:16 notice (70): Undefined index: _controller
+
+2012-08-14 11:32:19 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:32:19 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:32:19 notice (70): Undefined index: _action
+2012-08-14 11:32:19 notice (70): Undefined index: _controller
+
+2012-08-14 11:32:53 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:32:53 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:32:53 notice (70): Undefined index: _action
+2012-08-14 11:32:53 notice (70): Undefined index: _controller
+
+2012-08-14 11:33:21 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:33:22 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:33:22 notice (70): Undefined index: _action
+2012-08-14 11:33:22 notice (70): Undefined index: _controller
+
+2012-08-14 11:33:47 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:33:47 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:33:47 notice (70): Undefined index: _action
+2012-08-14 11:33:47 notice (70): Undefined index: _controller
+
+2012-08-14 11:33:54 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:33:54 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:33:54 notice (70): Undefined index: _action
+2012-08-14 11:33:54 notice (70): Undefined index: _controller
+
+2012-08-14 11:36:14 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:36:14 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:36:14 notice (70): Undefined index: _action
+2012-08-14 11:36:14 notice (70): Undefined index: _controller
+
+2012-08-14 11:36:25 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:36:25 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:36:25 notice (70): Undefined index: _action
+2012-08-14 11:36:25 notice (70): Undefined index: _controller
+
+2012-08-14 11:36:37 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:36:38 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:36:38 notice (70): Undefined index: _action
+2012-08-14 11:36:38 notice (70): Undefined index: _controller
+
+2012-08-14 11:36:39 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:36:39 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:36:39 notice (70): Undefined index: _action
+2012-08-14 11:36:39 notice (70): Undefined index: _controller
+
+2012-08-14 11:37:51 err (50): Object of class Shift1\Core\Bundle\Definition\TemplateDefinition could not be converted to string
+
+2012-08-14 11:38:13 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:38:13 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:38:13 notice (70): Undefined index: _action
+2012-08-14 11:38:13 notice (70): Undefined index: _controller
+
+2012-08-14 11:38:28 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:38:28 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:38:28 notice (70): Undefined index: _action
+2012-08-14 11:38:28 notice (70): Undefined index: _controller
+
+2012-08-14 11:38:37 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:38:37 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:38:37 notice (70): Undefined index: _action
+2012-08-14 11:38:37 notice (70): Undefined index: _controller
+
+2012-08-14 11:38:45 warn (60): file(C:\xampp\htdocs\shift1\Application\Bundles\Shift1\BlogdemoBundle\Views\Page\notfound.tpl.php) [<a href='function.file'>function.file</a>]: failed to open stream: No such file or directory
+2012-08-14 11:38:45 warn (60): Invalid argument supplied for foreach()
+2012-08-14 11:38:45 notice (70): Undefined index: _action
+2012-08-14 11:38:45 notice (70): Undefined index: _controller
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

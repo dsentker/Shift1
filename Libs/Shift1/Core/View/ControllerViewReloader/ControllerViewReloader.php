@@ -27,8 +27,7 @@ class ControllerViewReloader {
 
         $bundleDefinition   = $definition->getBundleDefinition();
         $controllerName     = $definition->getControllerName(false);
-        $actionName         = $definition->getActionName();
-
+        $actionName         = $definition->getActionName(false);
 
         return $this->reloadView($bundleDefinition, $controllerName, $actionName);
     }

@@ -10,4 +10,5 @@ $view->addDefaultFilter('escape');
 <p>Hello, it's me, a sidebar!</p>
 
 <p><?= $view->filter($vars->foo) ?></p>
+
 <p>Data from action page::sidebar: <?= $vars->data ?></p>
