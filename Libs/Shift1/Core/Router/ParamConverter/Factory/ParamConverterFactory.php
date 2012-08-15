@@ -8,8 +8,6 @@ use Shift1\Core\Exceptions\ParamConverterException;
 
 class ParamConverterFactory implements ContainerAccess {
 
-    const CONVERTER_BASE_NAMESPACE = '\\Application\\Config\\ParamConverter\\';
-
     protected $container;
 
     protected $activeConverter = array();
@@ -50,13 +48,13 @@ class ParamConverterFactory implements ContainerAccess {
             return $this->activeConverter[$converterName];
         }
 
-        $converter = self::CONVERTER_BASE_NAMESPACE . $converterName;
+        $converterName;
 
-        if(!\class_exists($converter)) {
+        if(!\class_exists($converterName)) {
             throw new ParamConverterException("Converter {$converterName} does not exist!");
         }
 
-        $converterClass = new $converter;
+        $converterClass = new $converterName;
 
         if(!($converterClass instanceof AbstractParamConverter)) {
             throw new ParamConverterException("Converter {$converterName} must be an instance of AbstractParamConverter!");

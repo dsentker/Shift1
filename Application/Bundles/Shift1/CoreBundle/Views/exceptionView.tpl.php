@@ -2,7 +2,7 @@
 /**
  * @var \Shift1\Core\View\ViewInterface $view
  * @var \Shift1\Core\VariableSet\VariableSetInterface $vars
- * @hasParent('Libs/Shift1/Core/Resources/Views/shift1Layout', 'content')
+ * @hasParent('shift1:core:shift1Layout', 'content')
  * @renderedByController
  */
 ?>
@@ -13,7 +13,7 @@
         File <strong><?php echo \str_replace(BASEPATH, '', $vars->e->getFile()); ?></strong>:</p>
         <code>
         <?php foreach($vars->code as $line => $code) : ?>
-                <span class="row<?php if($vars->e->getLine() === $line) echo ' highlight'; ?>"><span class="line"><?php echo $line; ?></span><span class="lineText"><?php echo $code; ?></span></span>
+                <span class="row<?php if($vars->e->getLine() === $line) echo ' highlight'; ?>"><span class="line"><?php echo $line ?></span><span class="lineText"><?php echo $view->filter($code, 'escape'); ?></span></span>
             <?php endforeach; ?>
         </code>
 

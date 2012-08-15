@@ -123,7 +123,7 @@
 
         <h1><?php echo (isset($view->pageTitle)) ? $view->pageTitle : 'Message' ?> - SHIFT 1 Framework</h1>
 
-        <?php echo $view->content; ?>
+        <?php echo $view->slot('content'); ?>
     </div>
 
 </body>

@@ -3,6 +3,7 @@ namespace Bundles\Shift1\CoreBundle\ServiceLocators;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 use Shift1\Core\Debug\HTMLResponseExceptionHandler;
+use Shift1\Core\Bundle\Definition\TemplateDefinition;
 
 class ExceptionHandlerLocator extends AbstractServiceLocator {
 
@@ -40,7 +41,8 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
 
         if($serviceInstance instanceof HTMLResponseExceptionHandler) {
             $view = $this->getService('view');
-            $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
+            $templateDefinition = new TemplateDefinition('shift1:core:exceptionView');
+            $view->setViewFile($templateDefinition);
             $serviceInstance->setExceptionView($view);
         }
 

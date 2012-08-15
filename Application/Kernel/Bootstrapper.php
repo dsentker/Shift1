@@ -32,26 +32,25 @@ namespace Application\Kernel {
 
         /**
          * @static
-         * @param $environment
+         * @param string $environment
          * @return \Shift1\Core\FrontController
          */
         protected static function init($environment) {
 
             require_once \realpath('../Libs/vendor/autoload.php');
-            require \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
+            require_once \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
 
             $shift1Loader = new Autoloader();
             $shift1Loader->register();
 
             $serviceContainer = new ServiceContainer();
+            $serviceContainer->get('parameter')->environment = $environment;
 
             $serviceLocatorConverger = BundleConverger::factory($environment);
             $serviceLocatorConverger->convergeServiceLocators($serviceContainer);
 
-            $serviceContainer->get('parameter')->environment = $environment;
-            #$serviceContainer->get('exceptionHandler')->register(); // hide me if u got problems
-
-            $log = $serviceContainer->get('log')->log('Service locator instances created.');
+            $serviceContainer->get('log')->log('Service locator instances created.');
+            $serviceContainer->get('exceptionHandler')->register();
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
@@ -68,6 +67,7 @@ namespace Application\Kernel {
          */
         public static function runDev() {
 
+            /** @todo automate this */
             \error_reporting(-1);
             \ini_set('display_errors', 1);
 

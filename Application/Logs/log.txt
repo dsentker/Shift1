@@ -2,3 +2,75 @@
 
 2012-08-15 16:28:07 debug (90): Service locator instances created.
 
+2012-08-15 17:11:27 debug (90): Service locator instances created.
+
+2012-08-15 17:17:09 debug (90): Service locator instances created.
+
+2012-08-15 17:24:43 debug (90): Service locator instances created.
+
+2012-08-15 17:25:21 debug (90): Service locator instances created.
+
+2012-08-15 17:25:23 debug (90): Service locator instances created.
+
+2012-08-15 17:26:04 debug (90): Service locator instances created.
+2012-08-15 17:26:04 err (50): Argument 1 passed to Bundles\Shift1\BlogDemoBundle\Controller\PostController::viewAction() must be an instance of stdClass, instance of Bundles\Shift1\BlogDemoBundle\Models\Blogpost given
+
+2012-08-15 17:27:22 debug (90): Service locator instances created.
+
+2012-08-15 17:28:02 debug (90): Service locator instances created.
+
+2012-08-15 17:28:31 debug (90): Service locator instances created.
+
+2012-08-15 17:32:45 debug (90): Service locator instances created.
+2012-08-15 17:32:45 err (50): View File Application\Bundles\Shift1\CoreBundle\Views\exceptionview.tpl.php not found
+
+2012-08-15 17:32:45 debug (90): Service locator instances created.
+2012-08-15 17:32:46 err (50): View File Application\Bundles\Shift1\CoreBundle\Views\exceptionview.tpl.php not found
+
+2012-08-15 17:35:19 debug (90): Service locator instances created.
+2012-08-15 17:35:19 notice (70): Undefined property: Shift1\Core\View\View::$content
+
+2012-08-15 17:36:03 debug (90): Service locator instances created.
+
+2012-08-15 17:36:17 debug (90): Service locator instances created.
+
+2012-08-15 17:36:21 debug (90): Service locator instances created.
+
+2012-08-15 17:36:21 debug (90): Service locator instances created.
+
+2012-08-15 17:36:25 debug (90): Service locator instances created.
+
+2012-08-15 17:37:07 debug (90): Service locator instances created.
+
+2012-08-15 17:37:15 debug (90): Service locator instances created.
+
+2012-08-15 17:37:16 debug (90): Service locator instances created.
+
+2012-08-15 17:37:18 debug (90): Service locator instances created.
+
+2012-08-15 17:38:08 debug (90): Service locator instances created.
+
+2012-08-15 17:38:09 debug (90): Service locator instances created.
+
+2012-08-15 17:38:10 debug (90): Service locator instances created.
+
+2012-08-15 17:38:11 debug (90): Service locator instances created.
+
+2012-08-15 17:38:22 debug (90): Service locator instances created.
+
+2012-08-15 17:38:23 debug (90): Service locator instances created.
+
+2012-08-15 17:38:24 debug (90): Service locator instances created.
+
+2012-08-15 17:38:30 debug (90): Service locator instances created.
+
+2012-08-15 17:38:31 debug (90): Service locator instances created.
+
+2012-08-15 17:38:31 debug (90): Service locator instances created.
+
+2012-08-15 17:39:00 debug (90): Service locator instances created.
+
+2012-08-15 17:39:01 debug (90): Service locator instances created.
+
+2012-08-15 17:39:27 debug (90): Service locator instances created.
+

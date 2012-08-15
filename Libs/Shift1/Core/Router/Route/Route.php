@@ -3,7 +3,7 @@ namespace Shift1\Core\Router\Route;
 
 use Shift1\Core\Exceptions\RouteException;
 
-class AbstractRoute implements RouteInterface {
+class Route implements RouteInterface {
 
     /**
      * @var string

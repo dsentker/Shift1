@@ -23,7 +23,7 @@ class TemplateDefinition extends BundleDefinition {
             throw new DefinitionException("A template definition must have a scheme like 'vendor:bundle:template', '{$definition}' given!", DefinitionException::TEMPLATE_DEFINITION_INVALID);
         }
 
-        $templateFile = \mb_strtolower(\array_pop($parts));
+        $templateFile = \array_pop($parts);
 
         if(false !== \strpos($templateFile, '/') || false !== \strpos($templateFile, '\\')) {
             $templateFile = \ucfirst($templateFile);

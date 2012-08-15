@@ -137,7 +137,9 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      */
     public function setViewFile($viewFile) {
 
-        if(!($viewFile instanceof InternalFilePath)) {
+        if($viewFile instanceof TemplateDefinition)  {
+            $viewFile = $viewFile->getTemplateFilePath();
+        } else if(!($viewFile instanceof InternalFilePath)) {
             try {
                 $definition = new TemplateDefinition($viewFile);
                 $viewFile = $definition->getTemplateFilePath();
