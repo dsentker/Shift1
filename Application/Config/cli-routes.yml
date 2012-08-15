@@ -1,0 +1,4 @@
+# route schemes
+test:
+  command: "test:me"
+  controller: "shift1:blogDemo:test::test"

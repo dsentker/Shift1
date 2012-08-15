@@ -10,7 +10,9 @@ class Router extends AbstractRouter {
 
     /**
      * @static
+     * @param \Shift1\Core\Request\RequestInterface $request
      * @param \Shift1\Core\Config\File\ConfigFileInterface $file
+     * @param \Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory $converterFactory
      * @return Router
      */
     public static function fromConfig(RequestInterface $request, ConfigFileInterface $file, ParamConverterFactory $converterFactory) {
