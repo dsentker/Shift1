@@ -14,7 +14,7 @@ class BundleConvergerLocator extends AbstractServiceLocator {
     public function initialize() {
 
         $this->setConstructorArgs(array(
-                       $this->getService('shift1.config')->bundle->namespace,
+                       $this->getService('config')->bundle->namespace,
                   ));
 
     }

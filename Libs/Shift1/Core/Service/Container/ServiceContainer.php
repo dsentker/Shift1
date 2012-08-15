@@ -14,11 +14,9 @@ class ServiceContainer implements ServiceContainerInterface {
     protected $serviceLocators = array();
 
     /**
-     * @param array $locators
      * @return \Shift1\Core\Service\Container\ServiceContainer
      */
-    public function __construct(array $locators) {
-        $this->serviceLocators = $locators;
+    public function __construct() {
         $this->add('parameter', new ParameterLocator());
     }
 
@@ -79,6 +77,13 @@ class ServiceContainer implements ServiceContainerInterface {
             throw new ServiceContainerException("'{$serviceName}' must be an instance of ServiceLocatorInterface", ServiceContainerException::BAD_INTERFACE);
         }
         return $this->serviceLocators[$serviceName];
+    }
+
+    /**
+     * @return array
+     */
+    public function getServiceLocatorKeys() {
+        return \array_keys($this->serviceLocators);
     }
 
     /**

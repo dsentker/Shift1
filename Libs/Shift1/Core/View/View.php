@@ -201,6 +201,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     /**
      * @param string $var
      * @param string $filterNames
+     * @throws Exceptions\TemplateException
      * @return mixed
      */
     public function filter($var, $filterNames = '') {
@@ -237,7 +238,16 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      * @return array
      */
     protected function splitFilter($filterNames) {
-        return \explode(self::FILTER_SEPARATOR, \strtolower($filterNames));
+
+        if(\trim($filterNames) === '') {
+            return array();
+        }
+
+        $filters = \explode(self::FILTER_SEPARATOR, $filterNames);
+        foreach($filters as &$filter) {
+            $filter = \trim($filter);
+        }
+        return $filters;
     }
 
     /**

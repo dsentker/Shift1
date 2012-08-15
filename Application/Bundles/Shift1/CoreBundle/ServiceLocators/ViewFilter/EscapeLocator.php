@@ -1,5 +1,5 @@
 <?php
-namespace Application\ServiceLocator\ViewFilter;
+namespace Bundles\Shift1\CoreBundle\ServiceLocators\ViewFilter;
 
 use Shift1\Core\Service\Locator\AbstractServiceLocator;
 

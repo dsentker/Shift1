@@ -8,13 +8,13 @@ class ControllerViewReloaderLocator extends AbstractServiceLocator {
     public function __construct() {
 
         $this->setClassNamespace('\Shift1\Core\View\ControllerViewReloader\ControllerViewReloader');
-        $this->dependsOn(array( 'shift1.controllerFactory', ));
+        $this->dependsOn(array( 'controllerFactory', ));
     }
 
     public function initialize() {
 
         $this->setConstructorArgs(array(
-                       $this->getService('shift1.controllerFactory'),
+                       $this->getService('controllerFactory'),
                   ));
 
     }

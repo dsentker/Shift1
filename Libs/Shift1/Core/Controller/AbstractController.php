@@ -146,10 +146,10 @@ abstract class AbstractController implements ControllerInterface  {
 
     /**
     /**
-     * @return \Shift1\Core\Shift1\Core\Request\RequestInterface
+     * @return \Shift1\Core\Request\RequestInterface
      */
     public function getRequest() {
-        return $this->getContainer()->get('shift1.request');
+        return $this->getContainer()->get('request');
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class AbstractController implements ControllerInterface  {
      * @return mixed|\Shift1\Core\Response\ResponseInterface
      */
     public function internalRequest($controller, $action, $params) {
-        $controllerFactory = $this->get('shift1.controllerFactory');
+        $controllerFactory = $this->get('controllerFactory');
         $controllerAggregate = $controllerFactory->createController($controller, $action, $params);
         return $controllerAggregate->run();
     }

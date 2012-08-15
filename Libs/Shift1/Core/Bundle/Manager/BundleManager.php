@@ -1,5 +1,7 @@
 <?php
 namespace Shift1\Core\Bundle\Manager;
+
+use Shift1\Core\Service\Container\ServiceContainer;
 /**
  * A basic bundle manager that is
  * perfectly valid and returns
@@ -7,15 +9,15 @@ namespace Shift1\Core\Bundle\Manager;
  */
 class BundleManager implements BundleManagerInterface {
 
-    public function getConfig() {
+    public function loadServiceLocators(ServiceContainer $container) {
 
     }
 
-    public function getServiceLocators() {
+    public function getApplicationConfig() {
 
     }
 
-    public function getRoutes() {
+    public function loadRoutes() {
 
     }
 

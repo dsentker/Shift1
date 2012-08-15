@@ -24,8 +24,8 @@ class PHPRenderer extends AbstractRenderer {
             }
         }
 
-        $request = $view->getContainer()->get('shift1.request');
-        $router  = $view->getContainer()->get('shift1.router');
+        $request = $view->getContainer()->get('request');
+        $router  = $view->getContainer()->get('router');
         $vars    = $view->getVariableSet();
 
         \ob_start(null);

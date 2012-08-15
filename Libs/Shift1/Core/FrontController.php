@@ -27,14 +27,14 @@ class FrontController {
     public function execute() {
 
         /** @var $router \Shift1\Core\Router\RouterInterface */
-        $router  = $this->getServiceContainer()->get('shift1.router');
+        $router  = $this->getServiceContainer()->get('router');
         $data = $router->resolve();
 
         if($this->validateRequestResult($data) === false) {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1));
         }
 
-        $controllerFactory = $this->getServiceContainer()->get('shift1.controllerFactory');
+        $controllerFactory = $this->getServiceContainer()->get('controllerFactory');
         /** @var $controllerFactory \Shift1\Core\Controller\Factory\ControllerFactory */
         $controllerAggregate = $controllerFactory->createController($data['_bundle'], $data['_controller'], $data['_action'], $data);
         $response = $controllerAggregate->run();

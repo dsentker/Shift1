@@ -9,11 +9,11 @@ class ViewLocator extends AbstractServiceLocator {
 
         $this->setClassNamespace('\Shift1\Core\View\View');
         $this->dependsOn(array(
-                        'shift1.config',
-                        'shift1.variableSet',
-                        'shift1.viewRenderer',
-                        'shift1.templateAnnotationReader',
-                        'shift1.controllerViewReloader',
+                        'config',
+                        'variableSet',
+                        'viewRenderer',
+                        'templateAnnotationReader',
+                        'controllerViewReloader',
                    ));
 
     }
@@ -21,11 +21,11 @@ class ViewLocator extends AbstractServiceLocator {
     public function initialize() {
 
         $this->setConstructorArgs(array(
-                       $this->getService('shift1.config')->view,
-                       $this->getService('shift1.variableSet'),
-                       $this->getService('shift1.viewRenderer'),
-                       $this->getService('shift1.templateAnnotationReader'),
-                       $this->getService('shift1.controllerViewReloader'),
+                       $this->getService('config')->view,
+                       $this->getService('variableSet'),
+                       $this->getService('viewRenderer'),
+                       $this->getService('templateAnnotationReader'),
+                       $this->getService('controllerViewReloader'),
                   ));
 
     }

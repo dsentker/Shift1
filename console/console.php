@@ -6,6 +6,6 @@ require_once \realpath('../Libs/vendor/autoload.php');
 require \realpath('../Application/Boot/Bootstrapper.php');
 
 $frontController = \Application\Boot\Bootstrapper::runConsole();
-$inputHandler = $frontController->getServiceContainer()->get('shift1.consoleInputHandler');
+$inputHandler = $frontController->getServiceContainer()->get('consoleInputHandler');
 /** @var $inputHandler \Shift1\Core\Console\InputHandler */
 $inputHandler->handle();

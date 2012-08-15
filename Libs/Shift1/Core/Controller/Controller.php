@@ -18,7 +18,7 @@ class Controller extends AbstractController {
 
         /** @var $dispatchedDefinition \Shift1\Core\Bundle\Definition\ActionDefinition  */
         $dispatchedDefinition = $this->getParam('_dispatchedDefinition');
-        $this->view = $this->get('shift1.view');
+        $this->view = $this->get('view');
 
         $templateDefinition = $dispatchedDefinition->getTemplateDefinition();
         $suggestedView = $templateDefinition->getTemplateFilePath($dispatchedDefinition->getControllerName(false));

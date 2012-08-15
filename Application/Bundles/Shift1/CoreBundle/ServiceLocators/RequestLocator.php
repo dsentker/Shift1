@@ -13,13 +13,13 @@ class RequestLocator extends AbstractServiceLocator {
     public function __construct() {
 
         $this->setClassNamespace('\Shift1\Core\Request\Request');
-        $this->dependsOn('shift1.config');
+        $this->dependsOn('config');
     }
 
     public function getInstance() {
 
         $classNamespace = $this->getClassNamespace();
-        return $classNamespace::fromGlobals($this->getService('shift1.config')->route->appWebRoot);
+        return $classNamespace::fromGlobals($this->getService('config')->route->appWebRoot);
 
     }
 

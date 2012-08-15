@@ -11,7 +11,7 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
     public function __construct() {
         $this->dependsOn(array(
             'parameter',
-            'shift1.view',
+            'view',
         ));
     }
 
@@ -39,7 +39,7 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
          */
 
         if($serviceInstance instanceof HTMLResponseExceptionHandler) {
-            $view = $this->getService('shift1.view');
+            $view = $this->getService('view');
             $view->setViewFile('Libs/Shift1/Core/Resources/Views/exceptionView', false);
             $serviceInstance->setExceptionView($view);
         }

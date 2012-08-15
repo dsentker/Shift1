@@ -26,7 +26,7 @@ namespace Application\Kernel {
     use Shift1\Core\Autoloader\Autoloader;
     use Shift1\Core\Debug;
     use Shift1\Core\Service\Container\ServiceContainer;
-    use Shift1\Core\Bundle\Converger\BundleServiceLocatorConverger;
+    use Shift1\Core\Bundle\Converger\BundleConverger;
 
     class Bootstrapper  {
 
@@ -43,13 +43,13 @@ namespace Application\Kernel {
             $shift1Loader = new Autoloader();
             $shift1Loader->register();
 
-            $serviceLocatorConverger = BundleServiceLocatorConverger::factory($environment);
-            $serviceLocators = $serviceLocatorConverger->getServiceLocators();
-            $serviceContainer = new ServiceContainer($serviceLocators);
+            $serviceContainer = new ServiceContainer();
 
+            $serviceLocatorConverger = BundleConverger::factory($environment);
+            $serviceLocatorConverger->convergeServiceLocators($serviceContainer);
 
             $serviceContainer->get('parameter')->environment = $environment;
-            #$serviceContainer->get('shift1.exceptionHandler')->register(); // hide me if u got problems
+            #$serviceContainer->get('exceptionHandler')->register(); // hide me if u got problems
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
@@ -70,7 +70,7 @@ namespace Application\Kernel {
             \ini_set('display_errors', 1);
 
             $fc = self::init('development');
-            $fc->getServiceContainer()->get('shift1.log')->registerErrorHandler(false); // hide me if u got problems
+            $fc->getServiceContainer()->get('log')->registerErrorHandler(false); // hide me if u got problems
             self::execute($fc);
         }
 
@@ -83,7 +83,7 @@ namespace Application\Kernel {
         public static function runStaging() {
             \error_reporting(-1);
             $fc = self::init('staging');
-            $fc->getServiceContainer()->get('shift1.log')->registerErrorHandler(false);
+            $fc->getServiceContainer()->get('log')->registerErrorHandler(false);
             self::execute($fc);
 
         }

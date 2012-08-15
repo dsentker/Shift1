@@ -5,6 +5,7 @@ use Shift1\Core\InternalFilePath;
 use Shift1\Core\Bundle\Manager\BundleManagerInterface;
 use Shift1\Core\Bundle\Exceptions\ConvergerException;
 use Shift1\Core\Config\File\IniFile as ConfigFile;
+use Shift1\Core\Service\Container\ServiceContainer;
 
 class BundleConverger {
 
@@ -64,18 +65,12 @@ class BundleConverger {
 
     /**
      * @param null|string $bundle
-     * @return array|bool
+     * @return array|bool|BundleManagerInterface
      */
     public function getBundleManager($bundle = null) {
 
-        /*
-        if(null === $this->bundleManager) {
-            $this->scanBundles();
-        }
-        */
-
         if(null === $bundle) {
-            // Get all bundles
+            // Get all bundle managers in an array
             return $this->bundleManager;
         } elseif(\is_string($bundle)) {
             return (isset($this->bundleManager[$bundle]) && $this->bundleManager[$bundle] instanceof BundleManagerInterface)
@@ -87,33 +82,20 @@ class BundleConverger {
 
     }
 
-/*
-    protected function scanBundles() {
-        $globPattern = $this->bundlePath->getAbsolutePath() . \DIRECTORY_SEPARATOR . '*';
-        $foundBundleManager = array();
-        $bundleRootNamespace = '\\Bundles\\';
+    /**
+     * @param \Shift1\Core\Service\Container\ServiceContainer $container
+     * @return \Shift1\Core\Service\Container\ServiceContainer
+     */
+    public function convergeServiceLocators(ServiceContainer $container) {
 
-        foreach(\glob($globPattern, \GLOB_ONLYDIR) as $developerFolder) {
-
-            $developer = \basename($developerFolder);
-
-            foreach(\glob($this->bundlePath->getAbsolutePath() . \DIRECTORY_SEPARATOR . $developer . \DIRECTORY_SEPARATOR . '*', \GLOB_ONLYDIR) as $bundleFolder) {
-
-                $bundleName = \basename($bundleFolder);
-                $bundleNamespace = $developer . '\\' . $bundleName;
-                $bundleManagerClassname = $bundleName . 'Manager';
-                $bundleManagerNamepsace = $bundleRootNamespace . $bundleNamespace . '\\' . $bundleManagerClassname;
-                if(!\class_exists($bundleManagerNamepsace)) {
-                    throw new ConvergerException("Bundle Manager for bundle '{$bundleNamespace}' does not exist (tried to load manager via '{$bundleManagerNamepsace}').", ConvergerException::BUNDLE_MANAGER_NOT_FOUND);
-                }
-                $foundBundleManager[$bundleNamespace] = new $bundleManagerNamepsace;
-            }
-
+        foreach($this->getBundleManager() as $bundleManager) {
+            /** @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface */
+            $bundleManager->loadServiceLocators($container);
         }
 
-        $this->bundleManager = $foundBundleManager;
+        return $container;
 
     }
-*/
+
 
 }
