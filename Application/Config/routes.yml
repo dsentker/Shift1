@@ -9,7 +9,7 @@ viewpost:
     _action:
       default: view
     post:
-      converter: \Bundles\Shift1\BlogDemoBundle\ParamConverter\BlogpostConverter
+      converter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
 
 default:
   scheme: /@_bundle/@_controller/@_action/

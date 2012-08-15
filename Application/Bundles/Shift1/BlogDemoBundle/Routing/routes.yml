@@ -1,0 +1,11 @@
+viewpost:
+  scheme: /viewpost/@post
+  bindings:
+    _bundle:
+      default: Shift1:BlogDemo
+    _controller:
+      default: Post
+    _action:
+      default: view
+    post:
+      converter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter

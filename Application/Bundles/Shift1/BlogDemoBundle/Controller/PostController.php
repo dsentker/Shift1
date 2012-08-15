@@ -18,7 +18,7 @@ class PostController extends ParentController {
 
         $dispatcher = $this->getContainer()->get('eventDispatcher');
         $dispatcher->dispatch('kernel.response', new BlogViewEvent($this->view));
-throw new \Exception("TEST");
+
         return new Response($this->view);
     }
 

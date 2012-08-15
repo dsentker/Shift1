@@ -38,4 +38,10 @@ class CoreBundleManager extends BundleManager  {
 
     }
 
+    public function getConsoleMap() {
+        return array(
+           /** @todo Controller or simple command map bindings? */
+        );
+    }
+
 }
