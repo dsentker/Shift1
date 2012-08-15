@@ -37,15 +37,6 @@ class IndexController extends ParentController {
         return new Response($this->getView()->render());
     }
 
-    public function logTestAction() {
-        /** @var \Shift1\Log\Logger $logger */
-        $logger = FrontController::getInstance()->getServiceContainer()->get('Log');
-        $logger->log('This is an debug information');
-        $logger->log('This is a warning log entry', 'warn');
-
-        return new Response($logger->getLogCount() . 'entries added.');
-    }
-
     public function exceptionAction() {
         throw new E\ApplicationException('This is an exception!');
     }

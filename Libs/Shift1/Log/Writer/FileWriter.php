@@ -47,6 +47,10 @@ class FileWriter extends AbstractWriter {
      */
     public function write() {
 
+        if(empty($this->events)) {
+            return; // to prevent empty lines
+        }
+
         $lines = array();
 
         foreach($this->getEvents() as $event) {

@@ -12,7 +12,7 @@ class LogLocator extends AbstractServiceLocator {
     public function __construct() {
         $this->setClassNamespace('\Shift1\Log\Logger');
 
-        #$this->necessitate('FirePHP');
+        #$this->necessitate('firePHP');
 
     }
 

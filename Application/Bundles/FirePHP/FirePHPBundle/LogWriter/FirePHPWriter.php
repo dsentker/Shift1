@@ -1,9 +1,9 @@
 <?php
-namespace Shift1\Log\Writer;
+namespace Bundles\FirePHP\FirePHPBundle\LogWriter;
 
 use Shift1\Core\Exceptions\LoggerException;
-use Shift1\Core\FrontController;
 use Shift1\Log\Event\Event;
+use Shift1\Log\Writer\AbstractWriter;
 
 final class FirePHPWriter extends AbstractWriter {
 
@@ -55,8 +55,7 @@ final class FirePHPWriter extends AbstractWriter {
      */
     public function write() {
         /*
-         * Nothing to do here, the
-         * firephp logs were already
+         * Nothing to do here, the FirePHP logs were already
          * sent via ::addEvent().
          */
     }

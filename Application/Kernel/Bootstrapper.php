@@ -51,6 +51,8 @@ namespace Application\Kernel {
             $serviceContainer->get('parameter')->environment = $environment;
             #$serviceContainer->get('exceptionHandler')->register(); // hide me if u got problems
 
+            $log = $serviceContainer->get('log')->log('Service locator instances created.');
+
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
 

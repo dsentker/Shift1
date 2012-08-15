@@ -19,9 +19,9 @@ interface LoggerInterface {
     /**
      * @abstract
      * @param string $msg
-     * @param string $errLevel
+     * @param string $level
      * @return void
      */
-    public function log($msg, $errLevel);
+    public function log($msg, $level = 'debug');
   
 }

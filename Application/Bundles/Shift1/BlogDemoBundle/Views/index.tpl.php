@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
     <title>Sample Blog</title>
     <style>
         body {
