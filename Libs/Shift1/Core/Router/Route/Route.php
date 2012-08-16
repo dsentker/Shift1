@@ -69,13 +69,7 @@ class Route implements RouteInterface {
         foreach($this->getSchemeSegments() as $position => $segment) {
             if($this->isBindedSegment($segment)) {
                 $bind = \str_replace(self::KEYBINDING_CHAR, '', $segment);
-
-                try {
-                    $bindingOpts = $this->getBinding($bind);
-                } catch(RouteException $e) {
-                    
-                }
-
+                $bindingOpts = $this->getBinding($bind);
 
                 if(!isset($bindingOpts['default'])) {
                     // There is no default value, so this segment is required
@@ -101,5 +95,7 @@ class Route implements RouteInterface {
     public function isBindedSegment($routeSegment) {
         return \strpos($routeSegment, self::KEYBINDING_CHAR) !== false;
     }
+
+
 
 }

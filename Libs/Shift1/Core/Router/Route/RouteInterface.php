@@ -24,7 +24,7 @@ interface RouteInterface {
     /**
      * @abstract
      * @param string $bind
-     * @return void
+     * @return bool
      */
     public function hasBinding($bind);
 

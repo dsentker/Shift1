@@ -21,7 +21,7 @@ namespace Shift1 {
 namespace Application\Kernel {
 
     use Shift1\Core\Config\Manager\Manager as ConfigManager;
-    use Shift1\Core\FrontController;
+    use Shift1\Core\FrontController\FrontController;
     use Shift1\Core\Router;
     use Shift1\Core\Autoloader\Autoloader;
     use Shift1\Core\Debug;
@@ -33,7 +33,7 @@ namespace Application\Kernel {
         /**
          * @static
          * @param string $environment
-         * @return \Shift1\Core\FrontController
+         * @return \Shift1\Core\FrontController\FrontController
          */
         protected static function init($environment) {
 
@@ -114,7 +114,9 @@ namespace Application\Kernel {
          * @return \Shift1\Core\FrontController
          */
         public static function runConsole() {
-            return self::init('development');
+            $fc = self::init('development');
+            $fc->executeConsole();
+
         }
 
 
@@ -124,7 +126,7 @@ namespace Application\Kernel {
          * @return mixed
          */
         protected static function execute(FrontController $fc) {
-            $fc->execute();
+            $fc->executeHttp();
         }
 
     }

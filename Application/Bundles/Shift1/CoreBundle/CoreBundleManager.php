@@ -20,6 +20,7 @@ class CoreBundleManager extends BundleManager  {
             'paramConverterFactory'     => new Locator\ParamConverterFactoryLocator(),
             'request'                   => new Locator\RequestLocator(),
             'router'                    => new Locator\RouterLocator(),
+            'cli-router'                => new Locator\ConsoleRouterLocator(),
             'templateAnnotationReader'  => new Locator\TemplateAnnotationReaderLocator(),
             'variableSet'               => new Locator\VariableSetLocator(),
             'view'                      => new Locator\ViewLocator(),
