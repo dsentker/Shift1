@@ -194,7 +194,9 @@ class Route implements RouteInterface {
         }
 
         $finalExpression  = \strtr($expression, $translate);
+        echo '<br>START<br>' .  $finalExpression . '<br>END<br>';
         return $finalExpression;
+
     }
 
 

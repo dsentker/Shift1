@@ -1,19 +1,21 @@
 # route schemes
 aTest:
-    route: /viewpost/<post>
+    route: /viewpost/<post><format>
     handler: shift1:blogDemo:post::view
     bindings:
-      @post:
-          paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
-          match: (.+)
+        @post:
+            paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
+        @format:
+            match: (\..+)
+            default: html
 
 viewpost:
     route: /<lang>/viewpost/<slug><format>
     handler: shift1:blogDemo:post::view
     bindings:
-      @slug:
-          paramConverter: /path/to/converter
-      @format:
-          match: \.(.+)
-          default: html
+        @slug:
+            paramConverter: /path/to/converter
+        @format:
+            match: \.(.+)
+            default: html
 

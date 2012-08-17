@@ -29,12 +29,11 @@ class FrontController {
         $router = $this->getServiceContainer()->get('router');
         $request = $this->getServiceContainer()->get('request');
         $data = $router->getDataFromUri($request->getAppRequestUri());
-
-        /*
+die(print_r($data));
         if($this->validateRequestResult($data) === false) {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1), FrontControllerException::REQUEST_NOT_VALID);
         }
-        */
+
 
         $route = $data['_route'];
         /** @var $route RouteInterface */
