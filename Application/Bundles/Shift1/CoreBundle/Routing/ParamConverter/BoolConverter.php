@@ -15,7 +15,7 @@ class BoolConverter extends AbstractParamConverter {
         } elseif(false === $value) {
             return 'false';
         }
-        return \str_replace(' ', '-', $value);
+        return $value;
     }
 
     public function getActionParam($identificator) {

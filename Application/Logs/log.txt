@@ -651,3 +651,17 @@
 
 2012-08-17 13:56:00 debug (90): Service locator instances created.
 
+2012-08-17 13:58:25 debug (90): Service locator instances created.
+
+2012-08-17 14:00:19 debug (90): Service locator instances created.
+
+2012-08-17 14:00:23 debug (90): Service locator instances created.
+
+2012-08-17 14:00:31 debug (90): Service locator instances created.
+
+2012-08-17 14:00:38 debug (90): Service locator instances created.
+
+2012-08-17 14:00:44 debug (90): Service locator instances created.
+
+2012-08-17 14:00:53 debug (90): Service locator instances created.
+
