@@ -1,7 +1,6 @@
 <?php
 namespace Bundles\FirePHP\FirePHPBundle\LogWriter;
 
-use Shift1\Core\Exceptions\LoggerException;
 use Shift1\Log\Event\Event;
 use Shift1\Log\Writer\AbstractWriter;
 

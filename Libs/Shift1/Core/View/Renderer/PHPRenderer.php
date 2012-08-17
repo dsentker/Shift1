@@ -1,10 +1,10 @@
 <?php
 namespace Shift1\Core\View\Renderer;
 
-use Shift1\Core\Exceptions\ViewRendererException as RendererException;
+use Shift1\Core\View\Exceptions\ViewFileException;
 use Shift1\Core\View\ViewInterface;
 
-class PHPRenderer extends AbstractRenderer {
+class PHPRenderer implements RendererInterface {
 
     public function render(ViewInterface $view) {
 
@@ -18,7 +18,7 @@ class PHPRenderer extends AbstractRenderer {
             $name = $template->getPath();
             $errorMessage = "View File {$name} not found";
             if($view->isThrowingExceptions()) {
-                throw new RendererException($errorMessage);
+                throw new ViewFileException($errorMessage, ViewFileException::INVALID_PATH);
             } else {
                 \trigger_error($errorMessage, \E_USER_ERROR);
             }

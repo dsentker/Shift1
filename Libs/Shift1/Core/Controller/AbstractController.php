@@ -1,10 +1,7 @@
 <?php
 namespace Shift1\Core\Controller;
 
-use Shift1\Core\Exceptions\ControllerException;
 use Shift1\Core\Service\Container\ServiceContainer;
-use Shift1\Core\Controller\Factory\ControllerFactory;
-use Shift1\Core\Request\RequestInterface;
 
 abstract class AbstractController implements ControllerInterface  {
 
@@ -127,10 +124,8 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @param string $controller The Controller name (no suffix)
-     * @param string $action  The Action name (no suffix)
-     * @param array  $params The params
-     * @return mixed|\Shift1\Core\Response\ResponseInterface
+     * @param string $actionDefinition
+     * @return mixed
      */
     public function internalRequest($actionDefinition) {
         $controllerFactory = $this->get('controllerFactory');

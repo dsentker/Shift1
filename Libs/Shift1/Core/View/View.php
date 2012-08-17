@@ -4,6 +4,7 @@ namespace Shift1\Core\View;
 use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\View\Exceptions\ViewFileException;
 use Shift1\Core\View\Exceptions\TemplateException;
+use Shift1\Core\View\Exceptions\ViewException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Response\Renderable;
@@ -12,7 +13,6 @@ use Shift1\Core\VariableSet\VariableSetInterface;
 use Shift1\Core\Bundle\Definition\TemplateDefinition;
 use Shift1\Core\Bundle\Definition\ActionDefinition;
 use Shift1\Core\Bundle\Exceptions\DefinitionException;
-use Shift1\Core\View\Exceptions\ViewException;
 
 class View implements ViewInterface, ContainerAccess, Renderable {
 

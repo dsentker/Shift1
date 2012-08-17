@@ -22,7 +22,6 @@ namespace Application\Kernel {
 
     use Shift1\Core\Config\Manager\Manager as ConfigManager;
     use Shift1\Core\FrontController\FrontController;
-    use Shift1\Core\Router;
     use Shift1\Core\Autoloader\Autoloader;
     use Shift1\Core\Debug;
     use Shift1\Core\Service\Container\ServiceContainer;
@@ -49,7 +48,7 @@ namespace Application\Kernel {
             $serviceLocatorConverger = BundleConverger::factory($environment);
             $serviceLocatorConverger->convergeServiceLocators($serviceContainer);
 
-            $serviceContainer->get('log')->log('Service locator instances created.');
+            #$serviceContainer->get('log')->log('Service locator instances created. Booting starts now.');
             $serviceContainer->get('exceptionHandler')->register();
 
             $fc = new FrontController();

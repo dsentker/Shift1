@@ -1,7 +1,6 @@
 <?php
 namespace Shift1\Core\Response\Generator;
 
-use Shift1\Core\Exceptions\ResponseException;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Response;

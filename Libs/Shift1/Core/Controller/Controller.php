@@ -1,8 +1,6 @@
 <?php
 namespace Shift1\Core\Controller;
 
-use Shift1\Core\View\View;
-
 class Controller extends AbstractController {
 
     /**

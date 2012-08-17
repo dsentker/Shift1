@@ -112,8 +112,8 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ServiceException
      * @return object
+     * @throws ServiceLocatorException
      */
     public function getInstance() {
         
@@ -140,9 +140,8 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ServiceException
-     * @param string|array $service
-     * @return void
+     * @param string $service
+     * @throws ServiceLocatorException
      */
     protected function dependsOn($service) {
 

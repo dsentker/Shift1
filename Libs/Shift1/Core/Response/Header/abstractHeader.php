@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response\Header;
 
-use Shift1\Core\Exceptions\ResponseHeaderException;
+use Shift1\Core\Response\Exceptions\ResponseHeaderException;
 
 abstract class AbstractHeader implements HeaderInterface {
 
@@ -23,14 +23,14 @@ abstract class AbstractHeader implements HeaderInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ResponseHeaderException
+     * @throws ResponseHeaderException
      * @param string $headerString
      * @param bool $overwrite
      * @return void
      */
     public function addLine($headerString, $overwrite = true) {
         if(!\is_string($headerString)) {
-            throw new ResponseHeaderException('No valid Header string added');
+            throw new ResponseHeaderException('No valid header string added!', ResponseHeaderException::HEADER_STRING_INALID);
         }
         $this->headerLines[] = array(
           'headerString' => \ucfirst($headerString),
@@ -56,13 +56,13 @@ abstract class AbstractHeader implements HeaderInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ResponseHeaderException
+     * @throws ResponseHeaderException
      * @return void
      */
     public function send() {
 
         if(\headers_sent($filename, $line)) {
-            throw new ResponseHeaderException('Could not output Header data - Headers already sent in ' . $filename . ' (Line ' . $line . ')');
+            throw new ResponseHeaderException('Could not output Header data - Headers already sent in ' . $filename . ' (Line ' . $line . ')', ResponseHeaderException::HEADERS_ALREADY_SENT);
         }
 
         foreach($this->getHeaderLines() as $line) {

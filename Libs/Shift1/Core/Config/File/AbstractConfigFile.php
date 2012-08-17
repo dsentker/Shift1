@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Config\File;
 
-use Shift1\Core\Exceptions\FileNotFoundException;
+use Shift1\Core\Config\Exceptions\ConfigException;
 
 abstract class AbstractConfigFile implements ConfigFileInterface {
 
@@ -19,13 +19,14 @@ abstract class AbstractConfigFile implements ConfigFileInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\FileNotFoundException
+     *
      * @param string $configFile
+     * @throws \Shift1\Core\Config\Exceptions\ConfigException
      * @return void
      */
     public function setConfigFile($configFile) {
         if(!\file_exists($configFile)) {
-            throw new FileNotFoundException($configFile);
+            throw new ConfigException("'{$configFile}' not found!", ConfigException::FILE_NOT_FOUND);
         }
         $this->configFile = $configFile;
     }

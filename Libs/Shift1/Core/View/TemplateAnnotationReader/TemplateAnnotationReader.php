@@ -1,8 +1,6 @@
 <?php
 namespace Shift1\Core\View\TemplateAnnotationReader;
 
-use Shift1\Core\Exceptions\AnnotationReaderException;
-
 class TemplateAnnotationReader implements TemplateAnnotationReaderInterface {
 
     const DOCBLOCK_BEGIN = '/**';

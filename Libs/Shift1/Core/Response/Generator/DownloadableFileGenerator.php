@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Core\Response\Generator;
 
-use Shift1\Core\Exceptions\FileNotFoundException;
+use Shift1\Core\Response\Exceptions\ResponseGeneratorException as GeneratorException;
 use Shift1\Core\InternalFilePath;
 use Shift1\Core\Response\Header\Header;
 use Shift1\Core\Response\Response;
@@ -53,7 +53,8 @@ class DownloadableFileGenerator extends AbstractResponseGenerator {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\ResponseException
+     *
+     * @throws \Shift1\Core\Response\Exceptions\ResponseGeneratorException
      * @return \Shift1\Core\Response\Response
      */
     public function getResponse() {
@@ -61,7 +62,7 @@ class DownloadableFileGenerator extends AbstractResponseGenerator {
         $fullPath = $this->getFile();
 
         if(!\file_exists($fullPath)) {
-            throw new FileNotFoundException($fullPath);
+            throw new GeneratorException($fullPath . ' not found!', GeneratorException::FILE_NOT_FOUND);
         }
 
         $fileSize = \filesize($fullPath);

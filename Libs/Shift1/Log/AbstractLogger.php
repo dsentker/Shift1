@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Log;
 
-use Shift1\Core\Exceptions\LoggerException;
+use Shift1\Log\Exceptions\LoggerException;
  
 abstract class AbstractLogger implements LoggerInterface {
 
@@ -22,6 +22,7 @@ abstract class AbstractLogger implements LoggerInterface {
     /**
      * @param int $level
      * @param string $name
+     * @throws Exceptions\LoggerException
      * @return void
      */
     public function addLevel($level, $name) {
@@ -29,7 +30,7 @@ abstract class AbstractLogger implements LoggerInterface {
         $level = (int) $level;
 
         if (isset($this->levels[$name]) || false !== array_search($level, $this->levels)) {
-            throw new LoggerException('Existing levels cannot be overwritten!');
+            throw new LoggerException('Existing levels cannot be overwritten!', LoggerException::ERROR_LEVEL_INVALID);
         }
         $this->levels[$name] = $level;
     }
@@ -42,26 +43,27 @@ abstract class AbstractLogger implements LoggerInterface {
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\LoggerException
      * @param string $levelId
+     * @throws Exceptions\LoggerException
      * @return string
      */
     public function getLevelName($levelId) {
         $flipped = \array_flip($this->getLevels());
         if(!isset($flipped[$levelId])) {
-            throw new LoggerException('Log level not defined: ' . $levelId);
+            throw new LoggerException('Log level not defined: ' . $levelId, LoggerException::ERROR_LEVEL_INVALID);
         }
         return $flipped[$levelId];
     }
 
     /**
-     * @throws \Shift1\Core\Exceptions\LoggerException
+     *
      * @param string $levelName
+     * @throws Exceptions\LoggerException
      * @return string
      */
     public function getLevel($levelName) {
         if(!isset($this->levels[$levelName])) {
-            throw new LoggerException('Log level name not defined: ' . $levelName);
+            throw new LoggerException('Log level not defined: ' . $levelId, LoggerException::ERROR_LEVEL_INVALID);
         }
         return $this->levels[$levelName];
     }

@@ -69,6 +69,9 @@ class Request implements RequestInterface {
          return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
     }
 
+    /**
+     * @return bool if the request was sended via CLI
+     */
     public function isCli() {
         return (\php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']));
     }

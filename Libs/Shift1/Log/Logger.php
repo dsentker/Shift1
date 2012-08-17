@@ -1,7 +1,7 @@
 <?php
 namespace Shift1\Log;
 
-use Shift1\Core\Exceptions\LoggerException;
+use Shift1\Log\Exceptions\LoggerException;
 
 class Logger extends AbstractLogger {
 
@@ -115,7 +115,7 @@ class Logger extends AbstractLogger {
             $errLevel = $this->getLevel($level);
             $errLevelName = $level;
         } else {
-            throw new LoggerException('Can\'t identify log level "' . $level . '"');
+            throw new LoggerException('Can\'t identify log level "' . $level . '"', LoggerException::ERROR_LEVEL_INVALID);
         }
 
         $event = $this->createEvent($msg, $errLevel, $errLevelName);

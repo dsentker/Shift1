@@ -1,5 +1,4 @@
 <?php
-
 namespace Shift1\Core\Config\File;;
 
 class configFileXml extends AbstractConfigFile {

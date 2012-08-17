@@ -37,4 +37,10 @@ interface ViewInterface {
      */
     function renderTemplate($templateFile);
 
+    /**
+     * @abstract
+     * @return void
+     */
+    function disableExceptions();
+
 }

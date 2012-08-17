@@ -28,10 +28,16 @@ class HTMLResponseExceptionHandler extends AbstractExceptionHandler {
         $this->exceptionView = $view;
     }
 
+    /**
+     * @return \Shift1\Core\View\View|\Shift1\Core\View\ViewInterface
+     */
     public function getExceptionView() {
         return $this->exceptionView;
     }
 
+    /**
+     * @param \Exception $e
+     */
     public function handle(\Exception $e) {
         $codeLine = $e->getLine();
         $codeFile = \file($e->getFile());

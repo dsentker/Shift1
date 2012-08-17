@@ -1,5 +1,4 @@
 <?php
-
 namespace Shift1\Core\Parser;
 
 /**
@@ -54,7 +53,7 @@ namespace Shift1\Core\Parser;
  * you will get an exception.
  *
  */
-class iniParser implements ParserInterface {
+class IniParser {
     /**
      * Inheritance marker
      */
