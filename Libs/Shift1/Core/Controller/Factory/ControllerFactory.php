@@ -11,33 +11,9 @@ use Shift1\Core\Bundle\Definition\ActionDefinition;
 class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
     /**
-     * @var array
-     */
-    protected $params = array();
-
-    /**
-     * @var string
-     */
-    protected $bundleDefinition;
-
-    /**
-     * @var string
-     */
-    protected $controllerName;
-
-    /**
-     * @var string
-     */
-    protected $actionName;
-
-    /**
      * @var ServiceContainerInterface
      */
     protected $container;
-
-    public function __construct() {
-
-    }
 
     public function setContainer(ServiceContainerInterface $container) {
         $this->container = $container;
@@ -45,55 +21,6 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
     public function getContainer() {
         return $this->container;
-    }
-
-    /**
-     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
-     */
-    public function getController() {
-
-        $controllerDefinitionString = \sprintf('%s:%s', $this->getBundleDefinition(), $this->getControllerName());
-        $controllerDefinition = new ControllerDefinition($controllerDefinitionString);
-        $controllerNamespace = $controllerDefinition->getNamespace();
-
-        if(!\class_exists($controllerNamespace)) {
-            /** @TODO : Throw exception here */
-            die('CONTROLLER NOT FOUND: ' . $controllerNamespace );
-        }
-
-        return $this->getControllerInstance($controllerDefinition, $this->getActionName(), $this->getParams());
-
-    }
-
-    /**
-     * @param ControllerDefinition $controllerDefinition
-     * @param string $actionName
-     * @param array $params
-     * @internal param string $controllerClass
-     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
-     */
-    protected function getControllerInstance(ControllerDefinition $controllerDefinition, $actionName, array $params = array()) {
-
-        $rfController = new \ReflectionClass($controllerDefinition->getNamespace());
-
-        /** @var $controller \Shift1\Core\Controller\AbstractController */
-        $controller = $rfController->newInstanceArgs(array($params));
-
-        $actionDefinitionString = $controllerDefinition->getControllerDefinition() . '::' . $actionName;
-        $actionDefinition = new ActionDefinition($actionDefinitionString);
-        $actionName = $actionDefinition->getActionName();
-
-        if(!\method_exists($controller, $actionName)) {
-            $actionName = $controller::getNotFoundActionName();
-            $params['_requestedDefinition'] = $actionDefinition;
-            // Recursive call
-            return $this->getControllerInstance($controllerDefinition, $actionName, $params);
-        }
-
-        $controller->addParam('_dispatchedDefinition', $actionDefinition);
-        $controller->setContainer($this->getContainer());
-        $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionName));
-        return new ControllerAggregate($controller, $actionName, $actionParams);
     }
 
     /**
@@ -128,62 +55,24 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
         return $actionParams;
     }
 
-    public function setBundleDefinition($bundle) {
-        $this->bundleDefinition = $bundle;
-    }
-
-    public function getBundleDefinition() {
-        return $this->bundleDefinition;
-    }
-
-    public function setControllerName($controller) {
-        $this->controllerName = $controller;
-    }
-
-    public function getControllerName() {
-        return $this->controllerName;
-    }
-
-    public function setActionName($action) {
-        $this->actionName = $action;
-    }
-
-    public function getActionName() {
-        return $this->actionName;
-    }
-
-    public function setParams(array $params) {
-        $this->params = $params;
-    }
-
-    public function addParam($key, $value) {
-        $this->params[$key] = $value;
-    }
-
-    public function getParam($key) {
-        if(!isset($this->params[$key])) {
-            /** @TODO throw exception */
-        }
-        return $this->params[$key];
-    }
-
-    public function getParams() {
-        return $this->params;
-    }
-
     /**
-     * @param string $bundleDefinition e.g. shift1:foo
-     * @param string $controllerName, non-suffixed
-     * @param string|null $actionName
+     * @param string $actionDefinition The action definition, e.g. vendor:bundleName:foo::bar
      * @param array $params
-     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
+     * @return ControllerAggregate
      */
-    public function createController($bundleDefinition, $controllerName, $actionName = null, array $params = array()) {
-        $this->setBundleDefinition($bundleDefinition);
-        $this->setControllerName($controllerName);
-        $this->setActionName($actionName);
-        $this->setParams($params);
-        return $this->getController();
+    public function createController($actionDefinition, array $params = array()) {
+
+        $actionDefinition = new ActionDefinition($actionDefinition);
+        $actionName = $actionDefinition->getActionName();
+        $rfController = new \ReflectionClass($actionDefinition->getNamespace());
+
+        /** @var $controller \Shift1\Core\Controller\AbstractController */
+        $controller = $rfController->newInstanceArgs(array($params));
+        $controller->addParam('_dispatchedDefinition', $actionDefinition);
+        $controller->setContainer($this->getContainer());
+        $actionParams = $this->mapParamsToActionArgs($params, new \ReflectionMethod($controller, $actionName));
+        return new ControllerAggregate($controller, $actionName, $actionParams);
+
     }
 
 }

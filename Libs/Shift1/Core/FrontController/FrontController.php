@@ -6,11 +6,14 @@ use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\FrontController\Exceptions\FrontControllerException;
 use Shift1\Core\Response\ResponseInterface;
 use Shift1\Core\Router\AbstractRouter;
+use Shift1\Core\Routing\Route\RouteInterface;
+use Shift1\Core\View\View;
+
 
 class FrontController {
 
     /**
-     * @var null|\Shift1\Core\Service\ServiceContainerInterface
+     * @var null|ServiceContainerInterface
      */
     protected $serviceContainer;
 
@@ -50,15 +53,37 @@ class FrontController {
      */
     public function executeHttp() {
 
-        /** @var $router \Shift1\Core\Router\RouterInterface */
         $router = $this->getServiceContainer()->get('router');
-        $data = $router->resolve();
+        $request = $this->getServiceContainer()->get('request');
+        $data = $router->getDataFromUri($request->getAppRequestUri());
 
+        /*
         if($this->validateRequestResult($data) === false) {
             throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1), FrontControllerException::REQUEST_NOT_VALID);
         }
+        */
 
-        $controllerAggregate = $this->getControllerFactory()->createController($data['_bundle'], $data['_controller'], $data['_action'], $data);
+        $route = $data['_route'];
+        /** @var $route RouteInterface */
+
+        $opts = $route->getParamOptions();
+        $paramFactory = $this->getServiceContainer()->get('paramConverterFactory');
+        /** @var $paramFactory \Shift1\Core\Routing\ParamConverter\Factory\ParamConverterFactory */
+
+        foreach($data as $paramKey => &$paramValue) {
+            if(\is_string($paramValue)) {
+                if(isset($opts['@' . $paramKey]['paramConverter'])) {
+                    $converter = $paramFactory->createConverter($opts['@' . $paramKey]['paramConverter']);
+                    /** @var $converter \Shift1\Core\Routing\ParamConverter\AbstractParamConverter */
+                    $paramValue = $converter->getActionParam($paramValue);
+                }
+            }
+        }
+
+        #echo '<pre>';
+        #die(print_r($data));
+
+        $controllerAggregate = $this->getControllerFactory()->createController($route->getHandler(), $data);
         $response = $controllerAggregate->run();
         
         if(!($response instanceof ResponseInterface)) {
@@ -73,11 +98,11 @@ class FrontController {
      * @return bool
      */
     protected function validateRequestResult(array $data) {
-        return ( isset($data['_controller']) && isset($data['_action']) );
+        return ( isset($data['_route']) && $data['_route'] instanceof RouteInterface );
     }
 
     /**
-     * @param Service\Container\ServiceContainer $serviceContainer
+     * @param ServiceContainerInterface $serviceContainer
      * @return void
      */
     public function setServiceContainer(ServiceContainerInterface $serviceContainer) {

@@ -1,32 +1,19 @@
 # route schemes
+aTest:
+    route: /viewpost/<post>
+    handler: shift1:blogDemo:post::view
+    bindings:
+      @post:
+          paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
+          match: (.+)
+
 viewpost:
-  scheme: /viewpost/@post
-  bindings:
-    _bundle:
-      default: Shift1:BlogDemo
-    _controller:
-      default: Post
-    _action:
-      default: view
-    post:
-      converter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
+    route: /<lang>/viewpost/<slug><format>
+    handler: shift1:blogDemo:post::view
+    bindings:
+      @slug:
+          paramConverter: /path/to/converter
+      @format:
+          match: \.(.+)
+          default: html
 
-default:
-  scheme: /@_bundle/@_controller/@_action/
-  bindings:
-    _controller:
-      default: Index
-
-    _action:
-      default: index
-      match: .*
-
-fallback:
-  scheme: /
-  bindings:
-    _bundle:
-      default: CoreBundle
-    _controller:
-      default: Error
-    _action:
-      default: index

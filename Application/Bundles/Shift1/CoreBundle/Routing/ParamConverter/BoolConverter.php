@@ -1,9 +1,9 @@
 <?php
-namespace Application\Config\ParamConverter;
+namespace Bundles\Shift1\CoreBundle\Routing\ParamConverter;
 
-use Shift1\Core\Router\ParamConverter\AbstractParamConverter;
+use Shift1\Core\Routing\ParamConverter\AbstractParamConverter;
 
-class DefaultConverter extends AbstractParamConverter {
+class BoolConverter extends AbstractParamConverter {
 
     /**
      * @param mixed $value

@@ -9,16 +9,6 @@ use Shift1\Core\Request\RequestInterface;
 abstract class AbstractController implements ControllerInterface  {
 
     /**
-     * @var string
-     */
-    static $actionDefault = 'index';
-
-    /**
-     * @var string
-     */
-    static $actionNotFound = 'notFound';
-
-    /**
      * @var array
      */
     protected $params = array();
@@ -85,22 +75,6 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @static
-     * @return string
-     */
-    public static function getDefaultActionName() {
-        return self::$actionDefault;
-    }
-
-    /**
-     * @static
-     * @return string
-     */
-    public static function getNotFoundActionName() {
-        return self::$actionNotFound;
-    }
-
-    /**
      * @return string
      */
     public function getControllerName() {
@@ -126,7 +100,7 @@ abstract class AbstractController implements ControllerInterface  {
     }
 
     /**
-     * @return \Shift1\Core\Service\ServiceContainer
+     * @return \Shift1\Core\Service\Container\ServiceContainer
      */
     public function getContainer() {
         return $this->serviceContainer;
@@ -158,9 +132,9 @@ abstract class AbstractController implements ControllerInterface  {
      * @param array  $params The params
      * @return mixed|\Shift1\Core\Response\ResponseInterface
      */
-    public function internalRequest($controller, $action, $params) {
+    public function internalRequest($actionDefinition) {
         $controllerFactory = $this->get('controllerFactory');
-        $controllerAggregate = $controllerFactory->createController($controller, $action, $params);
+        $controllerAggregate = $controllerFactory->createController($actionDefinition);
         return $controllerAggregate->run();
     }
 

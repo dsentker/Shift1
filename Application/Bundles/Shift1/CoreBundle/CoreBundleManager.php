@@ -14,7 +14,6 @@ class CoreBundleManager extends BundleManager  {
             'config'                    => new Locator\ConfigLocator(),
             'consoleInputHandler'       => new Locator\ConsoleInputHandlerLocator(),
             'controllerFactory'         => new Locator\ControllerFactoryLocator(),
-            'controllerViewReloader'    => new Locator\ControllerViewReloaderLocator(),
             'exceptionHandler'          => new Locator\ExceptionHandlerLocator(),
             'log'                       => new Locator\LogLocator(),
             'paramConverterFactory'     => new Locator\ParamConverterFactoryLocator(),

@@ -1,7 +1,7 @@
 <?php
 namespace Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter;
 
-use Shift1\Core\Router\ParamConverter\AbstractParamConverter;
+use Shift1\Core\Routing\ParamConverter\AbstractParamConverter;
 use Bundles\Shift1\BlogDemoBundle\Models\Blogpost;
 
 class BlogpostConverter extends AbstractParamConverter {

@@ -1,8 +1,7 @@
 <?php
 namespace Shift1\Core\View;
 
-use Shift1\Core\Exceptions\ViewException;
-use Shift1\Core\View\ControllerViewReloader\ControllerViewReloader;
+use Shift1\Core\Controller\Factory\ControllerFactory;
 use Shift1\Core\View\Exceptions\ViewFileException;
 use Shift1\Core\View\Exceptions\TemplateException;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
@@ -13,6 +12,7 @@ use Shift1\Core\VariableSet\VariableSetInterface;
 use Shift1\Core\Bundle\Definition\TemplateDefinition;
 use Shift1\Core\Bundle\Definition\ActionDefinition;
 use Shift1\Core\Bundle\Exceptions\DefinitionException;
+use Shift1\Core\View\Exceptions\ViewException;
 
 class View implements ViewInterface, ContainerAccess, Renderable {
 
@@ -55,9 +55,9 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected $annotationReader;
 
     /**
-     * @var \Shift1\Core\View\ControllerViewReloader\ControllerViewReloader
+     * @var ControllerFactory
      */
-    protected $controllerViewReloader;
+    protected $controllerFactory;
 
     /**
      * @var \Shift1\Core\VariableSet\VariableSetInterface
@@ -80,7 +80,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      * @param VariableSetInterface $variableSet
      * @param Renderer\RendererInterface $renderer
      * @param TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader
-     * @param ControllerViewReloader\ControllerViewReloader $controllerViewReloader
+     * @param ControllerFactory $controllerFactory
      *
      */
     public function __construct(
@@ -88,14 +88,14 @@ class View implements ViewInterface, ContainerAccess, Renderable {
         VariableSetInterface $variableSet,
         Renderer\RendererInterface $renderer,
         TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader,
-        ControllerViewReloader $controllerViewReloader
+        ControllerFactory $controllerFactory
 ) {
 
         $this->config = $config;
         $this->variableSet = $variableSet;
         $this->renderer = $renderer;
         $this->annotationReader = $annotationReader;
-        $this->controllerViewReloader = $controllerViewReloader;
+        $this->controllerFactory = $controllerFactory;
 
 	}
 
@@ -166,15 +166,15 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     /**
      * @param string $varKey
      * @param mixed $varValue
-     * @throws \Shift1\Core\Exceptions\ViewException
-     * @return View
+     * @throws ViewException
+     * @return ViewInterface
      */
 	public function assign($varKey, $varValue) {
 
         $varKey = \trim($varKey);
 
         if(empty($varKey)) {
-            throw new ViewException('Assignment failed: Empty keys are not allowed!');
+            throw new ViewException('Assignment failed: Empty keys are not allowed!', ViewException::VARIABLE_ASSIGNMENT_FAILED);
         }
 
         $this->variableSet->add($varKey, $varValue);
@@ -356,6 +356,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     }
 
     /**
+     * @throws ViewException
      * @return ViewInterface|string
      */
     protected function renderByController() {
@@ -367,8 +368,14 @@ class View implements ViewInterface, ContainerAccess, Renderable {
             $actionDefinition = ActionDefinition::fromTemplateFile($thisPath);
         }
 
-        $view = $this->controllerViewReloader->loadByActionDefinition($actionDefinition);
-        return $view;
+        $response = $this->controllerFactory->createController($actionDefinition->getActionDefinition())->run()->getContent();
+
+        if(!($response instanceof ViewInterface)) {
+            throw new ViewException("Action {$actionDefinition->getControllerName()}::{$actionDefinition->getActionName()} must return an Instance of
+                                    ViewInterface to reload view!", ViewException::INVALID_RESPONSE);
+        }
+
+        return $response;
     }
 
     /**

@@ -13,7 +13,7 @@ class ViewLocator extends AbstractServiceLocator {
                         'variableSet',
                         'viewRenderer',
                         'templateAnnotationReader',
-                        'controllerViewReloader',
+                        'controllerFactory',
                    ));
 
     }
@@ -25,7 +25,7 @@ class ViewLocator extends AbstractServiceLocator {
                        $this->getService('variableSet'),
                        $this->getService('viewRenderer'),
                        $this->getService('templateAnnotationReader'),
-                       $this->getService('controllerViewReloader'),
+                       $this->getService('controllerFactory'),
                   ));
 
     }

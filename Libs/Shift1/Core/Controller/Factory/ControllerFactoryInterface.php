@@ -4,12 +4,10 @@ namespace Shift1\Core\Controller\Factory;
 interface ControllerFactoryInterface {
 
     /**
-     * @param string $bundleName
-     * @param string $controllerName
-     * @param string|null $actionName
+     * @param string $actionDefinition The action definition, e.g. vendor:bundleName:foo::bar
      * @param array $params
-     * @return \Shift1\Core\Controller\Factory\ControllerAggregate
+     * @return ControllerAggregate
      */
-    function createController($bundleName, $controllerName, $actionName = null, array $params = array());
+    function createController($actionDefinition, array $params = array());
 
 }

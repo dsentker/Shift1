@@ -8,7 +8,7 @@ class ParamConverterFactoryLocator extends AbstractServiceLocator {
     public static $isSingleton = true;
 
     public function __construct() {
-        $this->setClassNamespace('\Shift1\Core\Router\ParamConverter\Factory\ParamConverterFactory');
+        $this->setClassNamespace('\Shift1\Core\Routing\ParamConverter\Factory\ParamConverterFactory');
     }
 
 }
