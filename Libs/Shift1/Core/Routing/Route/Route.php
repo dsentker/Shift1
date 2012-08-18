@@ -3,7 +3,7 @@ namespace Shift1\Core\Routing\Route;
 
 use Shift1\Core\Routing\Exceptions\RouteParamException;
 use Shift1\Core\Routing\Exceptions\RouteException;
-
+use Shift1\Core\Routing\Result\RoutingResult;
 
 class Route implements RouteInterface {
 
@@ -145,18 +145,17 @@ class Route implements RouteInterface {
     }
 
     /**
-     * @param array $bindings
+     * @param RoutingResult $result
      * @return RouteInterface
      */
-    public function replaceHandlerBindings(array $bindings) {
+    public function replaceHandlerBindings(RoutingResult $result) {
 
         $translate = array();
-        foreach($bindings as $key => $binding) {
+        foreach($result->getVars() as $key => $binding) {
             $translate['<' . $key . '>'] = $binding;
         }
 
-        $handler = $this->getHandler();
-        $this->setHandler(\strtr($handler, $translate));
+        $this->setHandler(\strtr($this->getHandler(), $translate));
         return $this;
     }
 
@@ -194,7 +193,6 @@ class Route implements RouteInterface {
         }
 
         $finalExpression  = \strtr($expression, $translate);
-        echo '<br>START<br>' .  $finalExpression . '<br>END<br>';
         return $finalExpression;
 
     }

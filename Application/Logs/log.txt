@@ -1,0 +1,4 @@
+2012-08-18 13:05:51 err (50): Argument 1 passed to Shift1\Core\Routing\Router\Router::fetchKeyValuePairs() must be an instance of Shift1\Core\Routing\Result\RoutingResult, instance of Shift1\Core\VariableSet\VariableSet given, called in D:\xampp\htdocs\shift1\Shift1\Libs\Shift1\Core\Routing\Router\Router.php on line 57 and defined
+
+2012-08-18 13:19:32 notice (70): Undefined variable: data
+

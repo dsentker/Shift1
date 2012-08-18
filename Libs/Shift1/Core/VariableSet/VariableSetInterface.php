@@ -11,11 +11,13 @@ interface VariableSetInterface {
 
     function __get($key);
 
-    function getAll();
+    function getVars();
 
     function getKeys();
 
     function has($key);
+
+    function modify($key, $var);
 
     function merge(VariableSetInterface $variableSet);
 

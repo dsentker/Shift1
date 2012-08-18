@@ -1,6 +1,8 @@
 <?php
 namespace Shift1\Core\Routing\Route;
 
+use Shift1\Core\Routing\Result\RoutingResult;
+
 interface RouteInterface {
 
     const PARAM_MATCH_EXPRESSION    = '#<([^<]*)>#';
@@ -68,7 +70,7 @@ interface RouteInterface {
      * @param array $bindings
      * @return RouteInterface
      */
-    public function replaceHandlerBindings(array $bindings);
+    public function replaceHandlerBindings(RoutingResult $result);
 
 
 }

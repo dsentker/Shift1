@@ -5,6 +5,7 @@ use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\FrontController\Exceptions\FrontControllerException;
 use Shift1\Core\Response\ResponseInterface;
 use Shift1\Core\Routing\Route\RouteInterface;
+use Shift1\Core\Routing\Result\RoutingResult;
 
 class FrontController {
 
@@ -28,31 +29,17 @@ class FrontController {
 
         $router = $this->getServiceContainer()->get('router');
         $request = $this->getServiceContainer()->get('request');
-        $data = $router->getDataFromUri($request->getAppRequestUri());
-die(print_r($data));
-        if($this->validateRequestResult($data) === false) {
-            throw new FrontControllerException('No valid request result given: ' . \var_export($data, 1), FrontControllerException::REQUEST_NOT_VALID);
+        $routingResult = $router->getDataFromUri($request->getAppRequestUri());
+
+        if($this->validateRequestResult($routingResult) === false) {
+            throw new FrontControllerException('No valid request result given.', FrontControllerException::REQUEST_NOT_VALID);
         }
 
 
-        $route = $data['_route'];
-        /** @var $route RouteInterface */
-
-        $opts = $route->getParamOptions();
         $paramFactory = $this->getServiceContainer()->get('paramConverterFactory');
-        /** @var $paramFactory \Shift1\Core\Routing\ParamConverter\Factory\ParamConverterFactory */
-
-        foreach($data as $paramKey => &$paramValue) {
-            if(\is_string($paramValue)) {
-                if(isset($opts['@' . $paramKey]['paramConverter'])) {
-                    $converter = $paramFactory->createConverter($opts['@' . $paramKey]['paramConverter']);
-                    /** @var $converter \Shift1\Core\Routing\ParamConverter\AbstractParamConverter */
-                    $paramValue = $converter->getActionParam($paramValue);
-                }
-            }
-        }
-
-        $controllerAggregate = $this->getControllerFactory()->createController($route->getHandler(), $data);
+        $routingResult->convertParams($paramFactory);
+        
+        $controllerAggregate = $this->getControllerFactory()->createController($routingResult->getRoute()->getHandler(), $routingResult->getVars());
         $response = $controllerAggregate->run();
         
         if(!($response instanceof ResponseInterface)) {
@@ -63,11 +50,11 @@ die(print_r($data));
     }
 
     /**
-     * @param array $data
+     * @param RoutingResult $result
      * @return bool
      */
-    protected function validateRequestResult(array $data) {
-        return ( isset($data['_route']) && $data['_route'] instanceof RouteInterface );
+    protected function validateRequestResult(RoutingResult $result) {
+        return ( $result->getRoute() instanceof RouteInterface );
     }
 
     /**

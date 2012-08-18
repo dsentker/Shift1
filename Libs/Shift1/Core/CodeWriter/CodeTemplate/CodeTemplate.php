@@ -67,7 +67,7 @@ class CodeTemplate implements CodeTemplateInterface {
         $fileContent = \file_get_contents($this->template->getAbsolutePath());
 
         $vars = array();
-        foreach($this->getVariableSet()->getAll() as $key => $val) {
+        foreach($this->getVariableSet()->getVars() as $key => $val) {
             $vars['/* MARKER_' . $key . ' */'] = $val;
         }
 

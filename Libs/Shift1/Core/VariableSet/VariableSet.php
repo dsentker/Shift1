@@ -1,8 +1,13 @@
 <?php
 namespace Shift1\Core\VariableSet;
 
+use Shift1\Core\VariableSet\Exceptions\VariableSetException;
+
 class VariableSet implements VariableSetInterface {
 
+    /**
+     * @var array
+     */
     protected $vars;
 
     public function add($key, $var) {
@@ -41,16 +46,45 @@ class VariableSet implements VariableSetInterface {
         return \array_keys($this->vars);
     }
 
-    public function getAll() {
+    /**
+     * @return array
+     */
+    public function getVars() {
         return $this->vars;
     }
 
-    public function __clone() {
-
+    public function merge(VariableSetInterface $variableSet) {
+        $this->vars = \array_merge($this->getVars(), $variableSet->getVars());
     }
 
-    public function merge(VariableSetInterface $variableSet) {
-        $this->vars = \array_merge($this->getAll(), $variableSet->getAll());
+    /**
+     * @param string $key
+     * @param mixed $var
+     * @throws Exceptions\VariableSetException
+     * @return void
+     */
+    public function modify($key, $var) {
+        if(!$this->has($key)) {
+            throw new VariableSetException("Could not modify key '{$key}': Key does not exist.", VariableSetException::MODIFYING_FAILED);
+        }
+        $this->vars[$key] = $var;
+    }
+
+    public function mergeArray(array $vars) {
+        foreach($vars as $key => $var) {
+            $this->add($key, $var);
+        }
+    }
+
+    /**
+     * @static
+     * @param array $vars
+     * @return VariableSet
+     */
+    public static function fromArray(array $vars) {
+        $set = new static;
+        $set->mergeArray($vars);
+        return $set;
     }
 
 

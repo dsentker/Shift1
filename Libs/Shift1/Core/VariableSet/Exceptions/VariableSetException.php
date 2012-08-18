@@ -3,5 +3,6 @@ namespace Shift1\Core\VariableSet\Exceptions;
 
 class VariableSetException extends \LogicException {
 
-    const READ_ONLY     = 0;
+    const READ_ONLY         = 0;
+    const MODIFYING_FAILED  = 1;
 }

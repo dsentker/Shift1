@@ -6,7 +6,7 @@ use Shift1\Core\Routing\Route\RouteInterface;
 use Shift1\Core\Routing\Route\Route;
 use Shift1\Core\Routing\Exceptions\RouterException;
 use Shift1\Core\Routing\PassChecker\PassCheckerInterface;
-
+use Shift1\Core\Routing\Result\RoutingResult;
 
 class Router {
 
@@ -53,7 +53,8 @@ class Router {
 
             if(1 === \preg_match_all($routeExpression, $uri, $matches)) {
                 \array_shift($matches);
-                $data = $this->fetchData($route, $matches, $uri);
+                $routingResult = $this->fetchData($route, $matches);
+                $this->fetchKeyValuePairs($routingResult, $uri);
 
                 $passCheckerNs = $route->getPassCheckerNamespace();
                 if(!empty($passCheckerNs)) {
@@ -62,14 +63,14 @@ class Router {
                         throw new RouterException("Given Passchecker for route '{$route->getName()}' must be an instance of PassCheckerInterface!", RouterException::PASSCHECKER_INVALID);
                     }
                     /** @var $passChecker PassCheckerInterface */
-                    if(!$passChecker->isValid($data)) {
+                    if(!$passChecker->isValid($routingResult)) {
                         continue; // Did not pass; try next route
                     }
                 }
 
-                $route->replaceHandlerBindings($data);
-                $data['_route'] = $route;
-                return $data;
+                $route->replaceHandlerBindings($routingResult);
+                $routingResult->setRoute($route);
+                return $routingResult;
             }
 
         }
@@ -77,21 +78,12 @@ class Router {
     }
 
     /**
-     * @param RouteInterface $route
-     * @param array $uriParams
+     * @param RoutingResult $result
      * @param string $uri
-     * @return array
+     * @return int
      */
-    protected function fetchData(RouteInterface $route, array $uriParams, $uri = '') {
-
+    protected function fetchKeyValuePairs(RoutingResult $result, $uri) {
         $data = array();
-
-        // defined uri param bindings
-        foreach($uriParams as $position =>  $uriParam)  {
-            $uriParam = $uriParam[0];
-            $paramName = $route->getParamNameByPosition($position);
-            $data[$paramName] = $uriParam;
-        }
 
         // optional key-value-pairs
         \preg_match_all('#' . self::KEY_VALUE_PAIR_EXPRESSION . '#', $uri, $keyValuePairs);
@@ -102,8 +94,27 @@ class Router {
                 $data[$paramKey] = $paramVal;
             }
         }
+        $result->mergeArray($data);
+        return \count($data);
+    }
 
-        return $data;
+    /**
+     * @param RouteInterface $route
+     * @param array $uriParams
+     * @return RoutingResult
+     */
+    protected function fetchData(RouteInterface $route, array $uriParams) {
+
+        $data = array();
+
+        // defined uri param bindings
+        foreach($uriParams as $position =>  $uriParam)  {
+            $uriParam = $uriParam[0];
+            $paramName = $route->getParamNameByPosition($position);
+            $data[$paramName] = $uriParam;
+        }
+
+        return RoutingResult::fromArray($data);
 
     }
 
