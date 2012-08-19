@@ -13,8 +13,8 @@ class RouterLocator extends AbstractServiceLocator {
 
     public function __construct() {
         $this->dependsOn(array(
-        //    'request',
-        //    'paramConverterFactory'
+            'request',
+            'routingResult'
         ));
 
         $this->setClassNamespace('\Shift1\Core\Routing\Router\Router');
@@ -25,11 +25,7 @@ class RouterLocator extends AbstractServiceLocator {
         $classNamespace = $this->getClassNamespace();
         $routeConfig = new File\YamlFile(new InternalFilePath('Application/Config/routes.yml'));
         $routes = $routeConfig->toArray();
-        return $classNamespace::fromConfig(
-          //   $this->getService('request'),
-            $routes
-        // $this->getService('paramConverterFactory')
-        );
+        return $classNamespace::fromConfig($routes, $this->getService('request'), $this->getService('routingResult'));
 
     }
 }

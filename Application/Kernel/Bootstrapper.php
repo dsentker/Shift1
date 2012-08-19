@@ -49,7 +49,7 @@ namespace Application\Kernel {
             $serviceLocatorConverger->convergeServiceLocators($serviceContainer);
 
             #$serviceContainer->get('log')->log('Service locator instances created. Booting starts now.');
-            $serviceContainer->get('exceptionHandler')->register();
+            #$serviceContainer->get('exceptionHandler')->register();
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);

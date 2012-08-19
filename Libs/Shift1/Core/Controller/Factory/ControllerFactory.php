@@ -6,7 +6,7 @@ use Shift1\Core\FrontController;
 use Shift1\Core\Service\ContainerAccess;
 use Shift1\Core\Service\Container\ServiceContainerInterface;
 use Shift1\Core\Bundle\Definition\ControllerDefinition;
-use Shift1\Core\Bundle\Definition\ActionDefinition;
+use Shift1\Core\Bundle\Definition\ActionResolver;
 
 class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
 
@@ -56,13 +56,12 @@ class ControllerFactory implements ControllerFactoryInterface, ContainerAccess {
     }
 
     /**
-     * @param string $actionDefinition The action definition, e.g. vendor:bundleName:foo::bar
+     * @param ActionResolver $actionDefinition
      * @param array $params
      * @return ControllerAggregate
      */
-    public function createController($actionDefinition, array $params = array()) {
+    public function createController(ActionResolver $actionDefinition, array $params = array()) {
 
-        $actionDefinition = new ActionDefinition($actionDefinition);
         $actionName = $actionDefinition->getActionName();
         $rfController = new \ReflectionClass($actionDefinition->getNamespace());
 

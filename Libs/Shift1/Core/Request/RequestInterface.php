@@ -3,7 +3,7 @@ namespace Shift1\Core\Request;
 
 interface RequestInterface {
 
-    function getAppRequestUri();
+    function getAppRequest();
 
     function getAppRootUri();
 

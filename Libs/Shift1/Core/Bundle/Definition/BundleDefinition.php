@@ -66,6 +66,10 @@ class BundleDefinition {
     }
 
     public function getNamespace() {
+        return $this->getBundleNamespace();
+    }
+
+    public function getBundleNamespace() {
         return 'Bundles\\' . $this->getVendorName() . '\\' . $this->getBundleName();
     }
 

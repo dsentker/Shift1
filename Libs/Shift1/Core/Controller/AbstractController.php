@@ -133,11 +133,4 @@ abstract class AbstractController implements ControllerInterface  {
         return $controllerAggregate->run();
     }
 
-    /**
-     * @abstract
-     * @return void
-     */
-    abstract public function initView();
-
-    
 }

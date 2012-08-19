@@ -2,3 +2,11 @@
 
 2012-08-18 13:19:32 notice (70): Undefined variable: data
 
+2012-08-18 19:19:36 err (50): Argument 1 passed to Shift1\Core\Controller\Factory\ControllerFactory::createController() must implement interface Shift1\Core\Bundle\Definition\ActionResolver, string given, called in D:\xampp\htdocs\shift1\Shift1\Libs\Shift1\Core\View\View.php on line 371 and defined
+
+2012-08-19 12:24:58 err (50): Argument 1 passed to Shift1\Core\Routing\Router\Router::fetchKeyValuePairs() must be an instance of Shift1\Core\Routing\Result\RoutingResult, null given, called in D:\xampp\htdocs\shift1\Shift1\Libs\Shift1\Core\Routing\Router\Router.php on line 73 and defined
+
+2012-08-19 12:25:54 err (50): Argument 1 passed to Shift1\Core\Routing\Router\Router::fetchKeyValuePairs() must be an instance of Shift1\Core\Routing\Result\RoutingResult, null given, called in D:\xampp\htdocs\shift1\Shift1\Libs\Shift1\Core\Routing\Router\Router.php on line 73 and defined
+
+2012-08-19 12:25:55 err (50): Argument 1 passed to Shift1\Core\Routing\Router\Router::fetchKeyValuePairs() must be an instance of Shift1\Core\Routing\Result\RoutingResult, null given, called in D:\xampp\htdocs\shift1\Shift1\Libs\Shift1\Core\Routing\Router\Router.php on line 73 and defined
+

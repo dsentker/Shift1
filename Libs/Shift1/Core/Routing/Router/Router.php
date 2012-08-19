@@ -12,6 +12,34 @@ class Router {
 
     const KEY_VALUE_PAIR_EXPRESSION = '([^:/]*):("[^"]*"|[^/"]*)'; // Thanks to stackoverflow.com/questions/168171/regular-expression-for-parsing-name-value-pairs
 
+
+    protected $request;
+
+    /**
+     * @var RoutingResult
+     */
+    protected $routingResult;
+
+    /**
+     * @param RequestInterface $request
+     * @param RoutingResult $routingResult
+     */
+    public function __construct(RequestInterface $request, RoutingResult $routingResult) {
+        $this->request = $request;
+        $this->routingResult = $routingResult;
+    }
+
+    /**
+     * @return RoutingResult
+     */
+    public function getRoutingResult() {
+        return $this->routingResult;
+    }
+
+    public function getRequest() {
+        return $this->request;
+    }
+
     /**
      * @var array
      */
@@ -45,7 +73,10 @@ class Router {
      * @return array
      * @throws \Shift1\Core\Routing\Exceptions\RouterException
      */
-    public function getDataFromUri($uri) {
+    public function getRequestData() {
+
+        $result = $this->getRoutingResult();
+        $uri = $this->getRequest()->getAppRequest();
 
         foreach($this->getRoutes() as $route) {
             /** @var $route RouteInterface */
@@ -53,8 +84,8 @@ class Router {
 
             if(1 === \preg_match_all($routeExpression, $uri, $matches)) {
                 \array_shift($matches);
-                $routingResult = $this->fetchData($route, $matches);
-                $this->fetchKeyValuePairs($routingResult, $uri);
+                $this->fetchData($route, $matches);
+                $this->fetchKeyValuePairs($uri);
 
                 $passCheckerNs = $route->getPassCheckerNamespace();
                 if(!empty($passCheckerNs)) {
@@ -63,18 +94,18 @@ class Router {
                         throw new RouterException("Given Passchecker for route '{$route->getName()}' must be an instance of PassCheckerInterface!", RouterException::PASSCHECKER_INVALID);
                     }
                     /** @var $passChecker PassCheckerInterface */
-                    if(!$passChecker->isValid($routingResult)) {
+                    if(!$passChecker->isValid($result)) {
                         continue; // Did not pass; try next route
                     }
                 }
 
-                $route->replaceHandlerBindings($routingResult);
-                $routingResult->setRoute($route);
-                return $routingResult;
+                $route->replaceHandlerBindings($result);
+                $this->getRoutingResult()->setRoute($route);
+                return $result;
             }
 
         }
-        return array();
+        return new RoutingResult();
     }
 
     /**
@@ -82,7 +113,7 @@ class Router {
      * @param string $uri
      * @return int
      */
-    protected function fetchKeyValuePairs(RoutingResult $result, $uri) {
+    protected function fetchKeyValuePairs($uri) {
         $data = array();
 
         // optional key-value-pairs
@@ -94,7 +125,7 @@ class Router {
                 $data[$paramKey] = $paramVal;
             }
         }
-        $result->mergeArray($data);
+        $this->getRoutingResult()->mergeArray($data);
         return \count($data);
     }
 
@@ -114,19 +145,19 @@ class Router {
             $data[$paramName] = $uriParam;
         }
 
-        return RoutingResult::fromArray($data);
+        $this->getRoutingResult()->mergeArray($data);
 
     }
 
-    public static function fromConfig(array $routes) {
-        $router = new self();
+    public static function fromConfig(array $routes, RequestInterface $request, RoutingResult $routingResult) {
+        $router = new self($request, $routingResult);
         foreach($routes as $routeName => $routeData)  {
 
             if(!isset($routeData['handler'])) {
                 throw new RouterException("No route handler defined for '{$routeName}'!", RouterException::ROUTE_HANDLER_MISSING);
             }
 
-            $route = new Route($routeName, $routeData['route']);
+            $route = new Route($routeName, $routeData['request']);
             $route->setHandler($routeData['handler']);
             $route->setParamOptions(isset($routeData['bindings']) ? $routeData['bindings'] : array());
             $router->addRoute($route);

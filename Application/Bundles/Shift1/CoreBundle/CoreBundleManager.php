@@ -24,6 +24,7 @@ class CoreBundleManager extends BundleManager  {
             'variableSet'               => new Locator\VariableSetLocator(),
             'view'                      => new Locator\ViewLocator(),
             'viewRenderer'              => new Locator\ViewRendererLocator(),
+            'routingResult'               => new Locator\RoutingResultLocator(),
 
             'viewFilter.escape'         => new Locator\ViewFilter\EscapeLocator(),
             'viewFilter.toLower'        => new Locator\ViewFilter\ToLowerLocator(),

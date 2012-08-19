@@ -101,9 +101,16 @@ class Request implements RequestInterface {
     /**
      * @return string
      */
-    public function getAppRequestUri() {
-        $requestString = $this->getDomain() . $this->getRequestUri();
-        return \str_ireplace($this->getAppRootUri(), '', $requestString);
+    public function getAppRequest() {
+
+        if($this->isCli()) {
+            \array_shift($GLOBALS['argv']);
+            return \implode(' ', $GLOBALS['argv']);
+        } else {
+            $requestString = $this->getDomain() . $this->getRequestUri();
+            return \str_ireplace($this->getAppRootUri(), '', $requestString);
+        }
+
     }
 
     public function getAppRootUri() {

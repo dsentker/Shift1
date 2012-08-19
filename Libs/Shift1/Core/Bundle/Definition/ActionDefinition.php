@@ -4,7 +4,7 @@ namespace Shift1\Core\Bundle\Definition;
 use Shift1\Core\Bundle\Exceptions\DefinitionException;
 use Shift1\Core\InternalFilePath;
 
-class ActionDefinition extends ControllerDefinition {
+class ActionDefinition extends ControllerDefinition implements ActionResolver {
 
     const ACTION_SUFFIX = 'Action';
 
@@ -67,7 +67,7 @@ class ActionDefinition extends ControllerDefinition {
     }
 
     public function getActionName($suffixed = true) {
-        return $suffixed? $this->actionName . self::ACTION_SUFFIX : $this->actionName;
+        return $suffixed ? $this->actionName . self::ACTION_SUFFIX : $this->actionName;
     }
 
     public function getTemplateDefinition() {

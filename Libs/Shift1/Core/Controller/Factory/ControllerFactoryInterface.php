@@ -1,13 +1,16 @@
 <?php
 namespace Shift1\Core\Controller\Factory;
- 
+
+use Shift1\Core\Bundle\Definition\ActionResolver;
+
 interface ControllerFactoryInterface {
 
     /**
-     * @param string $actionDefinition The action definition, e.g. vendor:bundleName:foo::bar
+     * @abstract
+     * @param \Shift1\Core\Bundle\Definition\ActionResolver $actionDefinition
      * @param array $params
-     * @return ControllerAggregate
+     * @return void
      */
-    function createController($actionDefinition, array $params = array());
+    function createController(ActionResolver $actionDefinition, array $params = array());
 
 }

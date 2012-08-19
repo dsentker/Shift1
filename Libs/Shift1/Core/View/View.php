@@ -360,6 +360,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      * @return ViewInterface|string
      */
     protected function renderByController() {
+
         if($this->annotationReader->hasAnnotationParameterCount('renderedByController', 1, 'min')) {
             $definition = $this->annotationReader->getAnnotationParameter('renderedByController');
             $actionDefinition = new ActionDefinition($definition[0]);
@@ -368,7 +369,7 @@ class View implements ViewInterface, ContainerAccess, Renderable {
             $actionDefinition = ActionDefinition::fromTemplateFile($thisPath);
         }
 
-        $response = $this->controllerFactory->createController($actionDefinition->getActionDefinition())->run()->getContent();
+        $response = $this->controllerFactory->createController($actionDefinition)->run()->getContent();
 
         if(!($response instanceof ViewInterface)) {
             throw new ViewException("Action {$actionDefinition->getControllerName()}::{$actionDefinition->getActionName()} must return an Instance of

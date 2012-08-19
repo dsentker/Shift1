@@ -191,7 +191,7 @@ abstract class AbstractServiceLocator implements ServiceLocatorInterface {
      */
     public function getService($serviceId) {
         if(empty($this->injectedServices[$serviceId])) {
-           throw new ServiceLocatorException("Service, requested by {$this->getId()}, not found: {$serviceId}", ServiceLocatorException::UNKNOWN_SERVICE);
+           throw new ServiceLocatorException("Service (requested by '{$this->getId()}'), not set: {$serviceId}. Was this service declared via ::dependsOn() ?", ServiceLocatorException::UNKNOWN_SERVICE);
         }
         return $this->injectedServices[$serviceId];
     }

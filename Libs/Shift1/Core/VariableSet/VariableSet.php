@@ -76,17 +76,4 @@ class VariableSet implements VariableSetInterface {
         }
     }
 
-    /**
-     * @static
-     * @param array $vars
-     * @return VariableSet
-     */
-    public static function fromArray(array $vars) {
-        $set = new static;
-        $set->mergeArray($vars);
-        return $set;
-    }
-
-
-
 }

@@ -1,6 +1,6 @@
 # route schemes
 aTest:
-    route: /viewpost/<post><format>
+    request: /viewpost/<post><format>
     handler: shift1:blogDemo:post::view
     bindings:
         @post:
@@ -10,7 +10,7 @@ aTest:
             default: html
 
 viewpost:
-    route: /<lang>/viewpost/<slug><format>
+    request: /<lang>/viewpost/<slug><format>
     handler: shift1:blogDemo:post::view
     bindings:
         @slug:

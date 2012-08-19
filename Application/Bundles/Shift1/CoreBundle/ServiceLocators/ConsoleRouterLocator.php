@@ -10,8 +10,9 @@ class ConsoleRouterLocator extends RouterLocator {
     public function getInstance() {
 
         $classNamespace = $this->getClassNamespace();
-        $routes = new File\YamlFile(new InternalFilePath('Application/Config/cli-routes.yml'));
-        return $classNamespace::fromConfig($this->getService('request'), $routes, $this->getService('paramConverterFactory'));
+        $routeConfig = new File\YamlFile(new InternalFilePath('Application/Config/cli-routes.yml'));
+        $routes = $routeConfig->toArray();
+        return $classNamespace::fromConfig($routes, $this->getService('request'), $this->getService('routingResult'));
 
     }
 }
