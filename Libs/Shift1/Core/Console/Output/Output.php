@@ -13,4 +13,8 @@ class Output {
         return $this->ln . \PHP_EOL;
     }
 
+    public function sendToConsole() {
+        echo $this->__toString();
+    }
+
 }

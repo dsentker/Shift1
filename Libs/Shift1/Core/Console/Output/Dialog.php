@@ -21,12 +21,16 @@ class Dialog {
         return $this->answer;
     }
 
+    public function getQuestion() {
+        return $this->question;
+    }
+
     public function ask() {
 
         while(!isset($answer)) {
-            print new ColorOutput($this->question);
+            print new ColorOutput($this->getQuestion());
             $input = \trim(\fgets(\STDIN));
-            if(!empty($input) || false === $this->answerIsRequired) {
+            if($this->checkDialogExit($input)) {
                 $answer = $input;
             }
         }
@@ -34,6 +38,14 @@ class Dialog {
         $this->answer = $answer;
 
         return $this;
+    }
+
+    /**
+     * @param $input
+     * @return bool true if the dialog is finished.
+     */
+    protected function checkDialogExit($input) {
+        return !empty($input) || false === $this->answerIsRequired;
     }
 
 }
