@@ -91,6 +91,52 @@ class Request implements RequestInterface {
     }
 
     /**
+     * Parses $GLOBALS['argv'] for parameters and assigns them to an array.
+     *
+     * @return array
+     * @todo cache this processing
+     *
+     * Supports:
+     * -e
+     * -e <value>
+     * --long-param
+     * --long-param=<value>
+     * --long-param <value>
+     * <value>
+     *
+     */
+    public function parseCliArgs() {
+
+        $result = array();
+        $params = $this->getCliArgs();
+
+        while (list($i, $p) = each($params)) {
+            if ($p{0} == '-') {
+                $pname = substr($p, 1);
+                $value = true;
+                if ($pname{0} == '-') {
+                    // long-opt (--<param>)
+                    $pname = \substr($pname, 1);
+                    if (\strpos($p, '=') !== false) {
+                        // value specified inline (--<param>=<value>)
+                        list($pname, $value) = \explode('=', \substr($p, 2), 2);
+                    }
+                }
+                // check if next parameter is a descriptor or a value
+                $nextparm = current($params);
+                if ($value === true && $nextparm !== false && $nextparm{0} != '-') list($tmp, $value) = each($params);
+                $result[$pname] = $value;
+            } else {
+                // param doesn't belong to any option
+                $result[] = $p;
+            }
+        }
+
+        return $result;
+
+    }
+
+    /**
      * @return string
      */
     public function getDomain() {
