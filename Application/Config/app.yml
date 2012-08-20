@@ -1,0 +1,17 @@
+development:
+  foo: bar
+  qux:
+    quxdeep:
+      quxdeeper:
+        quxval: ice cream
+  route:
+    appWebRoot = '/shift1/Shift1/public/index_dev.php'
+
+staging:
+  @extends: development
+  foo: baaz!
+  quxnew:
+    @extends: development.qux.quxdeep.quxdeeper
+
+production:
+  @extends: development

@@ -43,7 +43,7 @@ class BundleConverger {
             $bundleManagerNamespace = $bundleRelativeNamespace . '\\' . $bundleName . 'Manager';
 
             if(!\class_exists($bundleManagerNamespace)) {
-                throw new ConvergerException("Bundle Manager for bundle '{$bundlePath}' does not exist (tried to load manager via '{$bundleManagerNamespace}').", ConvergerException::BUNDLE_MANAGER_NOT_FOUND);
+                throw new ConvergerException("Bundle Manager for bundle '{$bundlePath}' does not exist (tried to load manager in '{$bundleManagerNamespace}').", ConvergerException::BUNDLE_MANAGER_NOT_FOUND);
             }
 
             $foundBundleManager[$bundlePath] = new $bundleManagerNamespace;
