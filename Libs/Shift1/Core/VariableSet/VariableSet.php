@@ -8,7 +8,7 @@ class VariableSet implements VariableSetInterface {
     /**
      * @var array
      */
-    protected $vars;
+    protected $vars = array();
 
     public function add($key, $var) {
         $this->vars[$key] = $var;

@@ -39,6 +39,9 @@ class Request implements RequestInterface {
      */
     protected $appWebRoot;
 
+
+    protected $cliArgs = array();
+
     /**
      * @param string $appWebRoot The relative uri where this app begins
      */
@@ -59,6 +62,10 @@ class Request implements RequestInterface {
         $req->setFiles($_FILES);
         $req->setGet($_GET);
         $req->setPost($_POST);
+
+        $cliArgs = $GLOBALS['argv'];
+        \array_shift($cliArgs);
+        $req->cliArgs = $cliArgs;
         return $req;
     }
 
@@ -74,6 +81,13 @@ class Request implements RequestInterface {
      */
     public function isCli() {
         return (\php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']));
+    }
+
+    /**
+     * @return array
+     */
+    public function getCliArgs() {
+        return $this->cliArgs;
     }
 
     /**
@@ -104,8 +118,7 @@ class Request implements RequestInterface {
     public function getAppRequest() {
 
         if($this->isCli()) {
-            \array_shift($GLOBALS['argv']);
-            return \implode(' ', $GLOBALS['argv']);
+            return \implode(' ', $this->getCliArgs());
         } else {
             $requestString = $this->getDomain() . $this->getRequestUri();
             return \str_ireplace($this->getAppRootUri(), '', $requestString);
@@ -169,12 +182,39 @@ class Request implements RequestInterface {
         return $this->server['REQUEST_METHOD'];
     }
 
-    public function isGET() {
-        return $this->getMethod() == 'GET';
+    /**
+     * @return bool
+     */
+    public function isGet() {
+        return 'GET' == $this->getMethod();
     }
 
-    public function isPOST() {
-        return $this->getMethod() == 'POST';
+    /**
+     * @return bool
+     */
+    public function isPost() {
+        return 'POST' == $this->getMethod();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPut() {
+        return 'PUT' == $this->getMethod();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDelete() {
+        return 'DELETE' == $this->getMethod();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHead() {
+        return 'HEAD' == $this->getMethod();
     }
 
     public function getQueryString() {
@@ -195,4 +235,4 @@ class Request implements RequestInterface {
         $this->server['HTTP_USER_AGENT'] = (string) $agent;
     }
 
- }
+}

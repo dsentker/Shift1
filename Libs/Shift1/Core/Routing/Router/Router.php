@@ -69,8 +69,7 @@ class Router {
     }
 
     /**
-     * @param string $uri
-     * @return array
+     * @return RoutingResult
      * @throws \Shift1\Core\Routing\Exceptions\RouterException
      */
     public function getRequestData() {

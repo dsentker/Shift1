@@ -19,3 +19,7 @@ viewpost:
             match: \.(.+)
             default: html
 
+
+fallback:
+  request: /
+  handler: shift1:core:error::notfound

@@ -7,6 +7,9 @@ use Shift1\Core\Routing\ParamConverter\Factory\ParamConverterFactory;
 
 class RoutingResult extends VariableSet {
 
+    /**
+     * @return RouteInterface|null
+     */
     public function getRoute() {
         return $this->get('_route');
     }

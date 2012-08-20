@@ -5,6 +5,7 @@ class FrontControllerException extends \LogicException {
 
     const REQUEST_NOT_VALID         = 0;
     const RESPONSE_NOT_VALID        = 1;
-    const CLI_NOT_RUNNING           = 2;
+    const NO_ROUTE_FOUND            = 2;
+    const CLI_NOT_RUNNING           = 3;
 
 }

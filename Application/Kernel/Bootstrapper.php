@@ -82,7 +82,11 @@ namespace Application\Kernel {
          * @return void
          */
         public static function runStaging() {
+
+            /** @todo automate this */
             \error_reporting(-1);
+            \ini_set('display_errors', 1);
+
             $fc = self::init('staging');
             $fc->getServiceContainer()->get('log')->registerErrorHandler(false);
             self::execute($fc);

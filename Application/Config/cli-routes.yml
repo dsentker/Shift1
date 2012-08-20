@@ -2,3 +2,7 @@
 test:
   request: "test:me"
   handler: "shift1:blogDemo:test::test"
+
+info:
+  request: "info:<action>"
+  handler: "shift1:core:info::<action>"

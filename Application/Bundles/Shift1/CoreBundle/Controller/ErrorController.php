@@ -1,13 +1,14 @@
 <?php
-namespace Application\Controller;
+namespace Bundles\Shift1\CoreBundle\Controller;
 
 use Shift1\Core\Response\Response;
 use Shift1\Core\View\View;
 use Shift1\Core\Response\Header\Header;
+use Shift1\Core\Controller\Controller;
 
-class ErrorController extends ParentController {
+class ErrorController extends Controller {
 
-    public function indexAction() {
+    public function notfoundAction() {
         return new Response($this->getView()->render(), new Header(404));
     }
 

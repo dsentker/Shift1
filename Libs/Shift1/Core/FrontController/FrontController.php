@@ -33,7 +33,7 @@ class FrontController {
         $routingResult = $router->getRequestData();
 
         if($this->validateRequestResult($routingResult) === false) {
-            throw new FrontControllerException('No valid request result given.', FrontControllerException::REQUEST_NOT_VALID);
+            throw new FrontControllerException('No route found for ' . $router->getRequest()->getAppRequest(), FrontControllerException::NO_ROUTE_FOUND);
         }
 
         $paramFactory = $this->getServiceContainer()->get('paramConverterFactory');
@@ -44,9 +44,16 @@ class FrontController {
     public function executeConsole() {
         $router = $this->getServiceContainer()->get('cli-router');
 
-        $routingResult = $this->getRoutingResult($router);
-        $commandDefinition = new CommandDefinition($routingResult->getRoute()->getHandler());
+        try {
+            $routingResult = $this->getRoutingResult($router);
+        } catch(FrontControllerException $e) {
+            if($e->getCode() === FrontControllerException::NO_ROUTE_FOUND) {
+                echo 'Command not found: ' . $router->getRequest()->getAppRequest();
+                exit;
+            }
+        }
 
+        $commandDefinition = new CommandDefinition($routingResult->getRoute()->getHandler());
 
         $controllerAggregate = $this->getControllerFactory()->createController($commandDefinition, $routingResult->getVars());
         echo $controllerAggregate->run();
