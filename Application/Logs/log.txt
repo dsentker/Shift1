@@ -56,3 +56,177 @@
 2012-08-20 15:06:30 notice (70): Undefined index: argv
 2012-08-20 15:06:30 warn (60): array_shift() expects parameter 1 to be array, null given
 
+2012-08-20 21:25:24 notice (70): Undefined index: argv
+2012-08-20 21:25:24 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:26:18 notice (70): Undefined index: argv
+2012-08-20 21:26:18 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:26:56 notice (70): Undefined index: argv
+2012-08-20 21:26:56 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:27:21 notice (70): Undefined index: argv
+2012-08-20 21:27:21 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:27:36 notice (70): Undefined index: argv
+2012-08-20 21:27:36 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:27:37 notice (70): Undefined index: argv
+2012-08-20 21:27:37 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:27:57 notice (70): Undefined index: argv
+2012-08-20 21:27:57 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:28:16 notice (70): Undefined index: argv
+2012-08-20 21:28:16 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:28:28 notice (70): Undefined index: argv
+2012-08-20 21:28:28 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:28:44 notice (70): Undefined index: argv
+2012-08-20 21:28:44 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:28:47 notice (70): Undefined index: argv
+2012-08-20 21:28:47 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:29:09 notice (70): Undefined index: argv
+2012-08-20 21:29:09 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:29:21 notice (70): Undefined index: argv
+2012-08-20 21:29:21 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:29:41 notice (70): Undefined index: argv
+2012-08-20 21:29:41 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:33:25 notice (70): Undefined index: argv
+2012-08-20 21:33:25 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:33:26 notice (70): Undefined index: argv
+2012-08-20 21:33:26 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:33:41 notice (70): Undefined index: argv
+2012-08-20 21:33:41 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:34:48 notice (70): Undefined index: argv
+2012-08-20 21:34:48 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:35:47 notice (70): Undefined index: argv
+2012-08-20 21:35:47 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:35:54 notice (70): Undefined index: argv
+2012-08-20 21:35:54 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:35:54 notice (70): Undefined index: argv
+2012-08-20 21:35:54 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:36:16 notice (70): Undefined index: argv
+2012-08-20 21:36:16 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:36:48 notice (70): Undefined index: argv
+2012-08-20 21:36:48 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:46:30 notice (70): Undefined index: argv
+2012-08-20 21:46:30 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:46:41 notice (70): Undefined index: argv
+2012-08-20 21:46:41 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:47:02 notice (70): Undefined index: argv
+2012-08-20 21:47:02 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:47:59 notice (70): Undefined index: argv
+2012-08-20 21:47:59 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:48:31 notice (70): Undefined index: argv
+2012-08-20 21:48:31 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:48:45 notice (70): Undefined index: argv
+2012-08-20 21:48:45 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:51:00 notice (70): Undefined index: argv
+2012-08-20 21:51:00 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:51:58 notice (70): Undefined index: argv
+2012-08-20 21:51:58 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:53:08 notice (70): Undefined index: argv
+2012-08-20 21:53:08 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:53:30 notice (70): Undefined index: argv
+2012-08-20 21:53:30 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:53:52 notice (70): Undefined index: argv
+2012-08-20 21:53:52 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:54:06 notice (70): Undefined index: argv
+2012-08-20 21:54:06 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:54:47 notice (70): Undefined index: argv
+2012-08-20 21:54:47 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:54:54 notice (70): Undefined index: argv
+2012-08-20 21:54:54 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:55:36 notice (70): Undefined index: argv
+2012-08-20 21:55:36 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:56:02 notice (70): Undefined index: argv
+2012-08-20 21:56:02 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:58:08 notice (70): Undefined index: argv
+2012-08-20 21:58:08 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 21:58:12 notice (70): Undefined index: argv
+2012-08-20 21:58:12 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:04:53 notice (70): Undefined index: argv
+2012-08-20 22:04:53 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:05:12 notice (70): Undefined index: argv
+2012-08-20 22:05:12 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:05:16 notice (70): Undefined index: argv
+2012-08-20 22:05:16 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:05:48 notice (70): Undefined index: argv
+2012-08-20 22:05:48 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:06:36 notice (70): Undefined index: argv
+2012-08-20 22:06:36 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:06:47 notice (70): Undefined index: argv
+2012-08-20 22:06:47 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:07:03 notice (70): Undefined index: argv
+2012-08-20 22:07:03 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:08:32 notice (70): Undefined index: argv
+2012-08-20 22:08:32 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:09:33 notice (70): Undefined index: argv
+2012-08-20 22:09:33 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:11:46 notice (70): Undefined index: argv
+2012-08-20 22:11:46 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:18:17 notice (70): Undefined index: argv
+2012-08-20 22:18:17 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:19:25 notice (70): Undefined index: argv
+2012-08-20 22:19:25 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:19:35 notice (70): Undefined index: argv
+2012-08-20 22:19:35 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:20:22 notice (70): Undefined index: argv
+2012-08-20 22:20:22 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:20:38 notice (70): Undefined index: argv
+2012-08-20 22:20:38 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:22:03 notice (70): Undefined index: argv
+2012-08-20 22:22:03 warn (60): array_shift() expects parameter 1 to be array, null given
+
+2012-08-20 22:22:24 notice (70): Undefined index: argv
+2012-08-20 22:22:24 warn (60): array_shift() expects parameter 1 to be array, null given
+

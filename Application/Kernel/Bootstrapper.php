@@ -56,7 +56,7 @@ namespace Application\Kernel {
 
             echo '<pre>';
             $parser = new \Shift1\Core\Parser\YamlParser();
-            $parser->parse(\file_get_contents(new \Shift1\Core\InternalFilePath('Application/Config/app.yml')));
+            print_r($parser->parse(\file_get_contents(new \Shift1\Core\InternalFilePath('Application/Config/app.yml'))));
 
 
             return $fc;

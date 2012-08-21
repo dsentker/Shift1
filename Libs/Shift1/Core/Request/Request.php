@@ -63,9 +63,12 @@ class Request implements RequestInterface {
         $req->setGet($_GET);
         $req->setPost($_POST);
 
-        $cliArgs = $GLOBALS['argv'];
-        \array_shift($cliArgs);
-        $req->cliArgs = $cliArgs;
+        if(isset($GLOBALS['argv'])) {
+            $cliArgs = $GLOBALS['argv'];
+            \array_shift($cliArgs);
+            $req->cliArgs = $cliArgs;
+        }
+
         return $req;
     }
 
