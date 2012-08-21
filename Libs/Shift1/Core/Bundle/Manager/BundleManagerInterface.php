@@ -2,38 +2,24 @@
 namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
+use Shift1\Core\Config\Builder\ConfigBuilder;
 
 interface BundleManagerInterface {
 
     /**
      * @abstract
-     * @return array
-     */
-    function getApplicationConfig();
-
-    /**
-     * @abstract
+     * @param ServiceContainer $container
      * @return array
      */
     function loadServiceLocators(ServiceContainer $container);
 
     /**
      * @abstract
-     * @return array
+     * @param ConfigBuilder $config
+     * @return ConfigBuilder
      */
-    function loadRoutes();
+    function loadApplicationConfiguration(ConfigBuilder $config);
 
-    /**
-     * @abstract
-     * @return array
-     */
-    function getConsoleMap();
-
-    /**
-     * @abstract
-     * @return array
-     */
-    function getEventListener();
 
     /**
      * @abstract

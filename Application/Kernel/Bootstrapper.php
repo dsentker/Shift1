@@ -25,7 +25,7 @@ namespace Application\Kernel {
     use Shift1\Core\Autoloader\Autoloader;
     use Shift1\Core\Debug;
     use Shift1\Core\Service\Container\ServiceContainer;
-    use Shift1\Core\Bundle\Converger\BundleConverger;
+    use Shift1\Core\Bundle\Converger\ServiceLocatorConverger;
 
     class Bootstrapper  {
 
@@ -45,19 +45,14 @@ namespace Application\Kernel {
             $serviceContainer = new ServiceContainer();
             $serviceContainer->get('parameter')->environment = $environment;
 
-            $serviceLocatorConverger = BundleConverger::factory($environment);
-            $serviceLocatorConverger->convergeServiceLocators($serviceContainer);
+            $serviceLocatorConverger = ServiceLocatorConverger::factory($environment);
+            $serviceLocatorConverger->populateContainer($serviceContainer);
 
             #$serviceContainer->get('log')->log('Service locator instances created. Booting starts now.');
             #$serviceContainer->get('exceptionHandler')->register();
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
-
-            echo '<pre>';
-            $parser = new \Shift1\Core\Parser\YamlParser();
-            print_r($parser->parse(\file_get_contents(new \Shift1\Core\InternalFilePath('Application/Config/app.yml'))));
-
 
             return $fc;
 

@@ -5,7 +5,6 @@ use Shift1\Core\InternalFilePath;
 use Shift1\Core\Bundle\Manager\BundleManagerInterface;
 use Shift1\Core\Bundle\Exceptions\ConvergerException;
 use Shift1\Core\Config\File\IniFile as ConfigFile;
-use Shift1\Core\Service\Container\ServiceContainer;
 
 class BundleConverger {
 
@@ -39,8 +38,7 @@ class BundleConverger {
             $bundleVendor = $bundlePathParts[0];
             $bundleName =   $bundlePathParts[1];
 
-            $bundleRelativeNamespace = '\\Bundles\\' . $bundlePath;
-            $bundleManagerNamespace = $bundleRelativeNamespace . '\\' . $bundleName . 'Manager';
+            $bundleManagerNamespace = '\\Bundles\\' . $bundlePath . '\\' . $bundleName . 'Manager';
 
             if(!\class_exists($bundleManagerNamespace)) {
                 throw new ConvergerException("Bundle Manager for bundle '{$bundlePath}' does not exist (tried to load manager in '{$bundleManagerNamespace}').", ConvergerException::BUNDLE_MANAGER_NOT_FOUND);
@@ -81,21 +79,5 @@ class BundleConverger {
         return false;
 
     }
-
-    /**
-     * @param \Shift1\Core\Service\Container\ServiceContainer $container
-     * @return \Shift1\Core\Service\Container\ServiceContainer
-     */
-    public function convergeServiceLocators(ServiceContainer $container) {
-
-        foreach($this->getBundleManager() as $bundleManager) {
-            /** @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface */
-            $bundleManager->loadServiceLocators($container);
-        }
-
-        return $container;
-
-    }
-
 
 }

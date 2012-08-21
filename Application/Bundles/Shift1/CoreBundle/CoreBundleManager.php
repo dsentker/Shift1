@@ -4,6 +4,8 @@ namespace Bundles\Shift1\CoreBundle;
 use Bundles\Shift1\CoreBundle\ServiceLocators as Locator;
 use Shift1\Core\Bundle\Manager\BundleManager;
 use Shift1\Core\Service\Container\ServiceContainer;
+use Shift1\Core\Config\Builder\ConfigBuilder;
+use Shift1\Core\Config\Builder\Item\ConfigItem;
 
 class CoreBundleManager extends BundleManager  {
 
@@ -24,7 +26,8 @@ class CoreBundleManager extends BundleManager  {
             'variableSet'               => new Locator\VariableSetLocator(),
             'view'                      => new Locator\ViewLocator(),
             'viewRenderer'              => new Locator\ViewRendererLocator(),
-            'routingResult'               => new Locator\RoutingResultLocator(),
+            'routingResult'             => new Locator\RoutingResultLocator(),
+            'configConverger'           => new Locator\ConfigConvergerLocator(),
 
             'viewFilter.escape'         => new Locator\ViewFilter\EscapeLocator(),
             'viewFilter.toLower'        => new Locator\ViewFilter\ToLowerLocator(),
@@ -36,6 +39,24 @@ class CoreBundleManager extends BundleManager  {
         }
 
         return $container;
+
+    }
+
+    public function loadApplicationConfiguration(ConfigBuilder $config) {
+
+        $config->addNode('core')
+                    ->addNode('routing')
+                        ->addItem(ConfigItem::create('appWebRoot')->setValue('/foo/index_dev.php/'))
+                        ->addItem(ConfigItem::create('test'))
+                        ->addItem(ConfigItem::create('test')->needValueInput('Enter the test value:', '#.+#'))
+                    ->getNode('core')
+                    ->addNode('foo')
+                       ->addItem(ConfigItem::create('fooKey')->setValue('fooValue'));
+        ;
+
+        return $config;
+
+
 
     }
 

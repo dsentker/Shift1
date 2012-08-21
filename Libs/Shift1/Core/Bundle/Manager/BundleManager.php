@@ -2,6 +2,7 @@
 namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
+use Shift1\Core\Config\Builder\ConfigBuilder;
 /**
  * A basic bundle manager that is
  * perfectly valid and returns
@@ -13,19 +14,7 @@ class BundleManager implements BundleManagerInterface {
 
     }
 
-    public function getApplicationConfig() {
-
-    }
-
-    public function loadRoutes() {
-
-    }
-
-    public function getConsoleMap() {
-
-    }
-
-    public function getEventListener() {
+    public function loadApplicationConfiguration(ConfigBuilder $config) {
 
     }
 
