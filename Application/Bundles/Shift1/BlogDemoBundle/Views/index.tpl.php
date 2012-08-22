@@ -38,6 +38,13 @@
             background-color: #f4f4f4;
         }
 
+        footer {
+            border-top: 1px solid #ccc;
+            margin-top: 30px;
+            padding-top: 30px;
+            clear: both;
+        }
+
     </style>
 </head>
 
@@ -54,6 +61,14 @@
         <div id="sidebar">
             <?php echo $view->renderTemplate('shift1:blogDemo:page/sidebar') ?>
         </div>
+
+        <footer>
+            <?php if($vars->has('params')) : ?>
+            <pre>
+                <?php print_r($vars->params) ?>
+            </pre>
+            <?php endif; ?>
+        </footer>
 
     </div>
 </body>

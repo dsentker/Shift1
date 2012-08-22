@@ -107,6 +107,13 @@ class ConfigBuilder {
     }
 
     /**
+     * @return array
+     */
+    public function getConfig() {
+        return $this->config;
+    }
+
+    /**
      * Sets key/value pairs at any depth on an array.
      * Thanks to cyranix at cyranix dot com via php.net/manual/de/function.array-walk-recursive.php#106340 - slightly modified
      * If a key in the $data-array is a string like foo.bar.baz, the value
@@ -115,7 +122,7 @@ class ConfigBuilder {
      * @param array $data an array of key/value pairs to be added/modified
      * @param array $array the array to operate on
      */
-    public function setNodes(array $data, &$array) {
+    protected function setNodes(array $data, &$array) {
         foreach ($data as $name => $value) {
             if (\strpos($name, self::NODEPATH_SEPARATOR) === false) {
                 // If the array doesn't contain a special separator character, just set the key/value pair.

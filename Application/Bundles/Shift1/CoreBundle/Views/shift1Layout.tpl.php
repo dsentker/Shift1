@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var $view \Shift1\Core\View\View
+ * @var $vars \Shift1\Core\VariableSet\VariableSet
+ */
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,7 +119,7 @@
             font-size: 15px;
             margin: 16px 0 4px 0;
         }
-        
+
     </style>
 
 </head>
@@ -124,6 +130,7 @@
         <h1><?php echo (isset($view->pageTitle)) ? $view->pageTitle : 'Message' ?> - SHIFT 1 Framework</h1>
 
         <?php echo $view->slot('content'); ?>
+
     </div>
 
 </body>

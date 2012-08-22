@@ -167,7 +167,8 @@ class Request implements RequestInterface {
     public function getAppRequest() {
 
         if($this->isCli()) {
-            return \implode(' ', $this->getCliArgs());
+            $args = $this->getCliArgs();
+            return $args[0];
         } else {
             $requestString = $this->getDomain() . $this->getRequestUri();
             return \str_ireplace($this->getAppRootUri(), '', $requestString);

@@ -6,7 +6,7 @@ aTest:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
         @format:
-            match: (\..+)
+            match: \.(.*)
             default: html
 
 viewpost:

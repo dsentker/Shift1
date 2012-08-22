@@ -84,7 +84,7 @@ class Router {
             if(1 === \preg_match_all($routeExpression, $uri, $matches)) {
                 \array_shift($matches);
                 $this->fetchData($route, $matches);
-                $this->fetchKeyValuePairs($uri);
+                $this->fetchRequestParams($uri);
 
                 $passCheckerNs = $route->getPassCheckerNamespace();
                 if(!empty($passCheckerNs)) {
@@ -112,18 +112,23 @@ class Router {
      * @param string $uri
      * @return int
      */
-    protected function fetchKeyValuePairs($uri) {
-        $data = array();
+    protected function fetchRequestParams($uri) {
 
-        // optional key-value-pairs
-        \preg_match_all('#' . self::KEY_VALUE_PAIR_EXPRESSION . '#', $uri, $keyValuePairs);
-        if(!empty($keyValuePairs[2])) {
-            foreach($keyValuePairs[1] as $key => $val) {
-                $paramKey = $keyValuePairs[1][$key];
-                $paramVal = $keyValuePairs[2][$key];
-                $data[$paramKey] = $paramVal;
+        if($this->getRequest()->isCli()) {
+            $data = $this->getRequest()->parseCliArgs();
+        } else {
+            $data = array();
+            // optional key-value-pairs
+            \preg_match_all('#' . self::KEY_VALUE_PAIR_EXPRESSION . '#', $uri, $keyValuePairs);
+            if(!empty($keyValuePairs[2])) {
+                foreach($keyValuePairs[1] as $key => $val) {
+                    $paramKey = $keyValuePairs[1][$key];
+                    $paramVal = $keyValuePairs[2][$key];
+                    $data[$paramKey] = $paramVal;
+                }
             }
         }
+
         $this->getRoutingResult()->mergeArray($data);
         return \count($data);
     }
@@ -131,7 +136,7 @@ class Router {
     /**
      * @param RouteInterface $route
      * @param array $uriParams
-     * @return RoutingResult
+     * @return int
      */
     protected function fetchData(RouteInterface $route, array $uriParams) {
 
@@ -145,6 +150,7 @@ class Router {
         }
 
         $this->getRoutingResult()->mergeArray($data);
+        return \count($data);
 
     }
 

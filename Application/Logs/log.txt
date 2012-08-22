@@ -230,3 +230,7 @@
 2012-08-20 22:22:24 notice (70): Undefined index: argv
 2012-08-20 22:22:24 warn (60): array_shift() expects parameter 1 to be array, null given
 
+2012-08-22 21:34:30 notice (70): Array to string conversion
+
+2012-08-22 21:34:41 notice (70): Array to string conversion
+

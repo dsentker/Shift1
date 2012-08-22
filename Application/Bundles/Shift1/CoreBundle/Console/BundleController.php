@@ -13,13 +13,15 @@ class BundleController extends CommandController {
     /**
      *
      */
-    public function loadConfigAction() {
+    public function createConfigFromBundlesAction() {
         $converger = $this->get('configConverger');
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
         $builder = new ConfigBuilder();
 
         $builder->setAddItemPreCallback($this->getBuilderAddItemCallback());
-        $converger->createConfigFile($builder);
+        #$converger->createConfigFile($builder);
+
+        die(print_r($this->getParams()));
     }
 
     /**

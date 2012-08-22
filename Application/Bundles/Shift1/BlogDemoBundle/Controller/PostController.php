@@ -15,6 +15,7 @@ class PostController extends ParentController {
 
         $this->view->post = $post;
         $this->view->foo = '<a href="#">A<'; // sic! to test the html output escaper
+        $this->view->params = $this->getParams();
 
         $dispatcher = $this->getContainer()->get('eventDispatcher');
         $dispatcher->dispatch('kernel.response', new BlogViewEvent($this->view));

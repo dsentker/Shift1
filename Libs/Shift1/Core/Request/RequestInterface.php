@@ -21,4 +21,10 @@ interface RequestInterface {
      */
     function parseCliArgs();
 
+    /**
+     * @abstract
+     * @return bool
+     */
+    function isCli();
+
 }
