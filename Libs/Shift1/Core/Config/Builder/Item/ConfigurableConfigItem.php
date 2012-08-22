@@ -25,6 +25,13 @@ class ConfigurableConfigItem extends ConfigItem {
      */
     protected $errorMessage = '';
 
+    /**
+     * @param string $prompt
+     */
+    public function setPrompt($prompt) {
+        $this->prompt = (string) $prompt;
+    }
+
 
     /**
      * @return string

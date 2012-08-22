@@ -38,7 +38,8 @@ class BundleController extends CommandController {
                     $callback = $item->getValidatorCallback();
                     $isValid = $callback($answer);
                     if(!$isValid)  {
-                        echo new Output($item->getErrorMessage());
+                        #echo new Output($item->getErrorMessage());
+                        $item->setPrompt($item->getErrorMessage());
                         return false;
                     }
                 }
