@@ -10,14 +10,26 @@ use Shift1\Core\Config\Builder\ConfigBuilder;
  */
 class BundleManager implements BundleManagerInterface {
 
+
+    /**
+     * @param \Shift1\Core\Service\Container\ServiceContainer $container
+     * @return ServiceContainer
+     */
     public function loadServiceLocators(ServiceContainer $container) {
 
     }
 
+    /**
+     * @param ConfigBuilder $config
+     * @return ConfigBuilder
+     */
     public function loadApplicationConfiguration(ConfigBuilder $config) {
 
     }
 
+    /**
+     * @return string The vendor name
+     */
     public function getVendor() {
         $bundleManagerNamespaceParts = \explode('\\', \get_class($this));
         \array_pop($bundleManagerNamespaceParts); // Strip bundle manager name

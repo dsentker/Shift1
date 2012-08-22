@@ -6,6 +6,9 @@ use Shift1\Core\InternalFilePath;
 
 class CommandDefinition extends ActionDefinition {
 
+    /**
+     * @return string
+     */
     public function getNamespace() {
         return $this->getBundleNamespace() . '\\' . 'Console' . '\\' . $this->getControllerName();
     }

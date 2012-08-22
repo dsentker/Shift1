@@ -8,16 +8,22 @@ class TemplateDefinition extends BundleDefinition {
 
     const TEMPLATE_EXT = '.tpl.php';
 
+    /**
+     * @var string
+     */
     protected $templateDefinition;
+
+    /**
+     * @var mixed|string
+     */
     protected $templateFile;
 
     /**
-     * @param string $definition
-     * @throws \Shift1\Core\Bundle\Exceptions\DefinitionException
+     * @param string $definition like vendor:bundleName:folder/templateFile
+     * @throws DefinitionException if the definition scheme was not valid
      */
     public function __construct($definition) {
 
-        // Something like vendor:bundleName:folder/templateFile
         $parts = \explode(':', $definition);
         if(!isset($parts[2]) || isset($parts[3])) {
             throw new DefinitionException("A template definition must have a scheme like 'vendor:bundle:template', '{$definition}' given!", DefinitionException::TEMPLATE_DEFINITION_INVALID);

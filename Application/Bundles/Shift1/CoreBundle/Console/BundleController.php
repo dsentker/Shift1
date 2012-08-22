@@ -10,6 +10,9 @@ use Shift1\Core\Config\Builder\Item\ConfigurableConfigItem;
 
 class BundleController extends CommandController {
 
+    /**
+     *
+     */
     public function loadConfigAction() {
         $converger = $this->get('configConverger');
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
@@ -19,6 +22,9 @@ class BundleController extends CommandController {
         $converger->createConfigFile($builder);
     }
 
+    /**
+     * @return \Closure
+     */
     protected function getBuilderAddItemCallback()  {
 
         return function(ConfigItem &$item, $path)  {

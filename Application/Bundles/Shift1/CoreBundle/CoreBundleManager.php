@@ -55,18 +55,11 @@ class CoreBundleManager extends BundleManager  {
                     ->addNode('foo')
                        ->addItem(ConfigItem::create('fooKey')->setValue('fooValue'))
                        ->addItem(ConfigItem::create('fooKey')->setValue('fooValue2'));
-        ;
 
         return $config;
 
 
 
-    }
-
-    public function getConsoleMap() {
-        return array(
-           /** @todo Controller or simple command map bindings? */
-        );
     }
 
 }

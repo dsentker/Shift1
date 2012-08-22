@@ -23,6 +23,9 @@ class ConfigBuilder {
      */
     protected $addItemPreCallback = null;
 
+    /**
+     * @param array $config
+     */
     public function __construct(array $config = array()) {
         $this->config = $config;
     }
@@ -106,6 +109,8 @@ class ConfigBuilder {
     /**
      * Sets key/value pairs at any depth on an array.
      * Thanks to cyranix at cyranix dot com via php.net/manual/de/function.array-walk-recursive.php#106340 - slightly modified
+     * If a key in the $data-array is a string like foo.bar.baz, the value
+     * will injected in foo => array( bar => array( baz => array( [here] )))
      *
      * @param array $data an array of key/value pairs to be added/modified
      * @param array $array the array to operate on

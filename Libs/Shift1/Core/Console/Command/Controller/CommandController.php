@@ -12,6 +12,9 @@ class CommandController extends AbstractController {
 
     }
 
+    /**
+     * @return mixed
+     */
     public function getConsoleArgs() {
         return $this->getRequest()->parseCliArgs();
     }

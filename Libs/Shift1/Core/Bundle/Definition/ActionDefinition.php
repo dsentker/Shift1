@@ -8,12 +8,23 @@ class ActionDefinition extends ControllerDefinition implements ActionResolver {
 
     const ACTION_SUFFIX = 'Action';
 
+    /**
+     * @var string
+     */
     protected $actionDefinition;
+
+    /**
+     * @var mixed
+     */
     protected $actionName;
 
+    /**
+     * Needs a string like vendor:bundleName:controllerName::fooAction
+     * @param string $definition
+     * @throws DefinitionException if the $definition is not valid
+     */
     public function __construct($definition) {
 
-        // Something like vendor:bundleName:controllerName::fooAction
         $parts = \explode('::', $definition);
         if(!isset($parts[1]) || isset($parts[2])) {
             throw new DefinitionException("A action definition must have a scheme like 'vendor:bundle:controller:action', '{$definition}' given!", DefinitionException::ACTION_DEFINITION_INVALID);
@@ -26,6 +37,12 @@ class ActionDefinition extends ControllerDefinition implements ActionResolver {
         parent::__construct($controllerDefinition);
     }
 
+    /**
+     * @static
+     * @param \Shift1\Core\InternalFilePath $filepath
+     * @return ActionDefinition
+     * @throws DefinitionException if the given template path was not valid
+     */
     public static function fromTemplateFile(InternalFilePath $filepath) {
         /*
          * Something like
@@ -37,8 +54,8 @@ class ActionDefinition extends ControllerDefinition implements ActionResolver {
          */
         $path = $filepath->getAbsolutePath();
         $identificator = 'Application' . \DIRECTORY_SEPARATOR . 'Bundles' . \DIRECTORY_SEPARATOR;
-        $pos = strpos($path, $identificator) + strlen($identificator);
-        $root = substr($path, $pos);
+        $pos = \strpos($path, $identificator) + \strlen($identificator);
+        $root = \substr($path, $pos);
         if(false === \strpos($root, \DIRECTORY_SEPARATOR)) {
             throw new DefinitionException("Template path not valid: '{$root}', extracted from {$path}.", DefinitionException::TEMPLATE_PATH_INVALID);
         }
@@ -62,14 +79,24 @@ class ActionDefinition extends ControllerDefinition implements ActionResolver {
 
     }
 
+    /**
+     * @return string
+     */
     public function getActionDefinition() {
         return $this->actionDefinition;
     }
 
+    /**
+     * @param bool $suffixed if the Action name is returned with or without suffix
+     * @return string
+     */
     public function getActionName($suffixed = true) {
         return $suffixed ? $this->actionName . self::ACTION_SUFFIX : $this->actionName;
     }
 
+    /**
+     * @return TemplateDefinition
+     */
     public function getTemplateDefinition() {
         $templateDefinition = $this->getBundleDefinition() . ':' . $this->getActionName(false);
         return new TemplateDefinition($templateDefinition);

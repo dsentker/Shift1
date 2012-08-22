@@ -9,7 +9,7 @@ interface BundleManagerInterface {
     /**
      * @abstract
      * @param ServiceContainer $container
-     * @return array
+     * @return ServiceContainer
      */
     function loadServiceLocators(ServiceContainer $container);
 

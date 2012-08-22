@@ -52,6 +52,11 @@ class BundleConverger {
 
     }
 
+    /**
+     * @static
+     * @param string $environment
+     * @return BundleConverger
+     */
     public static function factory($environment) {
         $projectBundlePath = 'Application\Bundles';
         $bundleConfigurationPath = new InternalFilePath('Application/Config/bundles.ini');

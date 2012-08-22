@@ -1,6 +1,10 @@
 <?php
 namespace Shift1\Core\Console\Command;
 
+/**
+ * THIS WILL BE NOT PART OF ANY MASTER BRANCH. I HOPE I REMEMBER THIS LATER :)
+ */
+
 use Shift1\Core\Console\Output;
 
 class CreateCommand extends AbstractCommand {

@@ -7,12 +7,22 @@ class ControllerDefinition extends BundleDefinition {
 
     const CONTROLLER_SUFFIX = 'Controller';
 
+    /**
+     * @var string
+     */
     protected $controllerDefinition;
+
+    /**
+     * @var string
+     */
     protected $controllerName;
 
+    /**
+     * @param string $definition like vendor:bundleName:controllerName
+     * @throws DefinitionException if the scheme is not valid
+     */
     public function __construct($definition) {
 
-        // Something like vendor:bundleName:controllerName
         $parts = \explode(':', $definition);
         if(!isset($parts[2]) || isset($parts[3])) {
             throw new DefinitionException("A controller definition must have a scheme like 'vendor:bundle:controller', '{$definition}' given!", DefinitionException::BUNDLE_DEFINITION_INVALID);
@@ -25,6 +35,12 @@ class ControllerDefinition extends BundleDefinition {
         parent::__construct($bundleDefinition);
     }
 
+    /**
+     * @static
+     * @param string $namespace
+     * @return ControllerDefinition
+     * @throws DefinitionException if the namespace was not usable
+     */
     public static function fromNamespace($namespace) {
 
         // Something like \Vendor\BundleName\Controller\FooController
@@ -45,14 +61,24 @@ class ControllerDefinition extends BundleDefinition {
 
     }
 
+    /**
+     * @return string
+     */
     public function getNamespace() {
         return parent::getNamespace() . '\\' . 'Controller' . '\\' . $this->getControllerName();
     }
 
+    /**
+     * @return string
+     */
     public function getControllerDefinition() {
         return $this->controllerDefinition;
     }
 
+    /**
+     * @param bool $suffixed
+     * @return string
+     */
     public function getControllerName($suffixed = true) {
         return $suffixed ? $this->controllerName . self::CONTROLLER_SUFFIX : $this->controllerName;
     }
@@ -60,3 +86,17 @@ class ControllerDefinition extends BundleDefinition {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

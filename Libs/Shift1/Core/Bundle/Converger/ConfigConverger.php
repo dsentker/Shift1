@@ -16,6 +16,7 @@ class ConfigConverger extends BundleConverger {
             $bundleManager->loadApplicationConfiguration($builder);
         }
 
+        // for testing purposes
         die($builder->dump());
 
     }

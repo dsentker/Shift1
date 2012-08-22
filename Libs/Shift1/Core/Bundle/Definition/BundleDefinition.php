@@ -7,10 +7,25 @@ class BundleDefinition {
 
     const BUNDLE_SUFFIX = 'Bundle';
 
+    /**
+     * @var string
+     */
     protected $bundleDefinition;
+
+    /**
+     * @var string
+     */
     protected $bundleName;
+
+    /**
+     * @var string
+     */
     protected $bundleVendor;
 
+    /**
+     * @param string $definition A definition like bundleVendor:bundleName
+     * @throws DefinitionException if the given $definition is not valid
+     */
     public function __construct($definition) {
 
         $this->bundleDefinition = $definition;
@@ -25,6 +40,12 @@ class BundleDefinition {
 
     }
 
+    /**
+     * @static
+     * @param string $namespace
+     * @return BundleDefinition
+     * @throws DefinitionException if the given Namespace was not usable
+     */
     public static function fromNamespace($namespace) {
 
         $bundleNamespace = \trim($namespace, '\\');
@@ -53,26 +74,49 @@ class BundleDefinition {
 
     }
 
+    /**
+     * @return string
+     */
     public function getBundleDefinition() {
         return $this->bundleDefinition;
     }
 
+    /**
+     * @param bool $suffixed
+     * @return string
+     */
     public function getBundleName($suffixed = true) {
         return $suffixed ? $this->bundleName . self::BUNDLE_SUFFIX : $this->bundleName;
     }
 
+    /**
+     * @return string
+     */
     public function getVendorName() {
         return $this->bundleVendor;
     }
 
+    /**
+     * @return string
+     */
     public function getNamespace() {
         return $this->getBundleNamespace();
     }
 
+    /**
+     * @return string
+     */
     public function getBundleNamespace() {
         return 'Bundles\\' . $this->getVendorName() . '\\' . $this->getBundleName();
     }
 
+    /**
+     * Removes the string $suffix from $subject
+     * @static
+     * @param $subject
+     * @param $suffix
+     * @return string
+     */
     protected static function removeSuffix($subject, $suffix) {
         $suffixPos = \strrpos($subject, $suffix);
         return \substr($subject, 0, $suffixPos);
