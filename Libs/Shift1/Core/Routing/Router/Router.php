@@ -150,6 +150,13 @@ class Router {
         }
 
         $this->getRoutingResult()->mergeArray($data);
+
+        foreach($route->getDefaults() as $paramKey => $defaultVal) {
+            if($this->getRoutingResult()->isEmpty($paramKey)) {
+                $this->getRoutingResult()->add($paramKey, $defaultVal);
+            }
+        }
+
         return \count($data);
 
     }

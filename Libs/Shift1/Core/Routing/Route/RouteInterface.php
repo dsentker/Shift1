@@ -72,5 +72,11 @@ interface RouteInterface {
      */
     public function replaceHandlerBindings(RoutingResult $result);
 
+    /**
+     * @abstract
+     * @return array
+     */
+    function getDefaults();
+
 
 }

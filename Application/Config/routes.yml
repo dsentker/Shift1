@@ -6,7 +6,7 @@ aTest:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
         @format:
-            match: (\.[a-z]{3,4})
+            match: \.?([a-z]{3,4})?
             default: html
 
 viewpost:
@@ -16,7 +16,7 @@ viewpost:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
         @format:
-            match: (\.[a-z]{3,4})
+            match: \.?([a-z]{3,4})?
             default: html
 
 

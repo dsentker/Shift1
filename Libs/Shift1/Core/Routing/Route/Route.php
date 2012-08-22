@@ -197,5 +197,20 @@ class Route implements RouteInterface {
 
     }
 
+    /**
+     * @return array
+     */
+    public function getDefaults() {
+        $bindings = $this->getParamOptions();
+        $defaults = array();
+        foreach($bindings as $paramKey => $opts) {
+            if(!empty($opts['default'])) {
+                $paramKey = \substr($paramKey, 1);
+                $defaults[$paramKey] = $opts['default'];
+            }
+        }
+        return $defaults;
+    }
+
 
 }

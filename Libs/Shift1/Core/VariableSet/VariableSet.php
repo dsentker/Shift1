@@ -38,6 +38,10 @@ class VariableSet implements VariableSetInterface {
         return (!empty($this->vars[$key]));
     }
 
+    public function isEmpty($key) {
+        return !($this->has($key) && \trim($this->get($key) !== ''));
+    }
+
     public function __isset($key) {
         return $this->has($key);
     }

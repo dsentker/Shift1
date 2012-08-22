@@ -248,3 +248,5 @@
 
 2012-08-22 21:57:40 err (50): Argument 1 passed to Bundles\Shift1\BlogDemoBundle\Controller\PostController::viewAction() must be an instance of Bundles\Shift1\BlogDemoBundle\Models\Blogpost, null given
 
+2012-08-22 22:18:53 notice (70): Undefined variable: opt
+
