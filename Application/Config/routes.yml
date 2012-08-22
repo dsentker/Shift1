@@ -1,22 +1,22 @@
 # route schemes
 aTest:
-    request: /viewpost/<post><format>
+    request: ^/viewpost/<post><format>
     handler: shift1:blogDemo:post::view
     bindings:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
         @format:
-            match: \.(.*)
+            match: (\.[a-z]{3,4})
             default: html
 
 viewpost:
-    request: /<lang>/viewpost/<slug><format>
+    request: ^/<lang>/viewpost/<post><format>
     handler: shift1:blogDemo:post::view
     bindings:
-        @slug:
-            paramConverter: /path/to/converter
+        @post:
+            paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
         @format:
-            match: \.(.+)
+            match: (\.[a-z]{3,4})
             default: html
 
 
