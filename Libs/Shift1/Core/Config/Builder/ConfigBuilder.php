@@ -2,9 +2,8 @@
 namespace Shift1\Core\Config\Builder;
 
 use Shift1\Core\Config\Builder\Item\ConfigItem;
+use Shift1\Core\Config\Exceptions\BuilderException;
 
-use Shift1\Core\Console\Output\Dialog;
- 
 class ConfigBuilder {
 
     const NODEPATH_SEPARATOR = '.';
@@ -14,40 +13,92 @@ class ConfigBuilder {
      */
     protected $config = array();
 
+    /**
+     * @var string
+     */
     protected $currentNode = '';
+
+    /**
+     * @var null|\Closure
+     */
+    protected $addItemPreCallback = null;
 
     public function __construct(array $config = array()) {
         $this->config = $config;
     }
 
+    /**
+     * Sets a closure which will be called before a config item is added to the builded config array via ::adItem().
+     * This closure will be called with two parameters: First, the item, second, the current node path.
+     * Note that the closure has to return a boolean true to proceed; otherwise there will be a self-recursive
+     * call to ::addItem().
+     *
+     * @param \Closure $callback The closure which will be called if a new config item is set.
+     */
+    public function setAddItemPreCallback(\Closure $callback)  {
+        $this->addItemPreCallback = $callback;
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getAddItemPreCallback()  {
+        if(null === $this->addItemPreCallback) {
+            return function() { return true; };
+        } else {
+            return $this->addItemPreCallback;
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function getCurrentNode() {
         return \trim($this->currentNode, self::NODEPATH_SEPARATOR);
     }
 
+    /**
+     * @param string $nodePath
+     * @return ConfigBuilder
+     */
     public function addNode($nodePath) {
         $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $nodePath => array()), $this->config);
         $this->currentNode .= self::NODEPATH_SEPARATOR . $nodePath;
         return $this;
     }
 
+    /**
+     * @param $nodePath
+     * @return ConfigBuilder
+     */
     public function getNode($nodePath) {
         $this->currentNode = $nodePath;
         return $this;
     }
 
+    /**
+     * Sets a new item to the builded config. Before integration, a function will be called, if
+     * set via ::setAddItemPreCallback()
+     *
+     * @param Item\ConfigItem $item
+     * @return ConfigBuilder
+     */
     public function addItem(ConfigItem $item) {
 
-        if($item->getNeedValueInput()) {
-            /** @todo this is not very pretty! */
-            $dialog = new Dialog($item->getPrompt());
-            $answer = $dialog->ask()->getAnswer();
-            $item->setValue($answer);
+        $callback = $this->getAddItemPreCallback();
+        $callbackFinished = $callback($item, $this->getCurrentNode());
+
+        if(!$callbackFinished)  {
+            return $this->addItem($item);
         }
 
         $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $item->getKey() => $item->getValue() ), $this->config);
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function dump() {
         return print_r($this->config, true);
     }
@@ -89,7 +140,5 @@ class ConfigBuilder {
             }
         }
     }
-
-
 
 }

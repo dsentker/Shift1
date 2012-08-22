@@ -13,10 +13,6 @@ class ConfigItem {
      */
     protected $value;
 
-    protected $prompt;
-
-    protected $needsInput = false;
-
     /**
      * @param string $key
      */
@@ -47,25 +43,11 @@ class ConfigItem {
         return $this->value;
     }
 
-    public function getPrompt() {
-        return $this->prompt;
-    }
-
-    public function getNeedValueInput() {
-        return $this->needsInput;
-    }
-
-    public function needValueInput($prompt, $validator) {
-        $this->prompt = $prompt;
-        $this->needsInput = true;
-        return $this;
-    }
-
     /**
      * Acts as a factory
      * @static
      * @param string $key
-     * @return ConfigItem
+     * @return ConfigItem|ConfigurableConfigItem
      */
     public static function create($key) {
         return new static($key);
