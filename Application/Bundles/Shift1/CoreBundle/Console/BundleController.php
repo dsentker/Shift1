@@ -19,7 +19,7 @@ class BundleController extends CommandController {
         $builder = new ConfigBuilder();
 
         $builder->setAddItemPreCallback($this->getBuilderAddItemCallback());
-        #$converger->createConfigFile($builder);
+        $bundleConfigs = $converger->getBundleConfiguration($builder);
 
         die(print_r($this->getParams()));
     }

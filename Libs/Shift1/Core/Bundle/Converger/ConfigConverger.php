@@ -9,7 +9,7 @@ class ConfigConverger extends BundleConverger {
      * @param ConfigBuilder $builder
      * @return void
      */
-    public function createConfigFile(ConfigBuilder $builder) {
+    public function getBundleConfiguration(ConfigBuilder $builder) {
 
         foreach($this->getBundleManager() as $bundleManager) {
             /** @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface */
