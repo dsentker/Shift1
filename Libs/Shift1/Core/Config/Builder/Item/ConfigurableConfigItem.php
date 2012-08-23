@@ -48,7 +48,7 @@ class ConfigurableConfigItem extends ConfigItem {
     }
 
     /**
-     * @param $prompt                           The prompt to ask for the specific value
+     * @param string $prompt                    The prompt to ask for the specific value
      * @param null|string|\Closure $validator   If a string is given, it will be used as a regular
      *                                          expression
      * @param string $errorMessage              The error message which will be shown if the validation fails
