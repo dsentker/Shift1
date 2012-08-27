@@ -45,7 +45,7 @@ class CoreBundleManager extends BundleManager  {
 
     public function loadApplicationConfiguration(ConfigBuilder $config) {
 
-        $config->addNode('core')
+        $config->node('core')
                     ->addNode('routing')
                         ->addItem(ConfigItem::create('appWebRoot')->setValue('/foo/index_dev.php/'))
                         ->addItem(ConfigItem::create('test1'))

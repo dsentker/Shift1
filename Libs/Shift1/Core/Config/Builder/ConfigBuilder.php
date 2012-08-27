@@ -19,9 +19,11 @@ class ConfigBuilder {
     protected $currentNode = '';
 
     /**
-     * @var null|\Closure
+     * @var array
      */
-    protected $addItemPreCallback = null;
+    protected $processedNodes = array();
+
+    protected $nodeCollisionHandler = null;
 
     /**
      * @param array $config
@@ -30,31 +32,16 @@ class ConfigBuilder {
         $this->config = $config;
     }
 
-    /**
-     * Sets a closure which will be called before a config item is added to the builded config array via ::adItem().
-     * This closure will be called with two parameters: First, the item, second, the current node path.
-     * Note that the closure has to return a boolean true to proceed; otherwise there will be a self-recursive
-     * call to ::addItem().
-     *
-     * @param \Closure $callback The closure which will be called if a new config item is set.
-     */
-    public function setAddItemPreCallback(\Closure $callback)  {
-        $this->addItemPreCallback = $callback;
+    public function setNodeCollisionHandler($nodeCollisionHandler)  {
+        $this->nodeCollisionHandler = $nodeCollisionHandler;
+    }
+
+    public function getNodeCollisionHandler() {
+        return $this->nodeCollisionHandler;
     }
 
     /**
-     * @return \Closure
-     */
-    public function getAddItemPreCallback()  {
-        if(null === $this->addItemPreCallback) {
-            return function() { return true; };
-        } else {
-            return $this->addItemPreCallback;
-        }
-    }
-
-    /**
-     * @return string
+     * @return string the current node, whitespace-trimmed
      */
     public function getCurrentNode() {
         return \trim($this->currentNode, self::NODEPATH_SEPARATOR);
@@ -66,16 +53,18 @@ class ConfigBuilder {
      */
     public function addNode($nodePath) {
         $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $nodePath => array()), $this->config);
-        $this->currentNode .= self::NODEPATH_SEPARATOR . $nodePath;
+        //$this->currentNode .= self::NODEPATH_SEPARATOR . $nodePath;
         return $this;
     }
 
     /**
+     * Sets the current node path to use this path for later actions. A single dot (.) will set the
+     * node path to root.
      * @param $nodePath
      * @return ConfigBuilder
      */
-    public function getNode($nodePath) {
-        $this->currentNode = $nodePath;
+    public function node($nodePath) {
+        $this->currentNode = ('.' === $nodePath) ? '' :  $nodePath;
         return $this;
     }
 
@@ -87,13 +76,6 @@ class ConfigBuilder {
      * @return ConfigBuilder
      */
     public function addItem(ConfigItem $item) {
-
-        $callback = $this->getAddItemPreCallback();
-        $callbackFinished = $callback($item, $this->getCurrentNode());
-
-        if(!$callbackFinished)  {
-            return $this->addItem($item);
-        }
 
         $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $item->getKey() => $item->getValue() ), $this->config);
         return $this;

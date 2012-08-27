@@ -13,6 +13,7 @@ class ConfigConverger extends BundleConverger {
 
         foreach($this->getBundleManager() as $bundleManager) {
             /** @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface */
+            $builder->node('.');
             $bundleManager->loadApplicationConfiguration($builder);
         }
 
