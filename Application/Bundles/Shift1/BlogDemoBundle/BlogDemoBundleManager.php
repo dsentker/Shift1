@@ -12,21 +12,6 @@ class BlogDemoBundleManager extends BundleManager {
         );
     }
 
-    public function loadApplicationConfiguration(ConfigBuilder $config) {
-
-        $config
-            ->add()
-
-
-        return $config;
-    }
-
 }
 
-
 ?>
-(hierarchy)
-key
-value
-needsAdjustment
-adjustmentvalidator

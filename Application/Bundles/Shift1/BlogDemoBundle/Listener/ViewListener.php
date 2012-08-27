@@ -1,5 +1,5 @@
 <?php
-namespace Application\Listener;
+namespace Bundles\Shift1\BlogDemoBundle\Listener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\Event as MyEvent;
@@ -35,7 +35,7 @@ class ViewListener implements EventSubscriberInterface
 
     public function onKernelResponsePre(MyEvent $event) {
 
-        echo "TestOnKernelResponsePre:" . $event->view->getViewFile()->__toString();
+        echo "TestOnKernelResponsePre: " . $event->view->getViewFile()->__toString();
 
     }
 

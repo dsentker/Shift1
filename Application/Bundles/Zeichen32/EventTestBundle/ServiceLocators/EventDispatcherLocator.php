@@ -27,9 +27,11 @@ class EventDispatcherLocator extends AbstractServiceLocator {
         foreach($listenerEntries->toArray() as $namespace => $listenerClasses) {
 
             foreach($listenerClasses as $listenerClass) {
-                $class = '\\' . $namespace . $listenerClass;
+                $class = $namespace . '\\' . $listenerClass;
                 if(\class_exists($class)) {
                     $serviceInstance->addSubscriber(new $class);
+                } else  {
+                    die("Listener not found: " . $class);
                 }
             }
         }

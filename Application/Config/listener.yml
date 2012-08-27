@@ -1,4 +1,4 @@
 # Listener Sets
-Application\Listener\:
+\Bundles\Shift1\BlogDemoBundle\Listener:
   - ViewListener
-  - TestListener
+  #- TestListener
