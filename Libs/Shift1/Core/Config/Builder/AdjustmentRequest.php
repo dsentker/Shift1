@@ -26,6 +26,11 @@ class AdjustmentRequest {
     protected $validationFailedMessage;
 
     /**
+     * @var string
+     */
+    protected $defaultValue = '';
+
+    /**
      * @param $subject
      * @throws Shift1\Core\Config\Exceptions\AdjustmentRequestException if the subject is not valid
      * @return AdjustmentRequest
@@ -39,6 +44,26 @@ class AdjustmentRequest {
         }
         $this->subject = $subject;
         return $this;
+    }
+
+    /**
+     * @param $val
+     * @return AdjustmentRequest
+     */
+    public function setDefault($val) {
+        $this->defaultValue = $val;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getDefault() {
+        return $this->defaultValue;
+    }
+
+    public function hasDefault() {
+        return !empty($this->defaultValue);
     }
 
         /**
@@ -87,7 +112,11 @@ class AdjustmentRequest {
      * @return string
      */
     public function getPrompt() {
-        return empty($this->prompt) ? \sprintf('Please enter a value for key %s', $this->getSubject()) : $this->prompt;
+        $prompt = empty($this->prompt) ? \sprintf('Please enter a value for key %s', $this->getSubject()) : $this->prompt;
+        if($this->hasDefault()) {
+            $prompt .= \sprintf(' (leave blank for the default value "%s")', $this->getDefault());
+        }
+        return $prompt;
     }
 
     /**

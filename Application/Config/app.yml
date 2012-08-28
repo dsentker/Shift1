@@ -1,24 +1,4 @@
-development:
-
-  databases:
-    default < production:
-      host: localhost
-      user: root
-      pass: foobar
-      dbname: shift1database
-
-  route:
-    appWebRoot: '/shift1/Shift1/public/index_dev.php'
-
-staging < development:
-  
-  foo: i_am_staging!
-
-  databases:
-    default:
-      host: stagingHost
-  
-
-
-production:
-  foo: i_am_PRODCUTIONBABY
+shift1:
+    core:
+        routing:
+            appWebRoot: /shift1/index_dev.php/

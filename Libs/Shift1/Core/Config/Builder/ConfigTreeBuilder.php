@@ -83,6 +83,7 @@ class ConfigTreeBuilder {
 
         if(null !== $adjustmentRequest) {
             $adjustmentRequest->setSubject($nodeKey);
+            $adjustmentRequest->setDefault($value);
             $this->addAdjustmentRequest($adjustmentRequest);
         }
 

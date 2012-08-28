@@ -47,13 +47,16 @@ class BundleController extends CommandController {
 
     protected function getAdjustmentRequestHandler() {
 
-        return $handler = function(AdjustmentRequest $adjustment, ConfigTreeBuilder $builder, $iterationCount) {
+        return function(AdjustmentRequest $adjustment, ConfigTreeBuilder $builder, $iterationCount) {
 
             $dialogText = ($iterationCount === 1) ? $adjustment->getPrompt() : $adjustment->getValidationFailedMessage();
             $dialog = new Dialog($dialogText);
             $input = $dialog->ask()->getAnswer();
 
-            if(null !== ($callback = $adjustment->getValidatorCallback())) {
+            if(empty($input) && $adjustment->hasDefault()) {
+                $input = $adjustment->getDefault();
+                print new Output(\sprintf('Default value "%s" used for %s ...', $adjustment->getDefault(), $adjustment->getSubject()));
+            } elseif(null !== ($callback = $adjustment->getValidatorCallback())) {
                 $validatorResult = $callback($input);
                 if(false === $validatorResult) {
                     return false;
