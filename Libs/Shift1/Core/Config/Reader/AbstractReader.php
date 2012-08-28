@@ -1,7 +1,7 @@
 <?php
-namespace Shift1\Core\Config\Manager;
+namespace Shift1\Core\Config\Reader;
 
-abstract class AbstractManager implements ConfigManagerInterface {
+abstract class AbstractReader implements ConfigReaderInterface {
 
     /**
      * @var \ArrayObject

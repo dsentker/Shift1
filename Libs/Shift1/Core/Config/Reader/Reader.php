@@ -1,9 +1,9 @@
 <?php
-namespace Shift1\Core\Config\Manager;
+namespace Shift1\Core\Config\Reader;
 
 use Shift1\Core\Config\File\ConfigFileInterface;
 
-class Manager extends AbstractManager {
+class Reader extends AbstractReader {
 
     /**
      * @param \Shift1\Core\Config\File\ConfigFileInterface $configFile

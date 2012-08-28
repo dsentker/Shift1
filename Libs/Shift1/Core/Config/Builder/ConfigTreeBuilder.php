@@ -1,7 +1,6 @@
 <?php
 namespace Shift1\Core\Config\Builder;
 
-use Shift1\Core\Config\Builder\Item\ConfigItem;
 use Shift1\Core\Config\Exceptions\BuilderException;
 
 class ConfigTreeBuilder {
@@ -21,9 +20,8 @@ class ConfigTreeBuilder {
     /**
      * @var array
      */
-    protected $processedNodes = array();
+    protected $adjustmentRequests = array();
 
-    protected $nodeCollisionHandler = null;
 
     /**
      * @param array $config
@@ -32,36 +30,18 @@ class ConfigTreeBuilder {
         $this->config = $config;
     }
 
-    public function setNodeCollisionHandler($nodeCollisionHandler)  {
-        $this->nodeCollisionHandler = $nodeCollisionHandler;
-    }
-
-    public function getNodeCollisionHandler() {
-        return $this->nodeCollisionHandler;
-    }
-
     /**
-     * @return string the current node, whitespace-trimmed
+     * @return string the current node, separator-trimmed
      */
     public function getCurrentNode() {
         return \trim($this->currentNode, self::NODEPATH_SEPARATOR);
     }
 
     /**
-     * @param string $nodePath
-     * @return ConfigBuilder
-     */
-    public function addNode($nodePath) {
-        $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $nodePath => array()), $this->config);
-        //$this->currentNode .= self::NODEPATH_SEPARATOR . $nodePath;
-        return $this;
-    }
-
-    /**
      * Sets the current node path to use this path for later actions. A single dot (.) will set the
      * node path to root.
      * @param $nodePath
-     * @return ConfigBuilder
+     * @return ConfigTreeBuilder
      */
     public function node($nodePath) {
         $this->currentNode = ('.' === $nodePath) ? '' :  $nodePath;
@@ -69,16 +49,68 @@ class ConfigTreeBuilder {
     }
 
     /**
+     * @param AdjustmentRequest $adjustmentRequest
+     * @return ConfigTreeBuilder
+     */
+    public function addAdjustmentRequest(AdjustmentRequest $adjustmentRequest) {
+        $this->adjustmentRequests[$adjustmentRequest->getSubject()] = $adjustmentRequest;
+        return $this;
+    }
+
+    /**
+     * @param array $adjustmentRequests
+     * @return ConfigTreeBuilder
+     */
+    public function addAdjustmentRequests(array $adjustmentRequests) {
+        foreach($adjustmentRequests as $req) {
+            $this->addAdjustmentRequest($req);
+        }
+        return $this;
+    }
+
+    /**
      * Sets a new item to the builded config. Before integration, a function will be called, if
      * set via ::setAddItemPreCallback()
      *
-     * @param Item\ConfigItem $item
-     * @return ConfigBuilder
+     * @param string            $key
+     * @param mixed             $value
+     * @param AdjustmentRequest $adjustmentRequest
+     * @return ConfigTreeBuilder
      */
-    public function addItem($key, $value = '') {
+    public function addItem($key, $value = '', AdjustmentRequest $adjustmentRequest = null) {
+        $nodeKey = \ltrim($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $key, self::NODEPATH_SEPARATOR);
+        $this->setNodes(array($nodeKey => $value ), $this->config);
 
-        $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $key => $value ), $this->config);
+        if(null !== $adjustmentRequest) {
+            $adjustmentRequest->setSubject($nodeKey);
+            $this->addAdjustmentRequest($adjustmentRequest);
+        }
+
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     * @return ConfigTreeBuilder
+     */
+    public function updateItem($key, $value = '') {
+        return $this->addItem($key, $value, null);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdjustmentRequests() {
+        return $this->adjustmentRequests;
+    }
+
+    /**
+     * @param $key
+     * @return AdjustmentRequest|bool returns false if there is no adjustment request
+     */
+    public function getAdjustmentRequest($key) {
+        return (isset($this->adjustmentRequests[$key])) ? $this->adjustmentRequests[$key] : false;
     }
 
     /**
@@ -93,6 +125,13 @@ class ConfigTreeBuilder {
      */
     public function getConfig() {
         return $this->config;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty() {
+        return empty($this->config);
     }
 
     /**

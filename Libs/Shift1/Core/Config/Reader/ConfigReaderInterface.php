@@ -1,7 +1,7 @@
 <?php
-namespace Shift1\Core\Config\Manager;
+namespace Shift1\Core\Config\Reader;
 
-interface ConfigManagerInterface {
+interface ConfigReaderInterface {
 
     /**
      * @abstract

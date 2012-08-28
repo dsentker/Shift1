@@ -2,7 +2,7 @@
 namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
-use Shift1\Core\Config\Builder\ConfigBuilder;
+use Shift1\Core\Config\Builder\ConfigTreeBuilder;
 /**
  * A basic bundle manager that is
  * perfectly valid and returns
@@ -20,11 +20,10 @@ class BundleManager implements BundleManagerInterface {
     }
 
     /**
-     * @param ConfigBuilder $config
-     * @return ConfigBuilder
+     * @return ConfigTreeBuilder
      */
-    public function loadApplicationConfiguration(ConfigBuilder $config) {
-
+    public function loadApplicationConfiguration() {
+        return new ConfigTreeBuilder();
     }
 
     /**
@@ -35,6 +34,12 @@ class BundleManager implements BundleManagerInterface {
         \array_pop($bundleManagerNamespaceParts); // Strip bundle manager name
         \array_pop($bundleManagerNamespaceParts); // Strip bundle name
         return \array_pop($bundleManagerNamespaceParts);
+    }
+
+    public function getBundleName() {
+        $suffixed = \implode('', \array_slice(explode('\\', \get_class($this)), -1));
+        $pos = \strrpos($suffixed, 'Bundle');
+        return \substr($suffixed, 0, $pos);
     }
 
 }

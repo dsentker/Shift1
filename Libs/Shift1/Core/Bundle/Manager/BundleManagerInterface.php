@@ -2,7 +2,7 @@
 namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
-use Shift1\Core\Config\Builder\ConfigBuilder;
+use Shift1\Core\Config\Builder\ConfigTreeBuilder;
 
 interface BundleManagerInterface {
 
@@ -15,10 +15,9 @@ interface BundleManagerInterface {
 
     /**
      * @abstract
-     * @param ConfigBuilder $config
-     * @return ConfigBuilder
+     * @return ConfigTreeBuilder
      */
-    function loadApplicationConfiguration(ConfigBuilder $config);
+    function loadApplicationConfiguration();
 
 
     /**
@@ -26,5 +25,11 @@ interface BundleManagerInterface {
      * @return string
      */
     function getVendor();
+
+    /**
+     * @abstract
+     * @return string
+     */
+    function getBundleName();
 
 }

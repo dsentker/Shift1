@@ -1,12 +1,10 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: MiBa GbR
- * Date: 28.08.12
- * Time: 14:09
- * To change this template use File | Settings | File Templates.
- */
-interface ConfigWriterInterface
-{
+namespace Shift1\Core\Config\File\Writer;
+
+interface ConfigWriterInterface {
+
+    function setPath($path);
+
+    function write(array $content);
 
 }

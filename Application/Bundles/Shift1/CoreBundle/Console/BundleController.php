@@ -2,11 +2,12 @@
 namespace Bundles\Shift1\CoreBundle\Console;
 
 use Shift1\Core\Console\Command\Controller\CommandController;
+use Shift1\Core\Config\Builder\ConfigTreeBuilder;
+use Shift1\Core\InternalFilePath;
+use Shift1\Core\Config\File\Writer\YamlFileWriter;
 use Shift1\Core\Console\Output\Output;
 use Shift1\Core\Console\Output\Dialog;
-use Shift1\Core\Config\Builder\ConfigBuilder;
-use Shift1\Core\Config\Builder\Item\ConfigItem;
-use Shift1\Core\Config\Builder\Item\ConfigurableConfigItem;
+use Shift1\Core\Config\Builder\AdjustmentRequest;
 
 class BundleController extends CommandController {
 
@@ -14,45 +15,58 @@ class BundleController extends CommandController {
      *
      */
     public function createConfigFromBundlesAction() {
-        $converger = $this->get('configConverger');
+
+
+
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
-        $builder = new ConfigBuilder();
+        $converger = $this->get('configConverger');
+        $converger->setRequestAdjustmentHandler($this->getAdjustmentRequestHandler());
 
-        $builder->setAddItemPreCallback($this->getBuilderAddItemCallback());
+        $env = $this->hasParam('env') ? '_' . $this->getParam('env') : null;
+        $filename = \sprintf('Application/Config/app%s.yml', $env);
+        $path = new InternalFilePath($filename);
+
+        echo new Output(\sprintf('Trying to create %s...', $path->getAbsolutePath()));
+
+        $builder = new ConfigTreeBuilder();
         $bundleConfigs = $converger->getBundleConfiguration($builder);
+        $writer = new YamlFileWriter();
+        $writer->setPath($path->getAbsolutePath());
 
-        die(print_r($this->getParams()));
+
+
+        $resArray = $bundleConfigs->getConfig();
+
+        if($writer->write($resArray)) {
+            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($resArray)));
+        } else {
+            return new Output(\sprintf('Error: Could not write to %s', $path->getPath()));
+        }
+
     }
 
-    /**
-     * @return \Closure
-     */
-    protected function getBuilderAddItemCallback()  {
+    protected function getAdjustmentRequestHandler() {
 
-        return function(ConfigItem &$item, $path)  {
+        return $handler = function(AdjustmentRequest $adjustment, ConfigTreeBuilder $builder, $iterationCount) {
 
-            if($item instanceof ConfigurableConfigItem && $item->getNeedValueInput()) {
-                /** @var $item ConfigurableConfigItem */
-                $dialog = new Dialog($item->getPrompt());
-                $answer = $dialog->ask()->getAnswer();
+            $dialogText = ($iterationCount === 1) ? $adjustment->getPrompt() : $adjustment->getValidationFailedMessage();
+            $dialog = new Dialog($dialogText);
+            $input = $dialog->ask()->getAnswer();
 
-                if($item->hasValidatorCallback()) {
-                    $callback = $item->getValidatorCallback();
-                    $isValid = $callback($answer);
-                    if(!$isValid)  {
-                        #echo new Output($item->getErrorMessage());
-                        $item->setPrompt($item->getErrorMessage());
-                        return false;
-                    }
+            if(null !== ($callback = $adjustment->getValidatorCallback())) {
+                $validatorResult = $callback($input);
+                if(false === $validatorResult) {
+                    return false;
                 }
-
-                $item->setValue($answer);
             }
 
-            // Everything is fine.
+            $builder->updateItem($adjustment->getSubject(), $input);
             return true;
 
         };
+
     }
+
+
 
 }
