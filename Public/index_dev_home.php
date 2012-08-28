@@ -2,6 +2,6 @@
 use \Application\Kernel\Bootstrapper;
 
 require_once \realpath('../Application/Kernel/Bootstrapper.php');
-$fc = Bootstrapper::getFrontController('stage');
+$fc = Bootstrapper::getFrontController('dev_home');
 $fc->getServiceContainer()->get('log')->registerErrorHandler(false); // hide me if u got problems
 $fc->executeHttp();

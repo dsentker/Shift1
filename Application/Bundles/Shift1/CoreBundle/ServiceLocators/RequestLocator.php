@@ -19,8 +19,7 @@ class RequestLocator extends AbstractServiceLocator {
     public function getInstance() {
 
         $classNamespace = $this->getClassNamespace();
-        #die(print_r($this->getService('config')->getArrayCopy()));
-        return $classNamespace::fromGlobals($this->getService('config')->get('development.route.appWebRoot'));
+        return $classNamespace::fromGlobals($this->getService('config')->get('shift1.core.routing.appWebRoot'));
         #return $classNamespace::fromGlobals($this->getService('config')->route->appWebRoot);
 
     }

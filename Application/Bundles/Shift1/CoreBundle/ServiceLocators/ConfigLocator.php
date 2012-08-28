@@ -12,13 +12,20 @@ class ConfigLocator extends AbstractServiceLocator {
     public function __construct() {
         #$this->setClassNamespace('\Shift1\Core\Config\Reader\Reader');
         $this->setClassNamespace('\Shift1\Core\Config\Reader\ConfigReader');
-        #$this->dependsOn('parameter');
+        $this->dependsOn('parameter');
     }
 
     public function initialize() {
-        $configFile = new File\IniFile(new InternalFilePath('Application/Config/app.ini'), true);
-        #$environment = $this->getService('parameter')->environment;
-        #$this->setConstructorArgs(array($configFile, $environment));
+        $configFile = new File\YamlFile(new InternalFilePath('Application/Config/' . $this->getConfigFile()));
         $this->setConstructorArgs(array($configFile->toArray()));
+    }
+
+    protected function getConfigFile() {
+        $env = $this->getService('parameter')->environment;
+        $file = 'app';
+        if(!empty($env)) {
+            $file .= '_' . $env;
+        }
+        return $file . '.yml';
     }
 }

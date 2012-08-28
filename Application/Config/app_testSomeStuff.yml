@@ -1,0 +1,7 @@
+shift1:
+    core:
+        routing:
+            appWebRoot: /index/foo/index_dev.php/
+    blogdemo:
+        posts:
+            postsPerPage: '12'

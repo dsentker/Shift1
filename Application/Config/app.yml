@@ -1,4 +1,0 @@
-shift1:
-    core:
-        routing:
-            appWebRoot: /shift1/index_dev.php/

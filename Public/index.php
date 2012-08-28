@@ -2,4 +2,5 @@
 use \Application\Kernel\Bootstrapper;
 
 require \realpath('../Application/Kernel/Bootstrapper.php');
-Bootstrapper::runProd();
+$fc = Bootstrapper::getFrontController('live');
+$fc->executeHttp();

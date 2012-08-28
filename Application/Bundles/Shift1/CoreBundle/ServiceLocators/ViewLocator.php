@@ -9,7 +9,6 @@ class ViewLocator extends AbstractServiceLocator {
 
         $this->setClassNamespace('\Shift1\Core\View\View');
         $this->dependsOn(array(
-                        'config',
                         'variableSet',
                         'viewRenderer',
                         'templateAnnotationReader',
@@ -21,7 +20,6 @@ class ViewLocator extends AbstractServiceLocator {
     public function initialize() {
 
         $this->setConstructorArgs(array(
-                       $this->getService('config')->view,
                        $this->getService('variableSet'),
                        $this->getService('viewRenderer'),
                        $this->getService('templateAnnotationReader'),

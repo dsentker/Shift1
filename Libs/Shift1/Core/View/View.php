@@ -35,11 +35,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
     protected $throw = true;
 
     /**
-     * @var \StdClass
-     */
-    protected $config;
-
-    /**
      * @var Renderer\RendererInterface
      */
     protected $renderer;
@@ -76,7 +71,6 @@ class View implements ViewInterface, ContainerAccess, Renderable {
 
 
     /**
-     * @param \ArrayObject $config
      * @param VariableSetInterface $variableSet
      * @param Renderer\RendererInterface $renderer
      * @param TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader
@@ -84,14 +78,12 @@ class View implements ViewInterface, ContainerAccess, Renderable {
      *
      */
     public function __construct(
-        \ArrayObject $config,
         VariableSetInterface $variableSet,
         Renderer\RendererInterface $renderer,
         TemplateAnnotationReader\TemplateAnnotationReaderInterface $annotationReader,
         ControllerFactory $controllerFactory
 ) {
 
-        $this->config = $config;
         $this->variableSet = $variableSet;
         $this->renderer = $renderer;
         $this->annotationReader = $annotationReader;

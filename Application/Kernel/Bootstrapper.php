@@ -20,10 +20,8 @@ namespace Shift1 {
 
 namespace Application\Kernel {
 
-    use Shift1\Core\Config\Manager\Manager as ConfigManager;
     use Shift1\Core\FrontController\FrontController;
     use Shift1\Core\Autoloader\Autoloader;
-    use Shift1\Core\Debug;
     use Shift1\Core\Service\Container\ServiceContainer;
     use Shift1\Core\Bundle\Converger\ServiceLocatorConverger;
 
@@ -34,7 +32,10 @@ namespace Application\Kernel {
          * @param string $environment
          * @return \Shift1\Core\FrontController\FrontController
          */
-        protected static function init($environment) {
+        public static function getFrontController($environment) {
+
+            \error_reporting(-1);
+            \ini_set('display_errors', 1);
 
             require_once \realpath('../Libs/vendor/autoload.php');
             require_once \realpath(BASEPATH . '/Libs/Shift1/Core/Autoloader/Autoloader.php');
@@ -49,87 +50,13 @@ namespace Application\Kernel {
             $serviceLocatorConverger->populateContainer($serviceContainer);
 
             #$serviceContainer->get('log')->log('Service locator instances created. Booting starts now.');
-            #$serviceContainer->get('exceptionHandler')->register();
+            $serviceContainer->get('exceptionHandler')->register();
 
             $fc = new FrontController();
             $fc->setServiceContainer($serviceContainer);
 
             return $fc;
 
-        }
-
-        /**
-         * Predfined runtime method in
-         * development environment
-         * @static
-         * @return void
-         */
-        public static function runDev() {
-
-            /** @todo automate this */
-            \error_reporting(-1);
-            \ini_set('display_errors', 1);
-
-            $fc = self::init('development');
-            $fc->getServiceContainer()->get('log')->registerErrorHandler(false); // hide me if u got problems
-            self::execute($fc);
-        }
-
-        /**
-         * Predfined runtime method in
-         * staging environment
-         * @static
-         * @return void
-         */
-        public static function runStaging() {
-
-            /** @todo automate this */
-            \error_reporting(-1);
-            \ini_set('display_errors', 1);
-
-            $fc = self::init('staging');
-            $fc->getServiceContainer()->get('log')->registerErrorHandler(false);
-            self::execute($fc);
-
-        }
-
-        /**
-         * Predfined runtime method in
-         * production environment
-         * @static
-         * @return void
-         */
-        public static function runProd() {
-
-            \error_reporting(0);
-            \ini_set('display_errors', 0);
-
-            /** @var $fc \Shift1\Core\FrontController */
-            $fc = self::init('production');
-
-            // Override the non-silent exception handler
-            Debug\SilentExceptionHandler::register();
-            self::execute($fc);
-        }
-
-        /**
-         * @static
-         * @return \Shift1\Core\FrontController
-         */
-        public static function runConsole() {
-            $fc = self::init('development');
-            $fc->executeConsole();
-
-        }
-
-
-        /**
-         * @static
-         * @param \Shift1\Core\FrontController $fc
-         * @return mixed
-         */
-        protected static function execute(FrontController $fc) {
-            $fc->executeHttp();
         }
 
     }

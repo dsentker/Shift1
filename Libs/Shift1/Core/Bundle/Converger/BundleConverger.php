@@ -62,8 +62,12 @@ class BundleConverger {
         $bundleConfigurationPath = new InternalFilePath('Application/Config/bundles.ini');
         $bundleConfiguration = new ConfigFile($bundleConfigurationPath->getAbsolutePath());
         $bundleSetDefinitions = $bundleConfiguration->toArray();
-        $bundleSetDefinition = isset($bundleSetDefinitions[$environment]['bundles']) ? $bundleSetDefinitions[$environment]['bundles'] : array();
-        return new static($bundleSetDefinition, $projectBundlePath);
+
+        if(!isset($bundleSetDefinitions[$environment]['bundles'])) {
+            throw new ConvergerException(\sprintf('No bundle definition for environment "%s" found!', $environment), ConvergerException::BUNDE_SET_INVALID);
+        }
+
+        return new static($bundleSetDefinitions[$environment]['bundles'], $projectBundlePath);
     }
 
     /**

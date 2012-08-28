@@ -1,0 +1,4 @@
+shift1:
+    core:
+        routing:
+            appWebRoot: '/shift1/Shift1/public/index_dev.php'

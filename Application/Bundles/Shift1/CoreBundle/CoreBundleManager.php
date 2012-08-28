@@ -47,7 +47,11 @@ class CoreBundleManager extends BundleManager  {
         $builder = new ConfigTreeBuilder();
 
         $builder->node('routing')
-                    ->addItem('appWebRoot', '/shift1/index_dev.php/', AdjustmentRequest::create()->setPrompt('Please enter the AppWebRoot!'))
+                    ->addItem('appWebRoot', '/shift1/public/index_dev.php/',
+                              AdjustmentRequest::create()
+                                      ->setPrompt('Please enter the the root path of your public folder, including the correspondating file, e.g. /subfolder/public/index_stage.php/ . Dont forget the trailing slash.')
+                                      ->setValidation('#^/(.+)/$#', 'Please enter a valid path for your root path. Don\'t forget the leading and trailing slash.')
+                                )
             ;
 
         return $builder;

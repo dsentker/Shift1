@@ -12,11 +12,9 @@ use Shift1\Core\Config\Builder\AdjustmentRequest;
 class BundleController extends CommandController {
 
     /**
-     *
+     * @return \Shift1\Core\Console\Output\Output
      */
     public function createConfigFromBundlesAction() {
-
-
 
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
         $converger = $this->get('configConverger');
@@ -26,14 +24,12 @@ class BundleController extends CommandController {
         $filename = \sprintf('Application/Config/app%s.yml', $env);
         $path = new InternalFilePath($filename);
 
-        echo new Output(\sprintf('Trying to create %s...', $path->getAbsolutePath()));
+        print new Output(\sprintf('Trying to create file %s...', $path->getAbsolutePath()));
 
         $builder = new ConfigTreeBuilder();
         $bundleConfigs = $converger->getBundleConfiguration($builder);
         $writer = new YamlFileWriter();
         $writer->setPath($path->getAbsolutePath());
-
-
 
         $resArray = $bundleConfigs->getConfig();
 
