@@ -51,10 +51,23 @@ class CoreBundleManager extends BundleManager  {
                               AdjustmentRequest::create()
                                       ->setPrompt('Please enter the the root path of your public folder, including the correspondating file, e.g. /subfolder/public/index_stage.php/ . Dont forget the trailing slash.')
                                       ->setValidation('#^/(.+)/$#', 'Please enter a valid path for your root path. Don\'t forget the leading and trailing slash.')
-                                )
+                             )
             ;
 
         return $builder;
+    }
+
+    public function loadHttpRoutingConfiguration() {
+        $builder = RoutingTreeBuilder();
+        $builder->addRoute('^/viewpost/<post><format>', 'shift1:blogDemo:post::view', array(
+                                         '@post' => array(
+                                                'paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter'
+                                         ),
+                                         '@format' => array(
+                                                'match' => '\.?([a-z]{3,4})?',
+                                                'default' => 'html',
+                                         )
+                                  ));
     }
 
 

@@ -108,7 +108,7 @@ class Request implements RequestInterface {
      * <value>
      *
      */
-    public function parseCliArgs() {
+    public function parseCliArgs($repeatingParamsAsArray = true) {
 
         $result = array();
         $params = $this->getCliArgs();
@@ -126,16 +126,28 @@ class Request implements RequestInterface {
                     }
                 }
                 // check if next parameter is a descriptor or a value
-                $nextparm = current($params);
-                if ($value === true && $nextparm !== false && $nextparm{0} != '-') list($tmp, $value) = each($params);
-                $result[$pname] = $value;
+                $nextparm = \current($params);
+                if ($value === true && $nextparm !== false && $nextparm{0} != '-') {
+                    list($tmp, $value) = \each($params);
+                }
+
+                if(isset($result[$pname]) && \is_array($result[$pname])) {
+                    $result[$pname][] = $value;
+                } elseif(isset($result[$pname])) {
+                    $result[$pname] = array($result[$pname]);
+                    $result[$pname][] = $value;
+                } else {
+                    $result[$pname] = $value;
+                }
+
+
             } else {
                 // param doesn't belong to any option
                 $result[] = $p;
             }
         }
 
-        return $result;
+        die(print_r($result));return $result;
 
     }
 
