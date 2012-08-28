@@ -4,7 +4,7 @@ namespace Shift1\Core\Config\Builder;
 use Shift1\Core\Config\Builder\Item\ConfigItem;
 use Shift1\Core\Config\Exceptions\BuilderException;
 
-class ConfigBuilder {
+class ConfigTreeBuilder {
 
     const NODEPATH_SEPARATOR = '.';
 
@@ -75,9 +75,9 @@ class ConfigBuilder {
      * @param Item\ConfigItem $item
      * @return ConfigBuilder
      */
-    public function addItem(ConfigItem $item) {
+    public function addItem($key, $value = '') {
 
-        $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $item->getKey() => $item->getValue() ), $this->config);
+        $this->setNodes(array($this->getCurrentNode() . self::NODEPATH_SEPARATOR . $key => $value ), $this->config);
         return $this;
     }
 
