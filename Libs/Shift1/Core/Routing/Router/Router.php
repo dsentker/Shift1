@@ -181,15 +181,7 @@ class Router implements ContainerAccess {
         $router = new self($request, $routingResult);
 
         foreach($routes as $routeName => $routeData)  {
-
-            if(!isset($routeData['handler'])) {
-                throw new RouterException("No route handler defined for '{$routeName}'!", RouterException::ROUTE_HANDLER_MISSING);
-            }
-
-            $route = new Route($routeName, $routeData['request']);
-            $route->setHandler($routeData['handler']);
-            $route->setParamOptions(isset($routeData['bindings']) ? $routeData['bindings'] : array());
-            $route->setPassCheckerLocator(isset($routeData['passChecker']) ? $routeData['passChecker'] : null);
+            $route = Route::fromArrayConfig($routeName, $routeData);
             $router->addRoute($route);
         }
         return $router;

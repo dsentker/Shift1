@@ -5,5 +5,8 @@ class RouteException extends \Exception {
 
     const PARAM_MATCH_EXPRESSION_INALID     = 0;
 
+    const ROUTE_CONFIG_INVALID              = 2;
+
+
 
 }

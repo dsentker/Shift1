@@ -30,7 +30,7 @@ class Route implements RouteInterface {
     /**
      * @var string
      */
-    protected $passCheckerLocator;
+    protected $passCheckerLocator = null;
 
     /**
      * @var array
@@ -216,5 +216,45 @@ class Route implements RouteInterface {
         return $defaults;
     }
 
+    public function getArrayConfig() {
+        return array(
+            $this->getName() => array(
+                'request' => $this->getScheme(),
+                'handler' => $this->getHandler(),
+                'passChecker' => $this->getPassCheckerLocator(),
+                'bindings' => $this->getParamOptions(),
+            )
+        );
+    }
+
+    /**
+     * @static
+     * @param  string   $routeName
+     * @param  array    $routeData
+     * @return Route
+     * @throws RouteException
+     */
+    public static function fromArrayConfig($routeName, array $routeData) {
+        if(!isset($routeData['handler'])) {
+            throw new RouteException("No route handler defined for '{$routeName}'!", RouteException::ROUTE_CONFIG_INVALID);
+        }
+
+        $route = self::create($routeName, $routeData['request']);
+        $route->setHandler($routeData['handler']);
+        $route->setParamOptions(        isset($routeData['bindings'])    ? $routeData['bindings']       : array()   );
+        $route->setPassCheckerLocator(  isset($routeData['passChecker']) ? $routeData['passChecker']    : null      );
+
+        return $route;
+    }
+
+    /**
+     * @static
+     * @param string $name
+     * @param string $scheme
+     * @return \Shift1\Core\Routing\Route\Route
+     */
+    public static function create($name, $scheme) {
+        return new static($name, $scheme);
+    }
 
 }
