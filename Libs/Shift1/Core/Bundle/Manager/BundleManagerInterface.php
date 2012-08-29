@@ -2,7 +2,6 @@
 namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
-use Shift1\Core\Config\Builder\ConfigTreeBuilder;
 
 interface BundleManagerInterface {
 
@@ -15,10 +14,21 @@ interface BundleManagerInterface {
 
     /**
      * @abstract
-     * @return ConfigTreeBuilder
+     * @return \Shift1\Core\Config\Builder\ConfigTreeBuilder
      */
     function loadApplicationConfiguration();
 
+    /**
+     * @abstract
+     * @return \Shift1\Core\Routing\Route\RouteCollection
+     */
+    function loadHttpRouteCollection();
+
+    /**
+     * @abstract
+     * @return \Shift1\Core\Routing\Route\RouteCollection
+     */
+    function loadConsoleRouteCollection();
 
     /**
      * @abstract

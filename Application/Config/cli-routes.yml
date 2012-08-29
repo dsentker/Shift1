@@ -3,6 +3,10 @@ bundleCreateConfig:
   request: "bundle:create-config"
   handler: "shift1:core:bundle::createConfigFromBundles"
 
+bundleCreateRoutes:
+  request: "bundle:create-http-routes"
+  handler: "shift1:core:bundle::createHttpRoutes"
+
 bundleManage:
   request: "bundle:<action>"
   handler: "shift1:core:bundle::<action>"

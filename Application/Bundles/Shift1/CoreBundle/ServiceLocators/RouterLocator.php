@@ -22,9 +22,13 @@ class RouterLocator extends AbstractServiceLocator {
     public function getInstance() {
 
         $router = $this->getClassNamespace();
-        $routeConfig = new YamlFile(new InternalFilePath('Application/Config/routes.yml'));
+        $routeConfig = new YamlFile(new InternalFilePath($this->getRouteFilePath()));
         $collection = RouteCollection::fromConfig($routeConfig);
         return $router::fromCollection($collection, $this->getService('request'), $this->getService('routingResult'));
 
+    }
+
+    protected function getRouteFilePath() {
+        return 'Application/Config/routes.yml';
     }
 }

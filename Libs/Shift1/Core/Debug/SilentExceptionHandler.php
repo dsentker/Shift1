@@ -1,6 +1,10 @@
 <?php
 namespace Shift1\Core\Debug;
 
+/**
+ * @TODO code me again
+ */
+
 use Shift1\Core\View\View;
 use Shift1\Core\Response;
 use Shift1\Core\Dispatcher\Dispatcher;

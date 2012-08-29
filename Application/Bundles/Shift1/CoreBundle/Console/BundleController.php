@@ -8,36 +8,63 @@ use Shift1\Core\Config\File\Writer\YamlFileWriter;
 use Shift1\Core\Console\Output\Output;
 use Shift1\Core\Console\Output\Dialog;
 use Shift1\Core\Config\Builder\AdjustmentRequest;
+use Shift1\Core\Bundle\Converger\RouteConvergerInterface;
 
 class BundleController extends CommandController {
 
     /**
+     * @param string $ext The file extension without leading dot
      * @return \Shift1\Core\Console\Output\Output
      */
-    public function createConfigFromBundlesAction() {
+    public function createConfigFromBundlesAction($ext = 'yml') {
 
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
         $converger = $this->get('configConverger');
         $converger->setRequestAdjustmentHandler($this->getAdjustmentRequestHandler());
 
         $env = $this->hasParam('env') ? '_' . $this->getParam('env') : null;
-        $filename = \sprintf('Application/Config/app%s.yml', $env);
+        $filename = \sprintf('Application/Config/app%s.%s', $env, $ext);
         $path = new InternalFilePath($filename);
 
         print new Output(\sprintf('Trying to create file %s...', $path->getAbsolutePath()));
 
         $builder = new ConfigTreeBuilder();
-        $bundleConfigs = $converger->getBundleConfiguration($builder);
+        $bundleConfigs = $converger->getBundleApplicationConfiguration($builder);
         $writer = new YamlFileWriter();
         $writer->setPath($path->getAbsolutePath());
 
-        $resArray = $bundleConfigs->getConfig();
+        $config = $bundleConfigs->getConfig();
 
-        if($writer->write($resArray)) {
-            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($resArray)));
+        if($writer->write($config)) {
+            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($config)));
         } else {
             return new Output(\sprintf('Error: Could not write to %s', $path->getPath()));
         }
+
+    }
+
+    public function createHttpRoutesAction($ext = 'yml') {
+        /** @var $converger \Shift1\Core\Bundle\Converger\RouteConverger */
+        $converger = $this->get('routeConverger');
+        $filename = \sprintf('Application/Config/routes__.%s', $ext);
+        $path = new InternalFilePath($filename);
+        $writer = new YamlFileWriter();
+        $writer->setPath($path);
+
+        print new Output(\sprintf('Trying to create file %s...', $path->getAbsolutePath()));
+
+        $httpRoutes = $converger->getBundleRouteCollection(RouteConvergerInterface::ROUTES_HTTP);
+        $httpRoutesArray = $httpRoutes->getVars();
+
+        if($writer->write($httpRoutesArray)) {
+            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($httpRoutesArray)));
+        } else {
+            return new Output(\sprintf('Error: Could not write to %s', $path->getPath()));
+        }
+
+
+
+
 
     }
 

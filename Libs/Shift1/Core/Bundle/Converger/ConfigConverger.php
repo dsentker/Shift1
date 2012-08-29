@@ -14,20 +14,19 @@ class ConfigConverger extends BundleConverger {
      * @param ConfigTreeBuilder $builder
      * @return ConfigTreeBuilder
      */
-    public function getBundleConfiguration(ConfigTreeBuilder $builder) {
+    public function getBundleApplicationConfiguration(ConfigTreeBuilder $builder) {
+
+        /**
+         * @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface
+         * @var $bundleConfig ConfigTreeBuilder
+         */
 
         $adjustmentRequestHandler = $this->getAdjustmentRequestHandler();
 
         foreach($this->getBundleManager() as $bundleManager) {
-
-            /**
-             * @var $bundleManager \Shift1\Core\Bundle\Manager\BundleManagerInterface
-             * @var $bundleConfig ConfigTreeBuilder
-             */
             $bundleConfig = $bundleManager->loadApplicationConfiguration();
 
             if(!$bundleConfig->isEmpty()) {
-
                 foreach($bundleConfig->getAdjustmentRequests() as $req) {
 
                     $bundleConfig->node('.'); // set to root
@@ -36,15 +35,10 @@ class ConfigConverger extends BundleConverger {
                         $bundleConfig->node('.'); // set to root
                         $iterationCount++;
                     }
-
-
                 }
-
                 $bundleRoot = \strtolower($bundleManager->getVendor() . '.' . $bundleManager->getBundleName());
                 $builder->addItem($bundleRoot, $bundleConfig->getConfig());
-
             }
-
         }
 
         return $builder;

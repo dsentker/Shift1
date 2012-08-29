@@ -7,12 +7,9 @@ use Shift1\Core\Config\File;
 
 class ConsoleRouterLocator extends RouterLocator {
 
-    public function getInstance() {
-
-        $classNamespace = $this->getClassNamespace();
-        $routeConfig = new File\YamlFile(new InternalFilePath('Application/Config/cli-routes.yml'));
-        $routes = $routeConfig->toArray();
-        return $classNamespace::fromConfig($routes, $this->getService('request'), $this->getService('routingResult'));
-
+    protected function getRouteFilePath() {
+        return 'Application/Config/cli-routes.yml';
     }
+
+
 }

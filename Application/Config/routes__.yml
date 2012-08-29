@@ -1,27 +1,21 @@
-# BlogDemoBundle default routes
 aTest:
     request: ^/viewpost/<post><format>
-    handler: shift1:blogDemo:post::view
+    handler: 'shift1:blogDemo:post::view'
     bindings:
-        @post:
+        '@post':
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
-        @format:
-            match: \.?([a-z]{3,4})?
+        '@format':
+            match: '\.?([a-z]{3,4})?'
             default: html
-
 viewpost:
     request: ^/<lang>/viewpost/<post><format>
-    handler: shift1:blogDemo:post::view
-#   passChecker: fooPassChecker
+    handler: 'shift1:blogDemo:post::view'
     bindings:
-        @post:
+        '@post':
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
-#           match: ([0-9])
-        @format:
-            match: \.?([a-z]{3,4})?
+        '@format':
+            match: '\.?([a-z]{3,4})?'
             default: html
-
-
 fallback:
-  request: /
-  handler: shift1:core:error::notfound
+    request: /
+    handler: 'shift1:core:error::notfound'

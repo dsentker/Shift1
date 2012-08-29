@@ -28,6 +28,7 @@ class CoreBundleManager extends BundleManager  {
             'viewRenderer'              => new Locator\ViewRendererLocator(),
             'routingResult'             => new Locator\RoutingResultLocator(),
             'configConverger'           => new Locator\ConfigConvergerLocator(),
+            'routeConverger'            => new Locator\RouteConvergerLocator(),
 
             'viewFilter.escape'         => new Locator\ViewFilter\EscapeLocator(),
             'viewFilter.toLower'        => new Locator\ViewFilter\ToLowerLocator(),
@@ -56,20 +57,6 @@ class CoreBundleManager extends BundleManager  {
 
         return $builder;
     }
-
-    public function loadHttpRoutingConfiguration() {
-        $builder = RoutingTreeBuilder();
-        $builder->addRoute('^/viewpost/<post><format>', 'shift1:blogDemo:post::view', array(
-                                         '@post' => array(
-                                                'paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter'
-                                         ),
-                                         '@format' => array(
-                                                'match' => '\.?([a-z]{3,4})?',
-                                                'default' => 'html',
-                                         )
-                                  ));
-    }
-
 
 
 }

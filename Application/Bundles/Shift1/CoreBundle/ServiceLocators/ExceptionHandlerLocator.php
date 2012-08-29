@@ -21,9 +21,11 @@ class ExceptionHandlerLocator extends AbstractServiceLocator {
         $handlerNS = '\\Shift1\\Core\Debug\\';
 
         switch($this->getService('parameter')->environment) {
-            case 'production':
-            case 'staging':
+            case 'live':
                 $handlerNS .= 'SilentExceptionHandler';
+                break;
+            case 'console':
+                $handlerNS .= 'DefaultExceptionHandler';
                 break;
             default:
                 $handlerNS .= 'HTMLResponseExceptionHandler';

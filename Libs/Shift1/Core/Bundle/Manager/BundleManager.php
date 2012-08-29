@@ -3,6 +3,8 @@ namespace Shift1\Core\Bundle\Manager;
 
 use Shift1\Core\Service\Container\ServiceContainer;
 use Shift1\Core\Config\Builder\ConfigTreeBuilder;
+use Shift1\Core\Routing\Route\RouteCollection;
+
 /**
  * A basic bundle manager that is
  * perfectly valid and returns
@@ -24,6 +26,20 @@ class BundleManager implements BundleManagerInterface {
      */
     public function loadApplicationConfiguration() {
         return new ConfigTreeBuilder();
+    }
+
+    /**
+     * @return RouteCollection
+     */
+    public function loadHttpRouteCollection() {
+        return new RouteCollection();
+    }
+
+    /**
+     * @return RouteCollection
+     */
+    public function loadConsoleRouteCollection() {
+        return new RouteCollection();
     }
 
     /**

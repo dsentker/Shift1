@@ -4,6 +4,7 @@ namespace Bundles\Shift1\BlogDemoBundle;
 use Shift1\Core\Bundle\Manager\BundleManager;
 use Shift1\Core\Config\Builder\ConfigTreeBuilder;
 use Shift1\Core\Config\Builder\AdjustmentRequest;
+use Shift1\Core\Config\File\YamlFile;
 
 class BlogDemoBundleManager extends BundleManager {
 
@@ -18,6 +19,9 @@ class BlogDemoBundleManager extends BundleManager {
         return $builder;
     }
 
-}
+    public function loadHttpRouteCollection() {
+        $bundleRoutes = new YamlFile(__DIR__ . '/Routing/routes.yml');
+        return \Shift1\Core\Routing\Route\RouteCollection::fromConfig($bundleRoutes);
+    }
 
-?>
+}
