@@ -97,9 +97,7 @@ class Router implements ContainerAccess {
 
         foreach($this->getRoutes() as $route) {
             /** @var $route RouteInterface */
-            $routeExpression = $route->getSchemeExpression();
-
-            if(1 === \preg_match_all($routeExpression, $uri, $matches)) {
+            if(\preg_match_all($route->getSchemeExpression(), $uri, $matches) > 0) {
                 \array_shift($matches);
                 $this->fetchData($route, $matches);
                 $this->fetchRequestParams($uri);

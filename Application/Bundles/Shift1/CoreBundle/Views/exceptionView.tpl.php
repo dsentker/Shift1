@@ -31,7 +31,7 @@
             }
 
             $class =    (empty($trace['class']))    ? ''            : '\\' . $trace['class'];
-            $type  =    (empty($trace['type']))     ? ''            : $trace['type'];
+            $type  =    (empty($trace['type']))     ? ''            : ($trace['type'] == '->') ? '::' : $trace['type'];
             $file =     (empty($trace['file']))     ? '(unknown)'   : $trace['file'];
             $line =     (empty($trace['line']))     ? ''            : '(' . $trace['line'] .')';
             $function = (empty($trace['function'])) ? ''            : $trace['function'];

@@ -16,6 +16,7 @@ viewpost:
     bindings:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
+            match: ([0-9])
         @format:
             match: \.?([a-z]{3,4})?
             default: html
