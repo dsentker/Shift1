@@ -3,7 +3,7 @@ namespace Shift1\Core\VariableSet;
 
 use Shift1\Core\VariableSet\Exceptions\VariableSetException;
 
-class VariableSet implements VariableSetInterface {
+class VariableSet implements VariableSetInterface, \IteratorAggregate {
 
     /**
      * @var array
@@ -57,8 +57,24 @@ class VariableSet implements VariableSetInterface {
         return $this->vars;
     }
 
+    /**
+     * @param VariableSetInterface $variableSet
+     * @return VariableSet
+     */
     public function merge(VariableSetInterface $variableSet) {
         $this->vars = \array_merge($this->getVars(), $variableSet->getVars());
+        return $this;
+    }
+
+    /**
+     * @param array $vars
+     * @return VariableSet
+     */
+    public function mergeArray(array $vars) {
+        foreach($vars as $key => $var) {
+            $this->add($key, $var);
+        }
+        return $this;
     }
 
     /**
@@ -74,10 +90,13 @@ class VariableSet implements VariableSetInterface {
         $this->vars[$key] = $var;
     }
 
-    public function mergeArray(array $vars) {
-        foreach($vars as $key => $var) {
-            $this->add($key, $var);
-        }
+    /**
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     */
+    public function getIterator() {
+        return new \ArrayIterator($this->getVars());
     }
-
 }

@@ -4,6 +4,7 @@ namespace Shift1\Core\Routing\Router;
 use Shift1\Core\Request\RequestInterface;
 use Shift1\Core\Routing\Route\RouteInterface;
 use Shift1\Core\Routing\Route\Route;
+use Shift1\Core\Routing\Route\RouteCollection;
 use Shift1\Core\Routing\Exceptions\RouterException;
 use Shift1\Core\Routing\PassChecker\PassCheckerInterface;
 use Shift1\Core\Routing\Result\RoutingResult;
@@ -176,11 +177,11 @@ class Router implements ContainerAccess {
 
     }
 
-    public static function fromConfig(array $routes, RequestInterface $request, RoutingResult $routingResult) {
+    public static function fromCollection(RouteCollection $routes, RequestInterface $request, RoutingResult $routingResult) {
 
         $router = new self($request, $routingResult);
 
-        foreach($routes as $routeName => $routeData)  {
+        foreach($routes->getIterator() as $routeName => $routeData)  {
             $route = Route::fromArrayConfig($routeName, $routeData);
             $router->addRoute($route);
         }
