@@ -11,7 +11,7 @@ SetEnv APP_ENVIRONMENT development
 <IfModule mod_rewrite.c>
 
     RewriteEngine On
-    RewriteBase /shift1/Shift1/public/
+    RewriteBase /shift1/public/
 
     # force 301 to a single domain if not requested
     #RewriteCond %{HTTP_HOST} !^www.example.com$ [NC]

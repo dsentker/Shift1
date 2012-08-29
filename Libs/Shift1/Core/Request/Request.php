@@ -147,7 +147,7 @@ class Request implements RequestInterface {
             }
         }
 
-        die(print_r($result));return $result;
+        return $result;
 
     }
 

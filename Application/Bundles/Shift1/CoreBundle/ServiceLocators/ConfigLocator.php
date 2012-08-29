@@ -10,7 +10,6 @@ class ConfigLocator extends AbstractServiceLocator {
     public static $isSingleton = true;
 
     public function __construct() {
-        #$this->setClassNamespace('\Shift1\Core\Config\Reader\Reader');
         $this->setClassNamespace('\Shift1\Core\Config\Reader\ConfigReader');
         $this->dependsOn('parameter');
     }

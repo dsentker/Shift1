@@ -7,12 +7,17 @@ use Shift1\Core\Routing\Route\Route;
 use Shift1\Core\Routing\Exceptions\RouterException;
 use Shift1\Core\Routing\PassChecker\PassCheckerInterface;
 use Shift1\Core\Routing\Result\RoutingResult;
+use Shift1\Core\Service\ContainerAccess;
+use Shift1\Core\Service\Container\ServiceContainerInterface;
 
-class Router {
+class Router implements ContainerAccess {
 
     const KEY_VALUE_PAIR_EXPRESSION = '([^:/]*):("[^"]*"|[^/"]*)'; // Thanks to stackoverflow.com/questions/168171/regular-expression-for-parsing-name-value-pairs
 
 
+    /**
+     * @var \Shift1\Core\Request\RequestInterface
+     */
     protected $request;
 
     /**
@@ -21,12 +26,25 @@ class Router {
     protected $routingResult;
 
     /**
+     * @var ServiceContainerInterface
+     */
+    protected $container;
+
+    /**
      * @param RequestInterface $request
      * @param RoutingResult $routingResult
      */
     public function __construct(RequestInterface $request, RoutingResult $routingResult) {
         $this->request = $request;
         $this->routingResult = $routingResult;
+    }
+
+    public function setContainer(ServiceContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function getContainer() {
+        return $this->container;
     }
 
     /**
@@ -86,9 +104,9 @@ class Router {
                 $this->fetchData($route, $matches);
                 $this->fetchRequestParams($uri);
 
-                $passCheckerNs = $route->getPassCheckerNamespace();
-                if(!empty($passCheckerNs)) {
-                    $passChecker = new $passCheckerNs;
+                if($route->hasPassChecker()) {
+                    $locator = $route->getPassCheckerLocator();
+                    $passChecker = $this->getContainer()->get($locator);
                     if(!($passChecker instanceof PassCheckerInterface)) {
                         throw new RouterException("Given Passchecker for route '{$route->getName()}' must be an instance of PassCheckerInterface!", RouterException::PASSCHECKER_INVALID);
                     }
@@ -108,7 +126,6 @@ class Router {
     }
 
     /**
-     * @param RoutingResult $result
      * @param string $uri
      * @return int
      */
@@ -162,7 +179,9 @@ class Router {
     }
 
     public static function fromConfig(array $routes, RequestInterface $request, RoutingResult $routingResult) {
+
         $router = new self($request, $routingResult);
+
         foreach($routes as $routeName => $routeData)  {
 
             if(!isset($routeData['handler'])) {
@@ -172,10 +191,10 @@ class Router {
             $route = new Route($routeName, $routeData['request']);
             $route->setHandler($routeData['handler']);
             $route->setParamOptions(isset($routeData['bindings']) ? $routeData['bindings'] : array());
+            $route->setPassCheckerLocator(isset($routeData['passChecker']) ? $routeData['passChecker'] : null);
             $router->addRoute($route);
         }
         return $router;
     }
-
 
 }

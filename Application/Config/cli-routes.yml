@@ -1,18 +1,6 @@
 # route schemes
-test:
-  request: "test:me"
-  handler: "shift1:blogDemo:test::test"
-
-test2:
-  request: "test:<action>"
-  handler: "shift1:blogDemo:test::<action>"
-
-info:
-  request: "info:<action>"
-  handler: "shift1:core:info::<action>"
-
 bundleCreateConfig:
-  request: "bundle:createConfig"
+  request: "bundle:create-config"
   handler: "shift1:core:bundle::createConfigFromBundles"
 
 bundleManage:

@@ -12,6 +12,7 @@ aTest:
 viewpost:
     request: ^/<lang>/viewpost/<post><format>
     handler: shift1:blogDemo:post::view
+#   passChecker: fooPassChecker
     bindings:
         @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter

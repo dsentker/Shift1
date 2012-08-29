@@ -30,7 +30,7 @@ class Route implements RouteInterface {
     /**
      * @var string
      */
-    protected $passCheckerNamespace;
+    protected $passCheckerLocator;
 
     /**
      * @var array
@@ -74,17 +74,21 @@ class Route implements RouteInterface {
     }
 
     /**
-     * @param string $passCheckerNamespace
+     * @param string $passCheckerLocator
      */
-    public function setPassCheckerNamespace($passCheckerNamespace) {
-        $this->passCheckerNamespace = $passCheckerNamespace;
+    public function setPassCheckerLocator($passCheckerLocator) {
+        $this->passCheckerLocator = $passCheckerLocator;
     }
 
     /**
      * @return string
      */
-    public function getPassCheckerNamespace() {
-        return $this->passCheckerNamespace;
+    public function getPassCheckerLocator() {
+        return $this->passCheckerLocator;
+    }
+
+    public function hasPassChecker() {
+        return !empty($this->passCheckerLocator);
     }
 
     /**

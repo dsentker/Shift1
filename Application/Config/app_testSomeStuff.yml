@@ -1,7 +1,7 @@
 shift1:
     core:
         routing:
-            appWebRoot: /index/foo/index_dev.php/
+            appWebRoot: /path/to/
     blogdemo:
         posts:
-            postsPerPage: '12'
+            postsPerPage: '204'
