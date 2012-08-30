@@ -19,4 +19,14 @@ class CommandController extends AbstractController {
         return $this->getRequest()->parseCliArgs();
     }
 
+    public function getParam($key, $defaultReturn = false) {
+        $keys = \explode('|', $key);
+        foreach($keys as $key) {
+            if(!empty($key) && (false !== ($keyReq = parent::getParam($key, false)))) {
+                return $keyReq;
+            }
+        }
+        return $defaultReturn;
+    }
+
 }
