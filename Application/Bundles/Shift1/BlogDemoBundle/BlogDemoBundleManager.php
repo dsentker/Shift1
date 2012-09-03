@@ -24,4 +24,9 @@ class BlogDemoBundleManager extends BundleManager {
         return \Shift1\Core\Routing\Route\RouteCollection::fromConfig($bundleRoutes);
     }
 
+    public function loadConsoleRouteCollection() {
+        $bundleRoutes = new YamlFile(__DIR__ . '/Routing/cli-routes.yml');
+        return \Shift1\Core\Routing\Route\RouteCollection::fromConfig($bundleRoutes);
+    }
+
 }

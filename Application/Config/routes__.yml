@@ -1,3 +1,7 @@
+fallback:
+    request: /
+    handler: 'shift1:core:error::notfound'
+    priority: 100
 aTest:
     request: ^/viewpost/<post><format>
     handler: 'shift1:blogDemo:post::view'
@@ -16,6 +20,5 @@ viewpost:
         '@format':
             match: '\.?([a-z]{3,4})?'
             default: html
-fallback:
-    request: /
-    handler: 'shift1:core:error::notfound'
+
+# Generated @ 2012-09-03 21:37:49

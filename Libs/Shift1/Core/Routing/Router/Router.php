@@ -87,6 +87,12 @@ class Router implements ContainerAccess {
         return $this->routes;
     }
 
+    protected function sortRoutes(RouteInterface $route1, RouteInterface $route2) {
+        if($route1->getPriority() == $route2->getPriority()) return 0;
+
+        return $route1->getPriority() < $route2->getPriority() ? -1 : 1;
+    }
+
     /**
      * @return RoutingResult
      * @throws \Shift1\Core\Routing\Exceptions\RouterException
@@ -95,8 +101,12 @@ class Router implements ContainerAccess {
 
         $result = $this->getRoutingResult();
         $uri = $this->getRequest()->getAppRequest();
+        /** @todo maybe its better to receive the request object in this method */
 
-        foreach($this->getRoutes() as $route) {
+        $routes = $this->getRoutes();
+        \usort($routes, array($this, 'sortRoutes'));
+
+        foreach($routes as $route) {
             /** @var $route RouteInterface */
             if(\preg_match_all($route->getSchemeExpression(), $uri, $matches) > 0) {
                 \array_shift($matches);

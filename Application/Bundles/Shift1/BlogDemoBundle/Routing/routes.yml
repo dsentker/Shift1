@@ -1,4 +1,4 @@
-# BlogDemoBundle default routes
+# route schemes
 aTest:
     request: ^/viewpost/<post><format>
     handler: shift1:blogDemo:post::view
@@ -20,8 +20,3 @@ viewpost:
         @format:
             match: \.?([a-z]{3,4})?
             default: html
-
-
-fallback:
-  request: /
-  handler: shift1:core:error::notfound

@@ -6,6 +6,7 @@ use Shift1\Core\Bundle\Manager\BundleManager;
 use Shift1\Core\Service\Container\ServiceContainer;
 use Shift1\Core\Config\Builder\ConfigTreeBuilder;
 use Shift1\Core\Config\Builder\AdjustmentRequest;
+use Shift1\Core\Config\File\YamlFile;
 
 class CoreBundleManager extends BundleManager  {
 
@@ -50,12 +51,23 @@ class CoreBundleManager extends BundleManager  {
         $builder->node('routing')
                     ->addItem('appWebRoot', '/shift1/public/index_dev.php/',
                               AdjustmentRequest::create()
-                                      ->setPrompt('Please enter the the root path of your public folder, including the correspondating file, e.g. /subfolder/public/index_stage.php/ . Dont forget the trailing slash.')
+                                      ->setPrompt('Please enter the the root path of your public folder, including the correspondating file, e.g. /subfolder/public/index_stage.php/ .
+                                                    Dont forget the trailing slash.')
                                       ->setValidation('#^/(.+)/$#', 'Please enter a valid path for your root path. Don\'t forget the leading and trailing slash.')
                              )
             ;
 
         return $builder;
+    }
+
+    public function loadConsoleRouteCollection() {
+        $bundleRoutes = new YamlFile(__DIR__ . '/Routing/cli-routes.yml');
+        return \Shift1\Core\Routing\Route\RouteCollection::fromConfig($bundleRoutes);
+    }
+
+    public function loadHttpRouteCollection() {
+        $bundleRoutes = new YamlFile(__DIR__ . '/Routing/routes.yml');
+        return \Shift1\Core\Routing\Route\RouteCollection::fromConfig($bundleRoutes);
     }
 
 

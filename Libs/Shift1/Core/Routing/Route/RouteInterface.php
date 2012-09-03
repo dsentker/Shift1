@@ -22,17 +22,17 @@ interface RouteInterface {
     /**
      * @return string
      */
-    public function getHandler();
+    function getHandler();
 
     /**
      * @return string
      */
-    public function getScheme();
+    function getScheme();
 
     /**
      * @return string
      */
-    public function getSchemeExpression();
+    function getSchemeExpression();
 
     /**
      * @abstract
@@ -52,31 +52,44 @@ interface RouteInterface {
      * @return array
      * @throws \Shift1\Core\Routing\Exceptions\RouteParamException
      */
-    public function getParamOptions($param = null);
+    function getParamOptions($param = null);
 
     /**
      * @param null|string $param
      * @return bool
      */
-    public function hasParamOptions($param = null);
+    function hasParamOptions($param = null);
 
     /**
      * @param array $bindings
      */
-    public function setParamOptions(array $bindings);
+    function setParamOptions(array $bindings);
 
     /**
      * @abstract
-     * @param array $bindings
+     * @param RoutingResult $bindings
      * @return RouteInterface
      */
-    public function replaceHandlerBindings(RoutingResult $result);
+    function replaceHandlerBindings(RoutingResult $result);
 
     /**
      * @abstract
      * @return array
      */
     function getDefaults();
+
+    /**
+     * @abstract
+     * @param int $priority
+     * @return void
+     */
+    function setPriority($priority);
+
+    /**
+     * @abstract
+     * @return int
+     */
+    function getPriority();
 
 
 }

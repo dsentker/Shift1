@@ -12,17 +12,21 @@ use Shift1\Core\Bundle\Converger\RouteConvergerInterface;
 
 class BundleController extends CommandController {
 
+    const ROUTEMODE_HTTP = 'http';
+    const ROUTEMODE_CLI  = 'cli';
+
     /**
      * @param string $ext The file extension without leading dot
+     * @param string $env the environment
      * @return \Shift1\Core\Console\Output\Output
      */
-    public function createConfigFromBundlesAction($ext = 'yml') {
+    public function createConfigFromBundlesAction($ext = 'yml', $env = '') {
 
         /** @var $converger \Shift1\Core\Bundle\Converger\ConfigConverger */
         $converger = $this->get('configConverger');
         $converger->setRequestAdjustmentHandler($this->getAdjustmentRequestHandler());
 
-        $env = $this->hasParam('env') ? '_' . $this->getParam('env') : null;
+        $env = !empty($env) ? '_' . $this->getParam('env') : null;
         $filename = \sprintf('Application/Config/app%s.%s', $env, $ext);
         $path = new InternalFilePath($filename);
 
@@ -43,21 +47,34 @@ class BundleController extends CommandController {
 
     }
 
-    public function createHttpRoutesAction($ext = 'yml') {
+    public function createRoutesAction($mode = self::ROUTEMODE_HTTP) {
         /** @var $converger \Shift1\Core\Bundle\Converger\RouteConverger */
         $converger = $this->get('routeConverger');
-        $filename = \sprintf('Application/Config/routes__.%s', $ext);
+
+        switch($mode) {
+            case self::ROUTEMODE_HTTP:
+                $routes = $converger->getBundleRouteCollection(RouteConvergerInterface::ROUTES_HTTP);
+                $filename = 'Application/Config/routes__.yml'; // underscores are just for test purpose
+                break;
+            case self::ROUTEMODE_CLI:
+                $routes = $converger->getBundleRouteCollection(RouteConvergerInterface::ROUTES_CLI);
+                $filename = 'Application/Config/cli-routes__.yml'; // underscores are just for test purpose
+                break;
+            case '':
+                return new Output('No route mode found. Try --mode http or --mode cli.');
+            default:
+                return new Output('Could not find a handler for mode ' . $mode);
+        }
+
+        $routesArray = $routes->getVars();
         $path = new InternalFilePath($filename);
+        print new Output(\sprintf('Trying to create file %s...', $path->getAbsolutePath()));
+
         $writer = new YamlFileWriter();
         $writer->setPath($path);
 
-        print new Output(\sprintf('Trying to create file %s...', $path->getAbsolutePath()));
-
-        $httpRoutes = $converger->getBundleRouteCollection(RouteConvergerInterface::ROUTES_HTTP);
-        $httpRoutesArray = $httpRoutes->getVars();
-
-        if($writer->write($httpRoutesArray)) {
-            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($httpRoutesArray)));
+        if($writer->write($routesArray)) {
+            return new Output(\sprintf('%s successfully created (%d root nodes created)', $path->getPath(), \count($routesArray)));
         } else {
             return new Output(\sprintf('Error: Could not write to %s', $path->getPath()));
         }

@@ -38,6 +38,11 @@ class Route implements RouteInterface {
     protected $paramOptions = array();
 
     /**
+     * @var int
+     */
+    protected $priority = 50;
+
+    /**
      * @param string $name
      * @param string $scheme
      */
@@ -64,6 +69,21 @@ class Route implements RouteInterface {
      */
     public function getHandler() {
         return $this->handler;
+    }
+
+    /**
+     * @param int $priority
+     * @return void
+     */
+    public function setPriority($priority) {
+        $this->priority = (int) $priority;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority() {
+        return $this->priority;
     }
 
     /**
@@ -235,6 +255,7 @@ class Route implements RouteInterface {
      * @throws RouteException
      */
     public static function fromArrayConfig($routeName, array $routeData) {
+
         if(!isset($routeData['handler'])) {
             throw new RouteException("No route handler defined for '{$routeName}'!", RouteException::ROUTE_CONFIG_INVALID);
         }
@@ -243,6 +264,7 @@ class Route implements RouteInterface {
         $route->setHandler($routeData['handler']);
         $route->setParamOptions(        isset($routeData['bindings'])    ? $routeData['bindings']       : array()   );
         $route->setPassCheckerLocator(  isset($routeData['passChecker']) ? $routeData['passChecker']    : null      );
+        $route->setPriority(            isset($routeData['priority'])    ? $routeData['priority']       : 50        );
 
         return $route;
     }

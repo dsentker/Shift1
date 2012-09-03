@@ -13,6 +13,7 @@ class YamlFileWriter implements ConfigWriterInterface  {
 
     public function write(array $content) {
         $ymlData = Yaml::dump($content, 6);
+        $ymlData .= \PHP_EOL . '# Generated @ ' . \date('Y-m-d H:i:s');
         return \file_put_contents($this->file, $ymlData);
     }
 

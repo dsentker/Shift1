@@ -1,23 +1,27 @@
-fallback:
-    request: /
-    handler: 'shift1:core:error::notfound'
+# route schemes
 aTest:
     request: ^/viewpost/<post><format>
-    handler: 'shift1:blogDemo:post::view'
+    handler: shift1:blogDemo:post::view
     bindings:
-        '@post':
+        @post:
             paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
-        '@format':
-            match: '\.?([a-z]{3,4})?'
-            default: html
-viewpost:
-    request: ^/<lang>/viewpost/<post><format>
-    handler: 'shift1:blogDemo:post::view'
-    bindings:
-        '@post':
-            paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
-        '@format':
-            match: '\.?([a-z]{3,4})?'
+        @format:
+            match: \.?([a-z]{3,4})?
             default: html
 
-# Generated @ 2012-09-03 21:16:04
+viewpost:
+    request: ^/<lang>/viewpost/<post><format>
+    handler: shift1:blogDemo:post::view
+#   passChecker: fooPassChecker
+    bindings:
+        @post:
+            paramConverter: \Bundles\Shift1\BlogDemoBundle\Routing\ParamConverter\BlogpostConverter
+#           match: ([0-9])
+        @format:
+            match: \.?([a-z]{3,4})?
+            default: html
+
+
+fallback:
+  request: /
+  handler: shift1:core:error::notfound
