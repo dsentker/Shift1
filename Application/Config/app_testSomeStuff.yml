@@ -1,7 +1,0 @@
-shift1:
-    core:
-        routing:
-            appWebRoot: /path/to/
-    blogdemo:
-        posts:
-            postsPerPage: '204'
