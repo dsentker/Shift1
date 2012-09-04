@@ -103,8 +103,8 @@ class CurlRequest {
                 $key = \CURLOPT_TIMEOUT_MS;
                 break;
             case self::TIMEUNIT_M:
-                $key = \CURLOPT_TIMEOUT_S;
-                $timeout = $timeout / 60;
+                $key = \CURLOPT_TIMEOUT;
+                $timeout = $timeout * 60;
                 break;
             default:
                 /** @todo throw exception here */
@@ -132,7 +132,7 @@ class CurlRequest {
             foreach($cookies as $key => $value) {
                 $cookieStr .= \sprintf(' %s=%s;', $key, $value);
             }
-            $cookie = \trim(\rtrim($cookieStr, ';'));
+            $cookies = \trim(\rtrim($cookieStr, ';'));
         } elseif(!\is_string($cookies)) {
             /** @todo throw exception here */
         }
