@@ -10,7 +10,11 @@ use Shift1\Core\View\View;
 use Shift1\Core\FrontController;
 use Shift1\Core\Request\Request;
 
-
+/**
+ *
+ * PostController
+ *
+**/
 
 class PostController extends ParentController {
 

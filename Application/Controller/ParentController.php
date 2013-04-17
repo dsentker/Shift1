@@ -4,6 +4,13 @@ namespace Application\Controller;
 use Shift1\Core\Controller\Controller;
 use Shift1\Core\Response\Response;
 
+/**
+ *
+ * ParentController
+ *
+ *
+ **/
+
 class ParentController extends Controller {
 
     public function indexAction() {

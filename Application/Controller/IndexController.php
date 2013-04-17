@@ -7,6 +7,13 @@ use Shift1\Core\View\View;
 use Shift1\Core\FrontController;
 use Shift1\Core\Request\Request;
 
+
+/**
+ *
+ * IndexController
+ *
+ *
+ **/
 class IndexController extends ParentController {
 
     public function init() {
