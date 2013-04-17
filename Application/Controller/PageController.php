@@ -4,6 +4,11 @@ namespace Application\Controller;
 use Shift1\Core\Response\Response;
 use Shift1\Core\Request\Request;
 
+/**
+ * PageController
+ * 
+ *
+**/
 class PageController extends ParentController {
 
     public function sidebarAction() {
